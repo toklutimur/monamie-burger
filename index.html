@@ -97,6 +97,7 @@
       font-weight: 600;
       color: var(--text-color);
       transition: all 0.2s;
+      touch-action: manipulation;
     }
     .category-pill:hover, .category-pill.active {
       background: var(--accent);
@@ -117,6 +118,9 @@
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         z-index: 99;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
       }
       .category-pill {
         white-space: nowrap;
@@ -205,16 +209,17 @@
       background: var(--accent); 
       color: #fff; 
       border: none; 
-      width: 28px; 
-      height: 28px; 
+      width: 44px; 
+      height: 44px; 
       border-radius: 50%; 
-      font-size: 1rem; 
+      font-size: 1.2rem; 
       font-weight: 700;
       cursor: pointer; 
       display: flex; 
       align-items: center; 
       justify-content: center;
       transition: all 0.2s;
+      touch-action: manipulation;
     }
     .btn:hover { background: var(--accent-hover); transform: scale(1.1); }
     .btn:active { transform: scale(0.95); }
@@ -269,6 +274,8 @@
       box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
       text-transform: uppercase;
       letter-spacing: 1px;
+      touch-action: manipulation;
+      min-height: 44px;
     }
     .checkout-btn:hover { 
       transform: translateY(-2px);
