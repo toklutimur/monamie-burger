@@ -39,45 +39,45 @@
       letter-spacing: 0.5px;
     }
     
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1rem;
+    .products-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
     
     .product { 
       background: #fff; 
-      border-radius: 12px; 
+      border-radius: 8px; 
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
       transition: transform 0.2s;
+      padding: 1rem;
     }
     .product:active { transform: scale(0.98); }
     
-    .product-image {
-      width: 100%;
-      height: 180px;
-      background: #000;
+    .product-header {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-    }
-    
-    .product-content {
-      padding: 1rem;
+      margin-bottom: 0.5rem;
     }
     
     .product-name {
       font-size: 1rem;
       font-weight: 600;
-      margin-bottom: 0.25rem;
     }
     
     .product-price {
+      color: #000;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    
+    .product-desc {
+      font-size: 0.85rem;
       color: #666;
-      font-size: 0.9rem;
       margin-bottom: 0.75rem;
+      line-height: 1.4;
     }
     
     .controls { 
@@ -207,162 +207,162 @@
   <script>
     const PRODUCTS = {
       'Chicken Menüs': [
-        { id: 'yoyo', name: 'YoYo Menü', price: 14.00, emoji: '🍗', desc: '1x YoYo Burger mit Jalapeño und Cheese "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo, ca. 130 g HotWings (2-3 Stk.)' },
-        { id: 'bbq', name: 'BBQ Menü', price: 10.00, emoji: '🍔', desc: '1x BBQ Burger mit Cheese "L", 1x Clausthalsalat' },
-        { id: 'kingwings', name: 'King Wings Menü', price: 13.50, emoji: '🍗', desc: 'Deep-Fried Chicken Wings (Scharf) ca. 400g (7-10), 1x Klein Pommes oder Wedges' },
-        { id: 'a1', name: 'A1', price: 13.50, emoji: '🍗', desc: 'HotWings ca. 400g (7-10 Stk.), 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'a2', name: 'A2 (Crispyfilets)', price: 11.50, emoji: '🍗', desc: '5x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'a3', name: 'A3 (2x Monamie Burger)', price: 14.50, emoji: '🍔', desc: '2x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'a4', name: 'A4', price: 11.50, emoji: '🍔', desc: '1x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Clausthal Salat, 1x Ketchup/Mayo' },
-        { id: 'bigmama', name: 'Big Mama', price: 14.00, emoji: '🍔', desc: '1x Big Mama Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'happybox', name: 'Happy Box', price: 7.90, emoji: '📦', desc: '1x Quick Chicken Burger oder 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Überraschung, 1x Caprisonne, 1x Ketchup/Mayo' },
-        { id: 'crushburger', name: 'Crush Menü', price: 14.00, emoji: '🍔', desc: '1x Crush Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'doublcrush', name: 'Double Crush Menü', price: 16.00, emoji: '🍔', desc: '1x Double Crush Burger mit Cheese "XXL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'pomwrap', name: 'Pomwrap', price: 5.00, emoji: '🌯', desc: '1x Knusprige Pommes in einem frischen Wrap' },
-        { id: 'b3', name: 'B3', price: 13.00, emoji: '🍔', desc: '1x Monamie Burger "L", 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'chickenwrapmenu', name: 'Chicken-Wrap Menü', price: 11.00, emoji: '🌯', desc: '1x Chickenwrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'nuggetwrapmenu', name: 'Nugget-Wrap Menü', price: 11.00, emoji: '🌯', desc: '1x Nugget-Wrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'filetburgermenu', name: 'Filet Burger Menü', price: 12.00, emoji: '🍔', desc: '1x Filet Burger, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'nuggetburgermenu', name: 'Nugget Burger Menü', price: 11.50, emoji: '🍗', desc: '1x Nugget Burger, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'redreaper', name: 'Red Reaper Menü', price: 11.00, emoji: '🌶', desc: '1x Red Reaper Burger "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'bbqwrapmenu', name: 'BBQ-Wrap Menü', price: 11.00, emoji: '🌯', desc: '1x BBQ-Wrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'yoyo', name: 'YoYo Menü', price: 14.00,desc: '1x YoYo Burger mit Jalapeño und Cheese "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo, ca. 130 g HotWings (2-3 Stk.)' },
+        { id: 'bbq', name: 'BBQ Menü', price: 10.00,desc: '1x BBQ Burger mit Cheese "L", 1x Clausthalsalat' },
+        { id: 'kingwings', name: 'King Wings Menü', price: 13.50,desc: 'Deep-Fried Chicken Wings (Scharf) ca. 400g (7-10), 1x Klein Pommes oder Wedges' },
+        { id: 'a1', name: 'A1', price: 13.50,desc: 'HotWings ca. 400g (7-10 Stk.), 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'a2', name: 'A2 (Crispyfilets)', price: 11.50,desc: '5x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'a3', name: 'A3 (2x Monamie Burger)', price: 14.50,desc: '2x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'a4', name: 'A4', price: 11.50,desc: '1x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Clausthal Salat, 1x Ketchup/Mayo' },
+        { id: 'bigmama', name: 'Big Mama', price: 14.00,desc: '1x Big Mama Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'happybox', name: 'Happy Box', price: 7.90,desc: '1x Quick Chicken Burger oder 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Überraschung, 1x Caprisonne, 1x Ketchup/Mayo' },
+        { id: 'crushburger', name: 'Crush Menü', price: 14.00,desc: '1x Crush Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'doublcrush', name: 'Double Crush Menü', price: 16.00,desc: '1x Double Crush Burger mit Cheese "XXL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'pomwrap', name: 'Pomwrap', price: 5.00,desc: '1x Knusprige Pommes in einem frischen Wrap' },
+        { id: 'b3', name: 'B3', price: 13.00,desc: '1x Monamie Burger "L", 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'chickenwrapmenu', name: 'Chicken-Wrap Menü', price: 11.00,desc: '1x Chickenwrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'nuggetwrapmenu', name: 'Nugget-Wrap Menü', price: 11.00,desc: '1x Nugget-Wrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'filetburgermenu', name: 'Filet Burger Menü', price: 12.00,desc: '1x Filet Burger, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'nuggetburgermenu', name: 'Nugget Burger Menü', price: 11.50,desc: '1x Nugget Burger, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'redreaper', name: 'Red Reaper Menü', price: 11.00,desc: '1x Red Reaper Burger "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'bbqwrapmenu', name: 'BBQ-Wrap Menü', price: 11.00,desc: '1x BBQ-Wrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
       ],
       'Vorspeisen': [
-        { id: 'joghurt', name: 'Joghurt', price: 6.00, emoji: '🥛', desc: 'Joghurt' },
-        { id: 'reis', name: 'Reis', price: 6.00, emoji: '🍚', desc: 'Reis' },
-        { id: 'bulgur', name: 'Bulgur', price: 6.00, emoji: '🌾', desc: 'Bulgur' },
-        { id: 'aciezme', name: 'Aci Ezme (Scharfe Soße)', price: 6.00, emoji: '🌶', desc: 'Scharfe Soße' },
+        { id: 'joghurt', name: 'Joghurt', price: 6.00,desc: 'Joghurt' },
+        { id: 'reis', name: 'Reis', price: 6.00,desc: 'Reis' },
+        { id: 'bulgur', name: 'Bulgur', price: 6.00,desc: 'Bulgur' },
+        { id: 'aciezme', name: 'Aci Ezme (Scharfe Soße)', price: 6.00,desc: 'Scharfe Soße' },
       ],
       'Vegetarian': [
-        { id: 'hallohalloumi', name: 'Hallo Halloumi', price: 11.00, emoji: '🧀', desc: '1x Halloumi Burger "L", 1x Pommes Klein, 1x Ketchup/Mayo' },
-        { id: 'halloumiteller', name: 'Halloumi Teller', price: 13.00, emoji: '🧀', desc: '6 Halloumi Stücke, Salat, Pommes, Soße' },
-        { id: 'veggietwister', name: 'Veggie Twister', price: 10.90, emoji: '🌱', desc: '1x Veggie Twister, 1x Pommes Klein, 1x Ketchup/Mayo' },
-        { id: 'veggiemenu', name: 'Veggie Menü', price: 11.00, emoji: '🌱', desc: '1x Veggie Burger "L", 1x Pommes Klein, 1x Ketchup/Mayo' },
+        { id: 'hallohalloumi', name: 'Hallo Halloumi', price: 11.00,desc: '1x Halloumi Burger "L", 1x Pommes Klein, 1x Ketchup/Mayo' },
+        { id: 'halloumiteller', name: 'Halloumi Teller', price: 13.00,desc: '6 Halloumi Stücke, Salat, Pommes, Soße' },
+        { id: 'veggietwister', name: 'Veggie Twister', price: 10.90,desc: '1x Veggie Twister, 1x Pommes Klein, 1x Ketchup/Mayo' },
+        { id: 'veggiemenu', name: 'Veggie Menü', price: 11.00,desc: '1x Veggie Burger "L", 1x Pommes Klein, 1x Ketchup/Mayo' },
       ],
       'Beef Burger': [
-        { id: 'beefburger', name: 'Beef Burger', price: 9.00, emoji: '🥩', desc: '1x Beef Burger "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'doublebeef', name: 'Double Beef Burger', price: 13.00, emoji: '🥩', desc: '1x Beef Burger "XL" (2x 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'cheeseburger', name: 'Cheeseburger', price: 10.00, emoji: '🧀', desc: '1x Beef Burger mit Cheese "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'doublecheese', name: 'Double Cheeseburger', price: 13.50, emoji: '🧀', desc: '1x Beef Burger mit Cheese "XL" (2x 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'royalbeef', name: 'Royal Beef Burger', price: 13.00, emoji: '👑', desc: '1x Beef Burger "XL" (180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'royalcheese', name: 'Royal Cheeseburger', price: 13.50, emoji: '👑', desc: '1x Beef Burger mit Cheese (180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'doubleroy', name: 'Double Royal Beef Burger', price: 15.50, emoji: '👑', desc: '1x Beef Burger "XXL" (2x 180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'doubleroyalcheese', name: 'Double Royal Cheeseburger', price: 16.00, emoji: '👑', desc: '1x Beef Burger mit Cheese "XXL" (2x 180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'brobeef', name: 'Bro Beef Burger Menü', price: 15.00, emoji: '🥩', desc: '2x Beef Burger "L" (je 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'chilibeef', name: 'Chili Beef Menü', price: 13.00, emoji: '🌶', desc: '1x Beef Burger mit Jalapeño und Cheese "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 3x Chili Cheese, 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'beefwrap', name: 'Beef Wrap', price: 13.00, emoji: '🌯', desc: '1x Beef Wrap (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'rumpsteak', name: 'Rumpsteak', price: 24.90, emoji: '🥩', desc: '1x 250 Gramm saftiges gegrilltes Rindfleisch Rumpsteak, 1x Pommes oder Kroketten, 1x Gemischtersalat' },
+        { id: 'beefburger', name: 'Beef Burger', price: 9.00,desc: '1x Beef Burger "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'doublebeef', name: 'Double Beef Burger', price: 13.00,desc: '1x Beef Burger "XL" (2x 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'cheeseburger', name: 'Cheeseburger', price: 10.00,desc: '1x Beef Burger mit Cheese "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'doublecheese', name: 'Double Cheeseburger', price: 13.50,desc: '1x Beef Burger mit Cheese "XL" (2x 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'royalbeef', name: 'Royal Beef Burger', price: 13.00,desc: '1x Beef Burger "XL" (180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'royalcheese', name: 'Royal Cheeseburger', price: 13.50,desc: '1x Beef Burger mit Cheese (180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'doubleroy', name: 'Double Royal Beef Burger', price: 15.50,desc: '1x Beef Burger "XXL" (2x 180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'doubleroyalcheese', name: 'Double Royal Cheeseburger', price: 16.00,desc: '1x Beef Burger mit Cheese "XXL" (2x 180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'brobeef', name: 'Bro Beef Burger Menü', price: 15.00,desc: '2x Beef Burger "L" (je 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'chilibeef', name: 'Chili Beef Menü', price: 13.00,desc: '1x Beef Burger mit Jalapeño und Cheese "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 3x Chili Cheese, 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'beefwrap', name: 'Beef Wrap', price: 13.00,desc: '1x Beef Wrap (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'rumpsteak', name: 'Rumpsteak', price: 24.90,desc: '1x 250 Gramm saftiges gegrilltes Rindfleisch Rumpsteak, 1x Pommes oder Kroketten, 1x Gemischtersalat' },
       ],
       'Grill-Spezialitäten': [
-        { id: 'adanakebab', name: 'Adana Kebab (Scharf)', price: 17.50, emoji: '🍖', desc: 'Scharfes gehacktes vom Rind am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'urfakebab', name: 'Urfa Kebab', price: 17.50, emoji: '🍖', desc: 'Gehacktes vom Rind am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'siskebab', name: 'Sis Kebab (Schisch Kebab)', price: 19.00, emoji: '🍖', desc: 'Rinderspieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'kanat', name: 'Hähnchenflügel (Kanat)', price: 17.50, emoji: '🍗', desc: 'Schön gegrilltes Hähnchen, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'tavukgoesue', name: 'Hähnchenbrustfilet (Tavuk Göğsü)', price: 17.50, emoji: '🍗', desc: 'Schön gegrilltes Hähnchenbrust, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'tavuksis', name: 'Hähnchenspieß (Tavuk Sis)', price: 17.50, emoji: '🍗', desc: 'Hähnchenstücke am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'koefte', name: 'Köfteteller', price: 17.50, emoji: '🥩', desc: 'Gegrillte Frikadellen aus Rindfleisch, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'adanakebab', name: 'Adana Kebab (Scharf)', price: 17.50,desc: 'Scharfes gehacktes vom Rind am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'urfakebab', name: 'Urfa Kebab', price: 17.50,desc: 'Gehacktes vom Rind am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'siskebab', name: 'Sis Kebab (Schisch Kebab)', price: 19.00,desc: 'Rinderspieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'kanat', name: 'Hähnchenflügel (Kanat)', price: 17.50,desc: 'Schön gegrilltes Hähnchen, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'tavukgoesue', name: 'Hähnchenbrustfilet (Tavuk Göğsü)', price: 17.50,desc: 'Schön gegrilltes Hähnchenbrust, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'tavuksis', name: 'Hähnchenspieß (Tavuk Sis)', price: 17.50,desc: 'Hähnchenstücke am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'koefte', name: 'Köfteteller', price: 17.50,desc: 'Gegrillte Frikadellen aus Rindfleisch, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
       ],
       'Combi-Grill': [
-        { id: 'comb1', name: 'Hähnchenspieß und Rinderspieß (Tavuk sis ve Kusbasi)', price: 19.00, emoji: '🍗🥩', desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'comb2', name: 'Hähnchenspieß und Adana (Tavuk Sis ve Adana)', price: 18.50, emoji: '🍗🍖', desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'comb3', name: 'Rinderspieß und Adana (Kusbasi ve Adana)', price: 19.00, emoji: '🥩🍖', desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'comb4', name: 'Hähnchenspieß und Köfte (Tavuk Sis ve Köfte)', price: 18.50, emoji: '🍗🥩', desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'comb5', name: 'Adana und Köfte', price: 18.50, emoji: '🍖🥩', desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'comb1', name: 'Hähnchenspieß und Rinderspieß (Tavuk sis ve Kusbasi)', price: 19.00,desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'comb2', name: 'Hähnchenspieß und Adana (Tavuk Sis ve Adana)', price: 18.50,desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'comb3', name: 'Rinderspieß und Adana (Kusbasi ve Adana)', price: 19.00,desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'comb4', name: 'Hähnchenspieß und Köfte (Tavuk Sis ve Köfte)', price: 18.50,desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'comb5', name: 'Adana und Köfte', price: 18.50,desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
       ],
       'Dürüm (gerollt)': [
-        { id: 'duerum1', name: 'Dürüm mit Hähnchenspieß (Tavuk Dürüm)', price: 13.00, emoji: '🌯', desc: 'Hähnchen am Spieß gerollt mit Salat und Soße' },
-        { id: 'duerum2', name: 'Dürüm mit Siskebab (Kusbasi Dürüm)', price: 15.00, emoji: '🌯', desc: 'Rinderspieß gerollt mit Salat und Soße' },
-        { id: 'duerum3', name: 'Adana Dürüm', price: 13.00, emoji: '🌯', desc: 'Gegrillter Hackfleischspieß gerollt mit Salat und Soße' },
+        { id: 'duerum1', name: 'Dürüm mit Hähnchenspieß (Tavuk Dürüm)', price: 13.00,desc: 'Hähnchen am Spieß gerollt mit Salat und Soße' },
+        { id: 'duerum2', name: 'Dürüm mit Siskebab (Kusbasi Dürüm)', price: 15.00,desc: 'Rinderspieß gerollt mit Salat und Soße' },
+        { id: 'duerum3', name: 'Adana Dürüm', price: 13.00,desc: 'Gegrillter Hackfleischspieß gerollt mit Salat und Soße' },
       ],
       'Sides': [
-        { id: 'pomssmall', name: 'Pommes Klein', price: 2.90, emoji: '🍟', desc: 'Klassische Pommes' },
-        { id: 'pomslarge', name: 'Pommes Groß', price: 3.90, emoji: '🍟', desc: 'Klassische Pommes' },
-        { id: 'wedgessmall', name: 'Wedges Klein', price: 2.90, emoji: '🥔', desc: 'Wedges' },
-        { id: 'wedgeslarge', name: 'Wedges Groß', price: 3.90, emoji: '🥔', desc: 'Wedges' },
-        { id: 'salat', name: 'Clausthalsalat', price: 3.50, emoji: '🥗', desc: 'Frischer Salat' },
-        { id: 'gemischtersalat', name: 'Gemischter Salat (Klein)', price: 3.50, emoji: '🥗', desc: 'Gemischter Salat' },
-        { id: 'beilagen_note', name: 'Bitte wählen Sie Ihre Beilagen', price: 0, emoji: '📝', desc: 'Clausthal Salat, Pommes oder Wedges, Getränk, Gemischter Salat (Klein)' },
+        { id: 'pomssmall', name: 'Pommes Klein', price: 2.90,desc: 'Klassische Pommes' },
+        { id: 'pomslarge', name: 'Pommes Groß', price: 3.90,desc: 'Klassische Pommes' },
+        { id: 'wedgessmall', name: 'Wedges Klein', price: 2.90,desc: 'Wedges' },
+        { id: 'wedgeslarge', name: 'Wedges Groß', price: 3.90,desc: 'Wedges' },
+        { id: 'salat', name: 'Clausthalsalat', price: 3.50,desc: 'Frischer Salat' },
+        { id: 'gemischtersalat', name: 'Gemischter Salat (Klein)', price: 3.50,desc: 'Gemischter Salat' },
+        { id: 'beilagen_note', name: 'Bitte wählen Sie Ihre Beilagen', price: 0,desc: 'Clausthal Salat, Pommes oder Wedges, Getränk, Gemischter Salat (Klein)' },
       ],
       'Single Chicken': [
-        { id: 'hotwings230', name: 'HotWings (230g/4-6 Stk.)', price: 8.50, emoji: '🍗', desc: 'HotWings ca. 230g (4-6 Stück)' },
-        { id: 'hotwings350', name: 'HotWings (350g/7-9 Stk.)', price: 12.50, emoji: '🍗', desc: 'HotWings ca. 350g (7-9 Stück)' },
-        { id: 'hotwings540', name: 'HotWings (540g/10-14 Stk.)', price: 17.50, emoji: '🍗', desc: 'HotWings ca. 540g (10-14 Stück)' },
-        { id: 'crispy4', name: 'Crispy Filet (4x)', price: 8.50, emoji: '🍗', desc: '4x Crispyfilets' },
-        { id: 'crispy6', name: 'Crispy Filet (6x)', price: 12.50, emoji: '🍗', desc: '6x Crispyfilets' },
-        { id: 'crispy9', name: 'Crispy Filet (9x)', price: 17.50, emoji: '🍗', desc: '9x Crispyfilets' },
-        { id: 'chickenbites6', name: 'Chicken Bites (6x)', price: 8.50, emoji: '🍗', desc: '6x Chicken Bites' },
-        { id: 'chickenbites9', name: 'Chicken Bites (9x)', price: 12.50, emoji: '🍗', desc: '9x Chicken Bites' },
-        { id: 'chickenbites15', name: 'Chicken Bites (15x)', price: 17.50, emoji: '🍗', desc: '15x Chicken Bites' },
-        { id: 'geflugel', name: 'Geflügel-Bratwurst', price: 9.00, emoji: '🌭', desc: 'Geflügel-Bratwurst' },
+        { id: 'hotwings230', name: 'HotWings (230g/4-6 Stk.)', price: 8.50,desc: 'HotWings ca. 230g (4-6 Stück)' },
+        { id: 'hotwings350', name: 'HotWings (350g/7-9 Stk.)', price: 12.50,desc: 'HotWings ca. 350g (7-9 Stück)' },
+        { id: 'hotwings540', name: 'HotWings (540g/10-14 Stk.)', price: 17.50,desc: 'HotWings ca. 540g (10-14 Stück)' },
+        { id: 'crispy4', name: 'Crispy Filet (4x)', price: 8.50,desc: '4x Crispyfilets' },
+        { id: 'crispy6', name: 'Crispy Filet (6x)', price: 12.50,desc: '6x Crispyfilets' },
+        { id: 'crispy9', name: 'Crispy Filet (9x)', price: 17.50,desc: '9x Crispyfilets' },
+        { id: 'chickenbites6', name: 'Chicken Bites (6x)', price: 8.50,desc: '6x Chicken Bites' },
+        { id: 'chickenbites9', name: 'Chicken Bites (9x)', price: 12.50,desc: '9x Chicken Bites' },
+        { id: 'chickenbites15', name: 'Chicken Bites (15x)', price: 17.50,desc: '15x Chicken Bites' },
+        { id: 'geflugel', name: 'Geflügel-Bratwurst', price: 9.00,desc: 'Geflügel-Bratwurst' },
       ],
       'Finger Food': [
-        { id: 'nuggets6', name: 'Chicken Nuggets (6x)', price: 4.50, emoji: '🍗', desc: '6x Chicken Nuggets' },
-        { id: 'nuggets10', name: 'Chicken Nuggets (10x)', price: 7.50, emoji: '🍗', desc: '10x Chicken Nuggets' },
-        { id: 'chili6', name: 'Chili Cheese (6x)', price: 4.50, emoji: '🧀', desc: '6x Chili Cheese Nuggets' },
-        { id: 'chili10', name: 'Chili Cheese (10x)', price: 7.50, emoji: '🧀', desc: '10x Chili Cheese Nuggets' },
-        { id: 'onion6', name: 'Onion Rings (6x)', price: 4.50, emoji: '🧅', desc: '6x Onion Rings' },
-        { id: 'onion10', name: 'Onion Rings (10x)', price: 7.50, emoji: '🧅', desc: '10x Onion Rings' },
-        { id: 'mozz6', name: 'Mozzarella Sticks (6x)', price: 4.50, emoji: '🧀', desc: '6x Mozzarella Sticks' },
-        { id: 'mozz10', name: 'Mozzarella Sticks (10x)', price: 7.50, emoji: '🧀', desc: '10x Mozzarella Sticks' },
-        { id: 'kroketten6', name: 'Kroketten (6x)', price: 4.50, emoji: '🥔', desc: '6x Kroketten' },
-        { id: 'kroketten10', name: 'Kroketten (10x)', price: 7.50, emoji: '🥔', desc: '10x Kroketten' },
+        { id: 'nuggets6', name: 'Chicken Nuggets (6x)', price: 4.50,desc: '6x Chicken Nuggets' },
+        { id: 'nuggets10', name: 'Chicken Nuggets (10x)', price: 7.50,desc: '10x Chicken Nuggets' },
+        { id: 'chili6', name: 'Chili Cheese (6x)', price: 4.50,desc: '6x Chili Cheese Nuggets' },
+        { id: 'chili10', name: 'Chili Cheese (10x)', price: 7.50,desc: '10x Chili Cheese Nuggets' },
+        { id: 'onion6', name: 'Onion Rings (6x)', price: 4.50,desc: '6x Onion Rings' },
+        { id: 'onion10', name: 'Onion Rings (10x)', price: 7.50,desc: '10x Onion Rings' },
+        { id: 'mozz6', name: 'Mozzarella Sticks (6x)', price: 4.50,desc: '6x Mozzarella Sticks' },
+        { id: 'mozz10', name: 'Mozzarella Sticks (10x)', price: 7.50,desc: '10x Mozzarella Sticks' },
+        { id: 'kroketten6', name: 'Kroketten (6x)', price: 4.50,desc: '6x Kroketten' },
+        { id: 'kroketten10', name: 'Kroketten (10x)', price: 7.50,desc: '10x Kroketten' },
       ],
       'Buckets': [
-        { id: 'bucket2', name: 'Small Mix Bucket (2p)', price: 29.90, emoji: '🪣', desc: 'Gönnt Euch zu zweit den Bucket mit ca. 540g HotWings (10-14 Stück) und 10 mild gewürzten Crispy Filets. Dazu gibt es 2 Beilagen nach Wahl und 3 Dips.' },
-        { id: 'bucket3', name: 'Medium Mix Bucket (3p)', price: 34.90, emoji: '🪣', desc: 'Unser beliebter Bucket für 3 Personen mit ca. 400g HotWings (7-10 Stück), 8 knusprigen Crispy Filets und 8 mild gewürzten Filet Bites. Dazu gibt es 3 Beilagen nach Wahl und 4 Dips.' },
-        { id: 'bucketparty', name: 'Party Bucket (4p)', price: 44.90, emoji: '🪣', desc: 'Unser Bucket für großen Hunger mit 4 Quick Chicken Burger "S", ca. 640g HotWings (12-16 Stück) und 8 knusprig leckeren Crispy Filets. Dazu gibt es 4 Beilagen Deiner Wahl und 2 Dips.' },
-        { id: 'bucketfilet', name: 'Filet Bucket', price: 24.90, emoji: '🪣', desc: '14 Filet Bites, 4 Crispy Filets, 2 Beilagen nach Wahl, 2 Dips nach Wahl.' },
-        { id: 'bucketsnack', name: 'Snack Bucket', price: 22.00, emoji: '🪣', desc: '6 Mozzarella, 6 Zwiebelringe, 6 Kroketten, 6 Nuggets, 6 Chilli Cheese, nach Wahl 4 Dip.' },
+        { id: 'bucket2', name: 'Small Mix Bucket (2p)', price: 29.90,desc: 'Gönnt Euch zu zweit den Bucket mit ca. 540g HotWings (10-14 Stück) und 10 mild gewürzten Crispy Filets. Dazu gibt es 2 Beilagen nach Wahl und 3 Dips.' },
+        { id: 'bucket3', name: 'Medium Mix Bucket (3p)', price: 34.90,desc: 'Unser beliebter Bucket für 3 Personen mit ca. 400g HotWings (7-10 Stück), 8 knusprigen Crispy Filets und 8 mild gewürzten Filet Bites. Dazu gibt es 3 Beilagen nach Wahl und 4 Dips.' },
+        { id: 'bucketparty', name: 'Party Bucket (4p)', price: 44.90,desc: 'Unser Bucket für großen Hunger mit 4 Quick Chicken Burger "S", ca. 640g HotWings (12-16 Stück) und 8 knusprig leckeren Crispy Filets. Dazu gibt es 4 Beilagen Deiner Wahl und 2 Dips.' },
+        { id: 'bucketfilet', name: 'Filet Bucket', price: 24.90,desc: '14 Filet Bites, 4 Crispy Filets, 2 Beilagen nach Wahl, 2 Dips nach Wahl.' },
+        { id: 'bucketsnack', name: 'Snack Bucket', price: 22.00,desc: '6 Mozzarella, 6 Zwiebelringe, 6 Kroketten, 6 Nuggets, 6 Chilli Cheese, nach Wahl 4 Dip.' },
       ],
       'Getränke - Soft Drinks': [
-        { id: 'cola', name: 'Cola/Fanta/Sprite (0,33l)', price: 2.50, emoji: '🥤', desc: '0,33l' },
-        { id: 'cola5', name: 'Cola/Fanta/Sprite (0,5l)', price: 4.50, emoji: '🥤', desc: '0,5l' },
-        { id: 'apfelschorle', name: 'Apfelschorle (0,33l)', price: 2.50, emoji: '🧃', desc: '0,33l' },
-        { id: 'water', name: 'Wasser (0,33l)', price: 2.20, emoji: '💧', desc: '0,33l' },
-        { id: 'gingerale', name: 'Ginger Ale (0,33l)', price: 2.90, emoji: '🥤', desc: '0,33l' },
-        { id: 'bitterlemon', name: 'Bitter Lemon (0,33l)', price: 2.90, emoji: '🍋', desc: '0,33l' },
-        { id: 'tonic', name: 'Tonic Wasser (0,33l)', price: 2.90, emoji: '🥤', desc: '0,33l' },
-        { id: 'schokolade', name: 'Kalte Schokolade (0,5l)', price: 3.00, emoji: '🍫', desc: '0,5l' },
-        { id: 'erdbeermilch', name: 'Kalte Erdbeermilch (0,5l)', price: 3.00, emoji: '🍓', desc: '0,5l' },
-        { id: 'icetea', name: 'Ice Tea (0,33l)', price: 2.50, emoji: '🍵', desc: '0,33l' },
-        { id: 'ayran', name: 'Ayran (0,25l)', price: 2.50, emoji: '🥛', desc: '0,25l' },
-        { id: 'uludag', name: 'Uludag (0,33l)', price: 2.50, emoji: '🥤', desc: '0,33l' },
-        { id: 'apfelsaft', name: 'Apfelsaft (0,2l)', price: 2.90, emoji: '🧃', desc: '0,2l' },
-        { id: 'kirschsaft', name: 'Kirschsaft (0,2l)', price: 2.90, emoji: '🍒', desc: '0,2l' },
-        { id: 'orangensaft', name: 'Orangensaft (0,2l)', price: 2.90, emoji: '🍊', desc: '0,2l' },
+        { id: 'cola', name: 'Cola/Fanta/Sprite (0,33l)', price: 2.50,desc: '0,33l' },
+        { id: 'cola5', name: 'Cola/Fanta/Sprite (0,5l)', price: 4.50,desc: '0,5l' },
+        { id: 'apfelschorle', name: 'Apfelschorle (0,33l)', price: 2.50,desc: '0,33l' },
+        { id: 'water', name: 'Wasser (0,33l)', price: 2.20,desc: '0,33l' },
+        { id: 'gingerale', name: 'Ginger Ale (0,33l)', price: 2.90,desc: '0,33l' },
+        { id: 'bitterlemon', name: 'Bitter Lemon (0,33l)', price: 2.90,desc: '0,33l' },
+        { id: 'tonic', name: 'Tonic Wasser (0,33l)', price: 2.90,desc: '0,33l' },
+        { id: 'schokolade', name: 'Kalte Schokolade (0,5l)', price: 3.00,desc: '0,5l' },
+        { id: 'erdbeermilch', name: 'Kalte Erdbeermilch (0,5l)', price: 3.00,desc: '0,5l' },
+        { id: 'icetea', name: 'Ice Tea (0,33l)', price: 2.50,desc: '0,33l' },
+        { id: 'ayran', name: 'Ayran (0,25l)', price: 2.50,desc: '0,25l' },
+        { id: 'uludag', name: 'Uludag (0,33l)', price: 2.50,desc: '0,33l' },
+        { id: 'apfelsaft', name: 'Apfelsaft (0,2l)', price: 2.90,desc: '0,2l' },
+        { id: 'kirschsaft', name: 'Kirschsaft (0,2l)', price: 2.90,desc: '0,2l' },
+        { id: 'orangensaft', name: 'Orangensaft (0,2l)', price: 2.90,desc: '0,2l' },
       ],
       'Kaffeesorten': [
-        { id: 'espresso_k', name: 'Espresso (K)', price: 2.60, emoji: '☕', desc: 'Klein' },
-        { id: 'espresso_g', name: 'Espresso (G)', price: 4.20, emoji: '☕', desc: 'Groß' },
-        { id: 'kaffee_pott', name: 'Kaffee Pott', price: 4.90, emoji: '☕', desc: 'Pott' },
-        { id: 'kaffee_crema', name: 'Kaffee Crema', price: 3.50, emoji: '☕', desc: 'Tasse' },
-        { id: 'latte', name: 'Latte Macchiato', price: 4.90, emoji: '☕', desc: 'Latte Macchiato' },
-        { id: 'milchkaffee', name: 'Milchkaffee', price: 4.90, emoji: '☕', desc: 'Milchkaffee' },
-        { id: 'tee_g', name: 'Tee (G)', price: 3.00, emoji: '🍵', desc: 'Groß' },
-        { id: 'cappuccino_k', name: 'Cappuccino (K)', price: 3.60, emoji: '☕', desc: 'Klein' },
-        { id: 'cappuccino_g', name: 'Cappuccino (G)', price: 4.90, emoji: '☕', desc: 'Groß' },
-        { id: 'heisse_milch', name: 'Heiße Milch', price: 3.50, emoji: '🥛', desc: 'Heiße Milch' },
-        { id: 'heisse_schoko', name: 'Heiße Schokolade', price: 4.90, emoji: '🍫', desc: 'Heiße Schokolade' },
+        { id: 'espresso_k', name: 'Espresso (K)', price: 2.60,desc: 'Klein' },
+        { id: 'espresso_g', name: 'Espresso (G)', price: 4.20,desc: 'Groß' },
+        { id: 'kaffee_pott', name: 'Kaffee Pott', price: 4.90,desc: 'Pott' },
+        { id: 'kaffee_crema', name: 'Kaffee Crema', price: 3.50,desc: 'Tasse' },
+        { id: 'latte', name: 'Latte Macchiato', price: 4.90,desc: 'Latte Macchiato' },
+        { id: 'milchkaffee', name: 'Milchkaffee', price: 4.90,desc: 'Milchkaffee' },
+        { id: 'tee_g', name: 'Tee (G)', price: 3.00,desc: 'Groß' },
+        { id: 'cappuccino_k', name: 'Cappuccino (K)', price: 3.60,desc: 'Klein' },
+        { id: 'cappuccino_g', name: 'Cappuccino (G)', price: 4.90,desc: 'Groß' },
+        { id: 'heisse_milch', name: 'Heiße Milch', price: 3.50,desc: 'Heiße Milch' },
+        { id: 'heisse_schoko', name: 'Heiße Schokolade', price: 4.90,desc: 'Heiße Schokolade' },
       ],
       'Bier-Spiritousen': [
-        { id: 'krombacher', name: 'Krombacher Pils (0,33l)', price: 3.90, emoji: '🍺', desc: '0,33l' },
-        { id: 'korbi_alkfrei', name: 'Korbmacher Alkoholfrei (0,33l)', price: 3.90, emoji: '🍺', desc: '0,33l Alkoholfrei' },
-        { id: 'koestritzer', name: 'Köstritzer Schwarzbier (0,33l)', price: 3.90, emoji: '🍺', desc: '0,33l' },
-        { id: 'radler', name: 'Radler (0,33l)', price: 3.90, emoji: '🍺', desc: '0,33l' },
-        { id: 'radler_alkfrei', name: 'Radler Alkoholfrei (0,33l)', price: 3.90, emoji: '🍺', desc: '0,33l Alkoholfrei' },
-        { id: 'erdinger', name: 'Erdinger Weißbier (0,5l)', price: 4.90, emoji: '🍺', desc: '0,5l' },
-        { id: 'erdinger_alkfrei', name: 'Erdinger Alkoholfrei (0,5l)', price: 4.90, emoji: '🍺', desc: '0,5l Alkoholfrei' },
+        { id: 'krombacher', name: 'Krombacher Pils (0,33l)', price: 3.90,desc: '0,33l' },
+        { id: 'korbi_alkfrei', name: 'Korbmacher Alkoholfrei (0,33l)', price: 3.90,desc: '0,33l Alkoholfrei' },
+        { id: 'koestritzer', name: 'Köstritzer Schwarzbier (0,33l)', price: 3.90,desc: '0,33l' },
+        { id: 'radler', name: 'Radler (0,33l)', price: 3.90,desc: '0,33l' },
+        { id: 'radler_alkfrei', name: 'Radler Alkoholfrei (0,33l)', price: 3.90,desc: '0,33l Alkoholfrei' },
+        { id: 'erdinger', name: 'Erdinger Weißbier (0,5l)', price: 4.90,desc: '0,5l' },
+        { id: 'erdinger_alkfrei', name: 'Erdinger Alkoholfrei (0,5l)', price: 4.90,desc: '0,5l Alkoholfrei' },
       ],
       'Wein': [
-        { id: 'villa_antik', name: 'Villa doluca Antik (Trocken)', price: 26.00, emoji: '🍷', desc: 'Fl. 0,75l' },
-        { id: 'villa_rot', name: 'Villa Doluca Rot (Trocken)', price: 19.00, emoji: '🍷', desc: 'Fl. 0,75l' },
-        { id: 'villa_weiss', name: 'Villa Doluca Weiß (Trocken)', price: 19.00, emoji: '🍷', desc: 'Fl. 0,75l' },
-        { id: 'weissweinschorle', name: 'Weißweinschorle (Trocken)', price: 5.50, emoji: '🍷', desc: '0,2l' },
-        { id: 'weissweinschorle2', name: 'Weißweinschorle (Trocken)', price: 4.50, emoji: '🍷', desc: '0,2l' },
+        { id: 'villa_antik', name: 'Villa doluca Antik (Trocken)', price: 26.00,desc: 'Fl. 0,75l' },
+        { id: 'villa_rot', name: 'Villa Doluca Rot (Trocken)', price: 19.00,desc: 'Fl. 0,75l' },
+        { id: 'villa_weiss', name: 'Villa Doluca Weiß (Trocken)', price: 19.00,desc: 'Fl. 0,75l' },
+        { id: 'weissweinschorle', name: 'Weißweinschorle (Trocken)', price: 5.50,desc: '0,2l' },
+        { id: 'weissweinschorle2', name: 'Weißweinschorle (Trocken)', price: 4.50,desc: '0,2l' },
       ],
       'Eis & Kuchen': [
-        { id: 'eis_note', name: 'Eiscreme & Milchshakes', price: 0, emoji: '🍦', desc: 'Freuen Sie sich auf den Sommer: Unsere köstlichen Eiscreme-Spezialitäten sind zurück, sobald die Sonne sich von ihrer warmen Seite zeigt!' },
-        { id: 'kuchen_note', name: 'Kuchen & Torten', price: 0, emoji: '🍰', desc: 'Verfügbar' },
+        { id: 'eis_note', name: 'Eiscreme & Milchshakes', price: 0,desc: 'Freuen Sie sich auf den Sommer: Unsere köstlichen Eiscreme-Spezialitäten sind zurück, sobald die Sonne sich von ihrer warmen Seite zeigt!' },
+        { id: 'kuchen_note', name: 'Kuchen & Torten', price: 0,desc: 'Verfügbar' },
       ],
     };
 
@@ -382,8 +382,8 @@
         title.textContent = category;
         categoryDiv.appendChild(title);
         
-        const grid = document.createElement('div');
-        grid.className = 'products-grid';
+        const list = document.createElement('div');
+        list.className = 'products-list';
         
         products.forEach(product => {
           const productDiv = document.createElement('div');
@@ -392,22 +392,21 @@
           const qty = cart[product.id] || 0;
           
           productDiv.innerHTML = `
-            <div class="product-image">${product.emoji || '🍽'}</div>
-            <div class="product-content">
+            <div class="product-header">
               <div class="product-name">${product.name}</div>
-              <div class="product-price">€${product.price.toFixed(2)}</div>
-              ${product.desc ? `<div style="font-size: 0.8rem; color: #666; margin-bottom: 0.75rem;">${product.desc}</div>` : ''}
-              <div class="controls">
-                ${qty > 0 ? `<button class="btn" onclick="removeItem('${product.id}')">−</button>` : ''}
-                ${qty > 0 ? `<span class="qty">${qty}</span>` : ''}
-                <button class="btn" onclick="addItem('${product.id}')">+</button>
-              </div>
+              <div class="product-price">€${product.price.toFixed(2).replace('.', ',')}</div>
+            </div>
+            ${product.desc ? `<div class="product-desc">${product.desc}</div>` : ''}
+            <div class="controls">
+              ${qty > 0 ? `<button class="btn" onclick="removeItem('${product.id}')">−</button>` : ''}
+              ${qty > 0 ? `<span class="qty">${qty}</span>` : ''}
+              <button class="btn" onclick="addItem('${product.id}')">+</button>
             </div>
           `;
-          grid.appendChild(productDiv);
+          list.appendChild(productDiv);
         });
         
-        categoryDiv.appendChild(grid);
+        categoryDiv.appendChild(list);
         menu.appendChild(categoryDiv);
       });
       
