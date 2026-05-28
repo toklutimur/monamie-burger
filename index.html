@@ -21,7 +21,7 @@
       font-family: 'Outfit', sans-serif; 
       background: var(--bg-color); 
       color: var(--text-color);
-      padding-bottom: 120px;
+      padding-bottom: 200px;
     }
     header { 
       background: rgba(255, 255, 255, 0.85);
@@ -84,8 +84,38 @@
       min-width: 220px;
       border-right: 1px solid var(--card-border);
       scroll-behavior: smooth;
+      transition: transform 0.3s ease;
     }
     .category-nav::-webkit-scrollbar { display: none; }
+    
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 300;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      touch-action: manipulation;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 199;
+    }
     .category-pill {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -107,26 +137,81 @@
     .container { flex: 1; padding: 1.5rem; min-width: 0; }
 
     @media (max-width: 768px) {
+      .menu-toggle { display: flex; align-items: center; justify-content: center; }
       .main-layout { flex-direction: column; }
       .category-nav {
-        flex-direction: row;
-        height: auto;
-        min-width: 100%;
-        border-right: none;
-        border-bottom: 1px solid var(--card-border);
-        padding: 0.75rem 1rem;
-        background: rgba(255, 255, 255, 0.95);
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 280px;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(10px);
-        z-index: 99;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
+        z-index: 200;
+        transform: translateX(-100%);
+        border-right: 1px solid var(--card-border);
+        padding-top: 60px;
+        flex-direction: column;
+      }
+      .category-nav.open {
+        transform: translateX(0);
+      }
+      .nav-overlay.show {
+        display: block;
       }
       .category-pill {
-        white-space: nowrap;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
+        white-space: normal;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
       }
+      header {
+        padding-left: 70px;
+      }
+    }
+    
+    .cart-footer {
+      position: fixed; 
+      bottom: 0; 
+      left: 0; 
+      right: 0; 
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid var(--card-border); 
+      z-index: 1000;
+      box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .cart-summary {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    
+    .cart-expand-icon {
+      transition: transform 0.3s;
+      font-size: 0.8rem;
+    }
+    .cart-expand-icon.open {
+      transform: rotate(180deg);
+    }
+    
+    .cart-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      border-top: 1px solid var(--card-border);
+    }
+    .cart-details.open {
+      max-height: 50vh;
+      overflow-y: auto;
+    }
+    .cart-details-inner {
+      padding: 1rem 1.5rem 1.5rem;
     }
     
     .category { margin-bottom: 3rem; }
@@ -345,6 +430,8 @@
 </head>
 <body>
   <button class="install-btn" id="installBtn">Install App</button>
+  <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
+  <div class="nav-overlay" id="navOverlay" onclick="toggleMenu()"></div>
   <header>
     <div class="header-title">MonAmie Order</div>
     <input type="text" id="searchInput" placeholder="Search menu..." oninput="filterMenu()">
@@ -355,15 +442,21 @@
     <div class="container" id="menu"></div>
   </div>
   
-  <div class="cart-items" id="cartItems"></div>
-  
-  <footer>
-    <div class="total" onclick="toggleCart()">
-      <span id="itemCount">0</span> Items | <span id="totalPrice">€0,00</span>
-      <br><small style="color: #666;">Click to see details</small>
+  <div class="cart-footer" id="cartFooter">
+    <div class="cart-summary" onclick="toggleCart()">
+      <div>
+        <span id="itemCount">0</span> Items | <span id="totalPrice">€0,00</span>
+        <br><small style="color: #64748b;">Tap to expand</small>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button class="checkout-btn" onclick="event.stopPropagation(); checkout()" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">Order via WhatsApp</button>
+        <span class="cart-expand-icon" id="cartExpandIcon">▼</span>
+      </div>
     </div>
-    <button class="checkout-btn" onclick="checkout()">Order via WhatsApp</button>
-  </footer>
+    <div class="cart-details" id="cartDetails">
+      <div class="cart-details-inner" id="cartItems"></div>
+    </div>
+  </div>
 
   <script>
     const PRODUCTS = {
@@ -543,6 +636,20 @@
 
     let cart = JSON.parse(localStorage.getItem('cart')) || {};
     let cartVisible = false;
+    let menuOpen = false;
+
+    function toggleMenu() {
+      const nav = document.getElementById('categoryNav');
+      const overlay = document.getElementById('navOverlay');
+      menuOpen = !menuOpen;
+      if (menuOpen) {
+        nav.classList.add('open');
+        overlay.classList.add('show');
+      } else {
+        nav.classList.remove('open');
+        overlay.classList.remove('show');
+      }
+    }
 
     function filterMenu() {
       const query = document.getElementById('searchInput').value.toLowerCase();
@@ -572,6 +679,8 @@
              if (target) {
                const y = target.getBoundingClientRect().top + window.scrollY - 180;
                window.scrollTo({top: y, behavior: 'smooth'});
+               // Close menu on mobile
+               if (window.innerWidth <= 768) toggleMenu();
              }
           };
           categoryNav.appendChild(pill);
@@ -660,8 +769,10 @@
     
     function updateCartDetails() {
       const cartDiv = document.getElementById('cartItems');
-      if (getTotalItems() === 0) {
-        cartDiv.classList.remove('show');
+      const detailsDiv = document.getElementById('cartDetails');
+      if (getTotalItems() ===0) {
+        detailsDiv.classList.remove('open');
+        document.getElementById('cartExpandIcon').classList.remove('open');
         return;
       }
       
@@ -686,17 +797,21 @@
           }
         });
       });
-      html += `<div style="margin-top: 1rem; font-weight: 700; text-align: right;">Total: €${calculateTotal().toFixed(2)}</div>`;
+      html += `<div style="margin-top: 1rem; font-weight: 700; text-align: right; padding-bottom: 0.5rem;">Total: €${calculateTotal().toFixed(2).replace('.', ',')}</div>`;
       cartDiv.innerHTML = html;
     }
     
     function toggleCart() {
-      const cartDiv = document.getElementById('cartItems');
+      const detailsDiv = document.getElementById('cartDetails');
+      const icon = document.getElementById('cartExpandIcon');
       cartVisible = !cartVisible;
       if (cartVisible && getTotalItems() > 0) {
-        cartDiv.classList.add('show');
+        detailsDiv.classList.add('open');
+        icon.classList.add('open');
       } else {
-        cartDiv.classList.remove('show');
+        detailsDiv.classList.remove('open');
+        icon.classList.remove('open');
+        cartVisible = false;
       }
     }
 
