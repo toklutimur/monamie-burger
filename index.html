@@ -8,117 +8,284 @@
   <meta name="theme-color" content="#000000">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; padding-bottom: 80px; }
-    header { background: #000; color: #fff; padding: 1rem; text-align: center; font-size: 1.2rem; font-weight: 600; }
-    .container { max-width: 600px; margin: 0 auto; padding: 1rem; }
-    .category { margin-bottom: 1.5rem; }
-    .category-title { background: #000; color: #fff; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; margin-bottom: 0.75rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
-    .product { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 0.75rem 1rem; margin-bottom: 0.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    .product-info { flex: 1; }
-    .product-info h3 { font-size: 0.95rem; margin-bottom: 0.2rem; }
-    .product-info p { color: #666; font-size: 0.85rem; }
-    .controls { display: flex; align-items: center; gap: 0.5rem; }
-    .btn { background: #000; color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .btn:active { transform: scale(0.95); }
-    .qty { font-weight: 600; min-width: 20px; text-align: center; }
-    footer { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #ddd; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
-    .total { font-weight: 600; }
-    .checkout-btn { background: #000; color: #fff; border: none; padding: 0.6rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; }
-    .checkout-btn:active { transform: scale(0.98); }
-    .install-btn { position: fixed; top: 10px; right: 10px; background: #000; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.8rem; cursor: pointer; z-index: 200; display: none; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+      background: #f5f5f5; 
+      padding-bottom: 100px;
+    }
+    header { 
+      background: #000; 
+      color: #fff; 
+      padding: 1rem; 
+      text-align: center; 
+      font-size: 1.5rem; 
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 1rem; }
+    
+    .category { margin-bottom: 2rem; }
+    .category-title { 
+      background: #000; 
+      color: #fff; 
+      padding: 0.75rem 1rem; 
+      border-radius: 8px; 
+      font-weight: 600; 
+      margin-bottom: 1rem; 
+      font-size: 1rem; 
+      text-transform: uppercase; 
+      letter-spacing: 0.5px;
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    
+    .product { 
+      background: #fff; 
+      border-radius: 12px; 
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .product:active { transform: scale(0.98); }
+    
+    .product-image {
+      width: 100%;
+      height: 180px;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+    
+    .product-content {
+      padding: 1rem;
+    }
+    
+    .product-name {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    
+    .product-price {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .controls { 
+      display: flex; 
+      align-items: center; 
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+    
+    .btn { 
+      background: #000; 
+      color: #fff; 
+      border: none; 
+      width: 36px; 
+      height: 36px; 
+      border-radius: 50%; 
+      font-size: 1.4rem; 
+      cursor: pointer; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      transition: opacity 0.2s;
+    }
+    .btn:active { opacity: 0.7; }
+    
+    .qty { 
+      font-weight: 700; 
+      min-width: 24px; 
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    
+    footer { 
+      position: fixed; 
+      bottom: 0; 
+      left: 0; 
+      right: 0; 
+      background: #fff; 
+      border-top: 2px solid #000; 
+      padding: 1rem; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      z-index: 100;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .total { 
+      font-weight: 700; 
+      font-size: 1.1rem;
+    }
+    
+    .checkout-btn { 
+      background: #000; 
+      color: #fff; 
+      border: none; 
+      padding: 0.75rem 2rem; 
+      border-radius: 8px; 
+      font-weight: 700; 
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .checkout-btn:active { opacity: 0.8; }
+    
+    .install-btn { 
+      position: fixed; 
+      top: 10px; 
+      right: 10px; 
+      background: #000; 
+      color: #fff; 
+      border: none; 
+      padding: 0.5rem 1rem; 
+      border-radius: 8px; 
+      font-size: 0.8rem; 
+      cursor: pointer; 
+      z-index: 200; 
+      display: none; 
+    }
     .install-btn.show { display: block; }
+    
+    .cart-items {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 2px solid #000;
+      border-radius: 12px;
+      padding: 1rem;
+      max-width: 400px;
+      width: 90%;
+      max-height: 300px;
+      overflow-y: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      z-index: 99;
+      display: none;
+    }
+    .cart-items.show { display: block; }
+    
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    .cart-item:last-child { border-bottom: none; }
   </style>
 </head>
 <body>
   <button class="install-btn" id="installBtn">Install App</button>
   <header>MonAmie Order</header>
+  
   <div class="container" id="menu"></div>
+  
+  <div class="cart-items" id="cartItems"></div>
+  
   <footer>
-    <div class="total">Items: <span id="itemCount">0</span> | <span id="totalPrice">€0,00</span></div>
+    <div class="total" onclick="toggleCart()">
+      <span id="itemCount">0</span> Items | <span id="totalPrice">€0,00</span>
+      <br><small style="color: #666;">Click to see details</small>
+    </div>
     <button class="checkout-btn" onclick="checkout()">Order via WhatsApp</button>
   </footer>
 
   <script>
     const PRODUCTS = {
       'Chicken Menüs': [
-        { id: 'yoyo', name: 'YoYo Menü', price: 14.00 },
-        { id: 'bbq', name: 'BBQ Menü', price: 10.00 },
-        { id: 'hallohalloumi', name: 'Hallo Halloumi', price: 11.50 },
-        { id: 'kingwings', name: 'King Wings Menü', price: 13.50 },
-        { id: 'a1', name: 'A1', price: 13.50 },
-        { id: 'a2', name: 'A2 (Crispyfilets)', price: 11.50 },
-        { id: 'a3', name: 'A3 (2x Monamie Burger)', price: 14.50 },
-        { id: 'a4', name: 'A4', price: 11.50 },
-        { id: 'bigmama', name: 'Big Mama', price: 14.00 },
-        { id: 'happybox', name: 'Happy Box', price: 7.90 },
-        { id: 'crushburger', name: 'Crush Menü', price: 14.00 },
-        { id: 'doublcrush', name: 'Double Crush Menü', price: 16.00 },
-        { id: 'pomwrap', name: 'Pomwrap', price: 5.00 },
-        { id: 'b3', name: 'B3', price: 13.00 },
-        { id: 'chickenwrapmenu', name: 'Chicken-Wrap Menü', price: 11.00 },
-        { id: 'nuggetwrapmenu', name: 'Nugget-Wrap Menü', price: 11.00 },
-        { id: 'veggietwister', name: 'Veggie Twister Menü', price: 11.00 },
-        { id: 'filetburgermenu', name: 'Filet Burger Menü', price: 12.00 },
-        { id: 'veggiemenu', name: 'Veggie Menü', price: 11.50 },
-        { id: 'nuggetburgermenu', name: 'Nugget Burger Menü', price: 11.50 },
-        { id: 'redreaper', name: 'Red Reaper Menü', price: 11.00 },
-        { id: 'bbqwrapmenu', name: 'BBQ-Wrap Menü', price: 11.00 },
+        { id: 'yoyo', name: 'YoYo Menü', price: 14.00, emoji: '🍗' },
+        { id: 'bbq', name: 'BBQ Menü', price: 10.00, emoji: '🍔' },
+        { id: 'hallohalloumi', name: 'Hallo Halloumi', price: 11.50, emoji: '🧀' },
+        { id: 'kingwings', name: 'King Wings Menü', price: 13.50, emoji: '🍗' },
+        { id: 'a1', name: 'A1', price: 13.50, emoji: '🍗' },
+        { id: 'a2', name: 'A2 (Crispyfilets)', price: 11.50, emoji: '🍗' },
+        { id: 'a3', name: 'A3 (2x Monamie Burger)', price: 14.50, emoji: '🍔' },
+        { id: 'a4', name: 'A4', price: 11.50, emoji: '🍔' },
+        { id: 'bigmama', name: 'Big Mama', price: 14.00, emoji: '🍔' },
+        { id: 'happybox', name: 'Happy Box', price: 7.90, emoji: '📦' },
+        { id: 'crushburger', name: 'Crush Menü', price: 14.00, emoji: '🍔' },
+        { id: 'doublcrush', name: 'Double Crush Menü', price: 16.00, emoji: '🍔' },
+        { id: 'pomwrap', name: 'Pomwrap', price: 5.00, emoji: '🌯' },
+        { id: 'b3', name: 'B3', price: 13.00, emoji: '🍔' },
+        { id: 'chickenwrapmenu', name: 'Chicken-Wrap Menü', price: 11.00, emoji: '🌯' },
+        { id: 'nuggetwrapmenu', name: 'Nugget-Wrap Menü', price: 11.00, emoji: '🌯' },
+        { id: 'veggietwister', name: 'Veggie Twister Menü', price: 11.00, emoji: '🌱' },
+        { id: 'filetburgermenu', name: 'Filet Burger Menü', price: 12.00, emoji: '🍔' },
+        { id: 'veggiemenu', name: 'Veggie Menü', price: 11.50, emoji: '🌱' },
+        { id: 'nuggetburgermenu', name: 'Nugget Burger Menü', price: 11.50, emoji: '🍗' },
+        { id: 'redreaper', name: 'Red Reaper Menü', price: 11.00, emoji: '🌶' },
+        { id: 'bbqwrapmenu', name: 'BBQ-Wrap Menü', price: 11.00, emoji: '🌯' },
       ],
       'Beef Burger': [
-        { id: 'beefburger', name: 'Beef Burger', price: 9.00 },
-        { id: 'doublebeef', name: 'Double Beef Burger', price: 13.00 },
-        { id: 'cheeseburger', name: 'Cheeseburger', price: 10.00 },
-        { id: 'doublecheese', name: 'Double Cheeseburger', price: 13.50 },
-        { id: 'royalbeef', name: 'Royal Beef Burger', price: 13.00 },
-        { id: 'royalcheese', name: 'Royal Cheeseburger', price: 13.50 },
-        { id: 'doubleroy', name: 'Double Royal Beef', price: 15.50 },
+        { id: 'beefburger', name: 'Beef Burger', price: 9.00, emoji: '🥩' },
+        { id: 'doublebeef', name: 'Double Beef Burger', price: 13.00, emoji: '🥩' },
+        { id: 'cheeseburger', name: 'Cheeseburger', price: 10.00, emoji: '🧀' },
+        { id: 'doublecheese', name: 'Double Cheeseburger', price: 13.50, emoji: '🧀' },
+        { id: 'royalbeef', name: 'Royal Beef Burger', price: 13.00, emoji: '👑' },
+        { id: 'royalcheese', name: 'Royal Cheeseburger', price: 13.50, emoji: '👑' },
+        { id: 'doubleroy', name: 'Double Royal Beef', price: 15.50, emoji: '👑' },
       ],
       'Sides': [
-        { id: 'pomssmall', name: 'Pommes Klein', price: 2.90 },
-        { id: 'pomslarge', name: 'Pommes Groß', price: 3.90 },
-        { id: 'wedgessmall', name: 'Wedges Klein', price: 2.90 },
-        { id: 'wedgeslarge', name: 'Wedges Groß', price: 3.90 },
-        { id: 'salat', name: 'Clausthalsalat', price: 3.50 },
+        { id: 'pomssmall', name: 'Pommes Klein', price: 2.90, emoji: '🍟' },
+        { id: 'pomslarge', name: 'Pommes Groß', price: 3.90, emoji: '🍟' },
+        { id: 'wedgessmall', name: 'Wedges Klein', price: 2.90, emoji: '🥔' },
+        { id: 'wedgeslarge', name: 'Wedges Groß', price: 3.90, emoji: '🥔' },
+        { id: 'salat', name: 'Clausthalsalat', price: 3.50, emoji: '🥗' },
       ],
       'Single Chicken': [
-        { id: 'hotwings230', name: 'HotWings (230g/4-6 Stk.)', price: 8.50 },
-        { id: 'hotwings350', name: 'HotWings (350g/7-9 Stk.)', price: 12.50 },
-        { id: 'hotwings540', name: 'HotWings (540g/10-14 Stk.)', price: 17.50 },
-        { id: 'crispy4', name: 'Crispy Filet (4x)', price: 8.50 },
-        { id: 'crispy6', name: 'Crispy Filet (6x)', price: 12.50 },
-        { id: 'crispy9', name: 'Crispy Filet (9x)', price: 17.50 },
-        { id: 'chickenbites6', name: 'Chicken Bites (6x)', price: 8.50 },
-        { id: 'chickenbites9', name: 'Chicken Bites (9x)', price: 12.50 },
-        { id: 'chickenbites15', name: 'Chicken Bites (15x)', price: 17.50 },
-        { id: 'geflugel', name: 'Geflügel-Bratwurst', price: 9.00 },
+        { id: 'hotwings230', name: 'HotWings (230g/4-6 Stk.)', price: 8.50, emoji: '🍗' },
+        { id: 'hotwings350', name: 'HotWings (350g/7-9 Stk.)', price: 12.50, emoji: '🍗' },
+        { id: 'hotwings540', name: 'HotWings (540g/10-14 Stk.)', price: 17.50, emoji: '🍗' },
+        { id: 'crispy4', name: 'Crispy Filet (4x)', price: 8.50, emoji: '🍗' },
+        { id: 'crispy6', name: 'Crispy Filet (6x)', price: 12.50, emoji: '🍗' },
+        { id: 'crispy9', name: 'Crispy Filet (9x)', price: 17.50, emoji: '🍗' },
+        { id: 'chickenbites6', name: 'Chicken Bites (6x)', price: 8.50, emoji: '🍗' },
+        { id: 'chickenbites9', name: 'Chicken Bites (9x)', price: 12.50, emoji: '🍗' },
+        { id: 'chickenbites15', name: 'Chicken Bites (15x)', price: 17.50, emoji: '🍗' },
+        { id: 'geflugel', name: 'Geflügel-Bratwurst', price: 9.00, emoji: '🌭' },
       ],
       'Finger Food': [
-        { id: 'nuggets6', name: 'Chicken Nuggets (6x)', price: 4.50 },
-        { id: 'nuggets10', name: 'Chicken Nuggets (10x)', price: 7.50 },
-        { id: 'chili6', name: 'Chili Cheese (6x)', price: 4.50 },
-        { id: 'chili10', name: 'Chili Cheese (10x)', price: 7.50 },
-        { id: 'onion6', name: 'Onion Rings (6x)', price: 4.50 },
-        { id: 'onion10', name: 'Onion Rings (10x)', price: 7.50 },
-        { id: 'mozz6', name: 'Mozzarella Sticks (6x)', price: 4.50 },
-        { id: 'mozz10', name: 'Mozzarella Sticks (10x)', price: 7.50 },
+        { id: 'nuggets6', name: 'Chicken Nuggets (6x)', price: 4.50, emoji: '🍗' },
+        { id: 'nuggets10', name: 'Chicken Nuggets (10x)', price: 7.50, emoji: '🍗' },
+        { id: 'chili6', name: 'Chili Cheese (6x)', price: 4.50, emoji: '🧀' },
+        { id: 'chili10', name: 'Chili Cheese (10x)', price: 7.50, emoji: '🧀' },
+        { id: 'onion6', name: 'Onion Rings (6x)', price: 4.50, emoji: '🧅' },
+        { id: 'onion10', name: 'Onion Rings (10x)', price: 7.50, emoji: '🧅' },
+        { id: 'mozz6', name: 'Mozzarella Sticks (6x)', price: 4.50, emoji: '🧀' },
+        { id: 'mozz10', name: 'Mozzarella Sticks (10x)', price: 7.50, emoji: '🧀' },
       ],
       'Buckets': [
-        { id: 'bucket2', name: 'Small Mix Bucket (2p)', price: 29.90 },
-        { id: 'bucket3', name: 'Medium Mix Bucket (3p)', price: 34.90 },
-        { id: 'bucketfilet', name: 'Filet Bucket', price: 24.90 },
-        { id: 'bucketparty', name: 'Party Bucket (4p)', price: 44.90 },
-        { id: 'bucketsnack', name: 'Snack Bucket', price: 22.00 },
+        { id: 'bucket2', name: 'Small Mix Bucket (2p)', price: 29.90, emoji: '🪣' },
+        { id: 'bucket3', name: 'Medium Mix Bucket (3p)', price: 34.90, emoji: '🪣' },
+        { id: 'bucketfilet', name: 'Filet Bucket', price: 24.90, emoji: '🪣' },
+        { id: 'bucketparty', name: 'Party Bucket (4p)', price: 44.90, emoji: '🪣' },
+        { id: 'bucketsnack', name: 'Snack Bucket', price: 22.00, emoji: '🪣' },
       ],
       'Beverages': [
-        { id: 'cola', name: 'Cola/Fanta/Sprite (0,33l)', price: 2.50 },
-        { id: 'water', name: 'Water (0,33l)', price: 2.20 },
-        { id: 'ayran', name: 'Ayran (0,25l)', price: 2.50 },
-        { id: 'icetea', name: 'Ice Tea (0,33l)', price: 2.50 },
-        { id: 'beer', name: 'Beer (0,33l)', price: 3.90 },
+        { id: 'cola', name: 'Cola/Fanta/Sprite (0,33l)', price: 2.50, emoji: '🥤' },
+        { id: 'water', name: 'Water (0,33l)', price: 2.20, emoji: '💧' },
+        { id: 'ayran', name: 'Ayran (0,25l)', price: 2.50, emoji: '🥛' },
+        { id: 'icetea', name: 'Ice Tea (0,33l)', price: 2.50, emoji: '🍵' },
+        { id: 'beer', name: 'Beer (0,33l)', price: 3.90, emoji: '🍺' },
       ],
     };
 
     let cart = JSON.parse(localStorage.getItem('cart')) || {};
+    let cartVisible = false;
 
     function renderMenu() {
       const menu = document.getElementById('menu');
@@ -133,6 +300,9 @@
         title.textContent = category;
         categoryDiv.appendChild(title);
         
+        const grid = document.createElement('div');
+        grid.className = 'products-grid';
+        
         products.forEach(product => {
           const productDiv = document.createElement('div');
           productDiv.className = 'product';
@@ -140,19 +310,21 @@
           const qty = cart[product.id] || 0;
           
           productDiv.innerHTML = `
-            <div class="product-info">
-              <h3>${product.name}</h3>
-              <p>€${product.price.toFixed(2)}</p>
-            </div>
-            <div class="controls">
-              ${qty > 0 ? `<button class="btn" onclick="removeItem('${product.id}')">−</button>` : ''}
-              ${qty > 0 ? `<span class="qty">${qty}</span>` : ''}
-              <button class="btn" onclick="addItem('${product.id}')">+</button>
+            <div class="product-image">${product.emoji || '🍽'}</div>
+            <div class="product-content">
+              <div class="product-name">${product.name}</div>
+              <div class="product-price">€${product.price.toFixed(2)}</div>
+              <div class="controls">
+                ${qty > 0 ? `<button class="btn" onclick="removeItem('${product.id}')">−</button>` : ''}
+                ${qty > 0 ? `<span class="qty">${qty}</span>` : ''}
+                <button class="btn" onclick="addItem('${product.id}')">+</button>
+              </div>
             </div>
           `;
-          categoryDiv.appendChild(productDiv);
+          grid.appendChild(productDiv);
         });
         
+        categoryDiv.appendChild(grid);
         menu.appendChild(categoryDiv);
       });
       
@@ -197,6 +369,42 @@
     function updateTotal() {
       document.getElementById('itemCount').textContent = getTotalItems();
       document.getElementById('totalPrice').textContent = '€' + calculateTotal().toFixed(2).replace('.', ',');
+      updateCartDetails();
+    }
+    
+    function updateCartDetails() {
+      const cartDiv = document.getElementById('cartItems');
+      if (getTotalItems() === 0) {
+        cartDiv.classList.remove('show');
+        return;
+      }
+      
+      let html = '';
+      Object.entries(cart).forEach(([id, qty]) => {
+        Object.values(PRODUCTS).forEach(category => {
+          const product = category.find(p => p.id === id);
+          if (product) {
+            html += `
+              <div class="cart-item">
+                <span>${qty}x ${product.name}</span>
+                <span>€${(product.price * qty).toFixed(2)}</span>
+              </div>
+            `;
+          }
+        });
+      });
+      html += `<div style="margin-top: 1rem; font-weight: 700; text-align: right;">Total: €${calculateTotal().toFixed(2)}</div>`;
+      cartDiv.innerHTML = html;
+    }
+    
+    function toggleCart() {
+      const cartDiv = document.getElementById('cartItems');
+      cartVisible = !cartVisible;
+      if (cartVisible && getTotalItems() > 0) {
+        cartDiv.classList.add('show');
+      } else {
+        cartDiv.classList.remove('show');
+      }
     }
 
     function checkout() {
@@ -232,14 +440,14 @@
       if (installPrompt) {
         installPrompt.prompt();
         const { outcome } = await installPrompt.userChoice;
-        console.log(`User response to the install prompt: ${outcome}`);
+        console.log(`User response: ${outcome}`);
         installPrompt = null;
       }
     });
 
     // Service Worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed:', err));
+      navigator.serviceWorker.register('sw.js').catch(err => console.log('SW failed:', err));
     }
 
     renderMenu();
