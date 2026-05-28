@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="MonAmie Chicken - Order directly, calculate total instantly">
+  <title>MonAmie Order</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%23000' width='180' height='180'/><text x='50%' y='50%' font-size='80' font-weight='bold' fill='%23fff' text-anchor='middle' dominant-baseline='middle'>🍗</text></svg>">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      overflow-x: hidden;
+    }
+    
+    header {
+      background: #000;
+      color: #fff;
+      padding: 16px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .install-btn {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: none;
+    }
+    
+    .install-btn.show {
+      display: block;
+    }
+    
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding-bottom: 180px;
+    }
+    
+    .category {
+      margin: 16px 12px;
+    }
+    
+    .category-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #000;
+      background: #fff;
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .product {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      border: 0.5px solid #e0e0e0;
+    }
+    
+    .product-info h3 {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    
+    .product-info p {
+      font-size: 13px;
+      color: #666;
+    }
+    
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .btn {
+      width: 32px;
+      height: 32px;
+      border: 0.5px solid #ddd;
+      background: #fff;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .btn:active {
+      background: #f0f0f0;
+    }
+    
+    .qty {
+      min-width: 28px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 0.5px solid #e0e0e0;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .summary {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 0 12px;
+    }
+    
+    .summary-total {
+      font-size: 18px;
+      font-weight: 700;
+      color: #000;
+      border-top: 0.5px solid #e0e0e0;
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .checkout-btn {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+    
+    .checkout-btn:active {
+      transform: scale(0.98);
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span>MonAmie Order</span>
+    <button class="install-btn" id="installBtn">Install App</button>
+  </header>
+  
+  <div class="container" id="menu"></div>
+  
+  <footer>
+    <div class="summary">
+      <span>Items: <strong id="itemCount">0</strong></span>
+    </div>
+    <div class="summary-total">
+      <span>Total:</span>
+      <span id="totalPrice">€0,00</span>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">Order via WhatsApp</button>
+  </footer>
+
+  <script>
+    const PRODUCTS = {
+      'Chicken Menus': [
+        { id: 'yoyo', name: 'YoYo Menü', price: 14.00 },
+        { id: 'bbq', name: 'BBQ Menü', price: 10.00 },
+        { id: 'kingwings', name: 'King Wings Menü', price: 13.50 },
+        { id: 'a2', name: 'A2 (Crispyfilets)', price: 11.50 },
+        { id: 'a3', name: 'A3 (2x Monamie Burger)', price: 14.50 },
+        { id: 'bigmama', name: 'Big Mama', price: 14.00 },
+        { id: 'happybox', name: 'Happy Box', price: 7.90 },
+        { id: 'crushburger', name: 'Crush Menü', price: 14.00 },
+        { id: 'doublcrush', name: 'Double Crush Menü', price: 16.00 },
+      ],
+      'Beef Burgers': [
+        { id: 'beefburger', name: 'Beef Burger', price: 9.00 },
+        { id: 'doublebeef', name: 'Double Beef Burger', price: 13.00 },
+        { id: 'cheeseburger', name: 'Cheeseburger', price: 10.00 },
+        { id: 'doublecheese', name: 'Double Cheeseburger', price: 13.50 },
+        { id: 'royalbeef', name: 'Royal Beef Burger', price: 13.00 },
+        { id: 'royalcheese', name: 'Royal Cheeseburger', price: 13.50 },
+        { id: 'doubleroy', name: 'Double Royal Beef', price: 15.50 },
+      ],
+      'Sides': [
+        { id: 'pomssmall', name: 'Pommes Klein', price: 2.90 },
+        { id: 'pomslarge', name: 'Pommes Groß', price: 3.90 },
+        { id: 'wedgessmall', name: 'Wedges Klein', price: 2.90 },
+        { id: 'wedgeslarge', name: 'Wedges Groß', price: 3.90 },
+        { id: 'salat', name: 'Clausthalsalat', price: 3.50 },
+      ],
+      'Finger Food': [
+        { id: 'nuggets6', name: 'Chicken Nuggets (6x)', price: 4.50 },
+        { id: 'nuggets10', name: 'Chicken Nuggets (10x)', price: 7.50 },
+        { id: 'chili6', name: 'Chili Cheese (6x)', price: 4.50 },
+        { id: 'chili10', name: 'Chili Cheese (10x)', price: 7.50 },
+        { id: 'onion6', name: 'Onion Rings (6x)', price: 4.50 },
+        { id: 'onion10', name: 'Onion Rings (10x)', price: 7.50 },
+        { id: 'mozz6', name: 'Mozzarella Sticks (6x)', price: 4.50 },
+        { id: 'mozz10', name: 'Mozzarella Sticks (10x)', price: 7.50 },
+      ],
+      'Buckets': [
+        { id: 'bucket2', name: 'Small Mix Bucket (2p)', price: 29.90 },
+        { id: 'bucket3', name: 'Medium Mix Bucket (3p)', price: 34.90 },
+        { id: 'bucketfilet', name: 'Filet Bucket', price: 24.90 },
+        { id: 'bucketparty', name: 'Party Bucket (4p)', price: 44.90 },
+        { id: 'bucketsnack', name: 'Snack Bucket', price: 22.00 },
+      ],
+      'Grill': [
+        { id: 'adana', name: 'Adana Kebab', price: 17.50 },
+        { id: 'urfa', name: 'Urfa Kebab', price: 17.50 },
+        { id: 'skewers', name: 'Sis Kebab (Beef)', price: 19.00 },
+        { id: 'wings', name: 'Hähnchenflügel', price: 17.50 },
+        { id: 'breast', name: 'Hähnchenbrustfilet', price: 17.50 },
+        { id: 'chickenski', name: 'Hähnchenspieß', price: 17.50 },
+        { id: 'kofte', name: 'Köfteteller', price: 17.50 },
+      ],
+      'Beverages': [
+        { id: 'cola', name: 'Cola/Fanta/Sprite (0,33l)', price: 2.50 },
+        { id: 'water', name: 'Water (0,33l)', price: 2.20 },
+        { id: 'ayran', name: 'Ayran (0,25l)', price: 2.50 },
+        { id: 'icetea', name: 'Ice Tea (0,33l)', price: 2.50 },
+        { id: 'beer', name: 'Beer (0,33l)', price: 3.90 },
+      ],
+    };
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+    function renderMenu() {
+      const menu = document.getElementById('menu');
+      menu.innerHTML = '';
+      
+      Object.entries(PRODUCTS).forEach(([category, products]) => {
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'category';
+        
+        const title = document.createElement('div');
+        title.className = 'category-title';
+        title.textContent = category;
+        categoryDiv.appendChild(title);
+        
+        products.forEach(product => {
+          const productDiv = document.createElement('div');
+          productDiv.className = 'product';
+          
+          const qty = cart[product.id] || 0;
+          
+          productDiv.innerHTML = `
+            <div class="product-info">
+              <h3>${product.name}</h3>
+              <p>€${product.price.toFixed(2)}</p>
+            </div>
+            <div class="controls">
+              ${qty > 0 ? `<button class="btn" onclick="removeItem('${product.id}')">−</button>` : ''}
+              ${qty > 0 ? `<span class="qty">${qty}</span>` : ''}
+              <button class="btn" onclick="addItem('${product.id}')">+</button>
+            </div>
+          `;
+          categoryDiv.appendChild(productDiv);
+        });
+        
+        menu.appendChild(categoryDiv);
+      });
+      
+      updateTotal();
+    }
+
+    function addItem(id) {
+      cart[id] = (cart[id] || 0) + 1;
+      saveCart();
+      renderMenu();
+    }
+
+    function removeItem(id) {
+      if (cart[id] > 1) {
+        cart[id]--;
+      } else {
+        delete cart[id];
+      }
+      saveCart();
+      renderMenu();
+    }
+
+    function saveCart() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function calculateTotal() {
+      let total = 0;
+      Object.entries(cart).forEach(([id, qty]) => {
+        Object.values(PRODUCTS).forEach(category => {
+          const product = category.find(p => p.id === id);
+          if (product) total += product.price * qty;
+        });
+      });
+      return total;
+    }
+
+    function getTotalItems() {
+      return Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+    }
+
+    function updateTotal() {
+      document.getElementById('itemCount').textContent = getTotalItems();
+      document.getElementById('totalPrice').textContent = '€' + calculateTotal().toFixed(2).replace('.', ',');
+    }
+
+    function checkout() {
+      const total = getTotalItems();
+      if (total === 0) {
+        alert('Please add items before ordering');
+        return;
+      }
+      
+      const items = [];
+      Object.entries(cart).forEach(([id, qty]) => {
+        Object.values(PRODUCTS).forEach(category => {
+          const product = category.find(p => p.id === id);
+          if (product) items.push(`${qty}x ${product.name}`);
+        });
+      });
+      
+      const message = `Order:\n${items.join('\n')}\n\nTotal: €${calculateTotal().toFixed(2).replace('.', ',')}`;
+      const encoded = encodeURIComponent(message);
+      window.open(`https://wa.me/4915253415522?text=${encoded}`, '_blank');
+    }
+
+    // PWA Install
+    let installPrompt = null;
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      installPrompt = e;
+      document.getElementById('installBtn').classList.add('show');
+    });
+
+    document.getElementById('installBtn').addEventListener('click', async () => {
+      if (installPrompt) {
+        installPrompt.prompt();
+        const { outcome } = await installPrompt.userChoice;
+        console.log(`User response to the install prompt: ${outcome}`);
+        installPrompt = null;
+      }
+    });
+
+    // Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed:', err));
+    }
+
+    renderMenu();
+  </script>
+</body>
+</html>
