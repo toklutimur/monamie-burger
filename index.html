@@ -443,6 +443,10 @@
   </div>
   
   <div class="cart-footer" id="cartFooter">
+    <div class="delivery-info" style="padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.95); border-bottom: 1px solid var(--card-border);">
+      <input type="text" id="doorName" placeholder="Kapıda yazan ad" style="width: 100%; padding: 0.6rem; margin-bottom: 0.5rem; border: 1px solid var(--card-border); border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
+      <input type="text" id="doorAddress" placeholder="Kapıda yazan adres" style="width: 100%; padding: 0.6rem; border: 1px solid var(--card-border); border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
+    </div>
     <div class="cart-summary" onclick="toggleCart()">
       <div>
         <span id="itemCount">0</span> Items | <span id="totalPrice">€0,00</span>
@@ -826,6 +830,21 @@
         return;
       }
       
+      const doorName = document.getElementById('doorName').value.trim();
+      const doorAddress = document.getElementById('doorAddress').value.trim();
+      
+      if (!doorName) {
+        alert('Lütfen kapıda yazan adı girin');
+        document.getElementById('doorName').focus();
+        return;
+      }
+      
+      if (!doorAddress) {
+        alert('Lütfen kapıda yazan adresi girin');
+        document.getElementById('doorAddress').focus();
+        return;
+      }
+      
       const items = [];
       Object.entries(cart).forEach(([id, qty]) => {
         Object.values(PRODUCTS).forEach(category => {
@@ -834,7 +853,7 @@
         });
       });
       
-      const message = `Order:\n${items.join('\n')}\n\nTotal: €${calculateTotal().toFixed(2).replace('.', ',')}`;
+      const message = `Order:\n${items.join('\n')}\n\nTotal: €${calculateTotal().toFixed(2).replace('.', ',')}\n\nKapıda yazan ad: ${doorName}\nAdres: ${doorAddress}`;
       const encoded = encodeURIComponent(message);
       window.open(`https://wa.me/4915253415522?text=${encoded}`, '_blank');
     }
