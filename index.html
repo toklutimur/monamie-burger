@@ -6,6 +6,7 @@
   <title>MonAmie Order</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#000000">
+  <meta name="author" content="Fırat Tekmanlı">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -21,7 +22,7 @@
       font-family: 'Outfit', sans-serif; 
       background: var(--bg-color); 
       color: var(--text-color);
-      padding-bottom: 200px;
+      padding-bottom: 260px;
     }
     header { 
       background: rgba(255, 255, 255, 0.85);
@@ -69,20 +70,23 @@
     .main-layout {
       display: flex;
       align-items: flex-start;
-      max-width: 1400px;
+      max-width: 100%;
       margin: 0 auto;
     }
     .category-nav {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0.5rem;
-      padding: 1.5rem 1rem;
+      padding: 1.5rem 1rem 180px 1rem;
       position: sticky;
-      top: 80px;
-      height: calc(100vh - 80px);
+      top: 60px;
+      height: calc(100vh - 60px);
       overflow-y: auto;
+      overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
       min-width: 220px;
+      max-width: 280px;
       border-right: 1px solid var(--card-border);
       scroll-behavior: smooth;
       transition: transform 0.3s ease;
@@ -94,7 +98,7 @@
       position: fixed;
       top: 15px;
       left: 15px;
-      z-index: 300;
+      z-index: 1200;
       background: var(--accent);
       color: #fff;
       border: none;
@@ -117,6 +121,9 @@
       color: var(--text-color);
       transition: all 0.2s;
       touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
+      user-select: none;
     }
     .category-pill:hover, .category-pill.active {
       background: var(--accent);
@@ -126,6 +133,7 @@
     .container { flex: 1; padding: 1.5rem; min-width: 0; }
     
     @media (max-width: 768px) {
+      body { padding-bottom: 300px; }
       .menu-toggle { display: flex; align-items: center; justify-content: center; }
       .main-layout { flex-direction: column; }
       .category-nav {
@@ -135,19 +143,36 @@
         bottom: 0;
         width: 280px;
         height: 100vh;
+        max-width: 85vw;
         background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(10px);
-        z-index: 200;
+        -webkit-backdrop-filter: blur(10px);
+        z-index: 1100;
         transform: translateX(-100%);
         border-right: 1px solid var(--card-border);
         padding-top: 60px;
+        padding-bottom: 80px;
+        /* override desktop grid: single column list */
         display: flex;
         flex-direction: column;
+        grid-template-columns: unset;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
       }
       .category-nav.open {
         transform: translateX(0);
+      }
+      .nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1050;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
       }
       .nav-overlay.show {
         display: block;
@@ -161,47 +186,97 @@
       header {
         padding-left: 70px;
       }
+      /* Cart footer: stack vertically on very small screens */
+      .cart-summary {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .checkout-btn {
+        width: 100%;
+        text-align: center;
+      }
+      .products-list {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 480px) {
+      header {
+        gap: 0.75rem;
+      }
+      #searchInput {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.75rem;
+      }
+      .cart-summary > div:first-child {
+        flex: 1 1 100%;
+      }
+      .cart-summary > div:last-child {
+        flex: 1 1 100%;
+        justify-content: space-between;
+      }
     }
     
+    .category-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 1.5rem 0 0.75rem 0;
+      color: var(--text-color);
+      border-left: 4px solid var(--accent);
+      padding-left: 0.5rem;
+    }
+    .products-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
     .product {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 1rem;
-      margin-bottom: 0.75rem;
+      border-radius: 12px;
+      padding: 0.5rem 0.75rem;
       transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
     }
     .product:hover {
       border-color: var(--accent);
-      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.1);
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.08);
     }
-    .product-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 0.5rem;
+    .product-info {
+      flex: 1;
+      min-width: 0;
     }
     .product-name {
       font-weight: 600;
-      font-size: 1.1rem;
-      flex: 1;
+      font-size: 0.95rem;
+      line-height: 1.3;
+    }
+    .product-desc {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 0.15rem;
+      line-height: 1.3;
+    }
+    .product-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
     }
     .product-price {
       font-weight: 700;
       color: var(--accent);
-      font-size: 1.1rem;
-      margin-left: 1rem;
-    }
-    .product-desc {
-      font-size: 0.85rem;
-      color: #64748b;
-      margin-bottom: 0.75rem;
-      line-height: 1.4;
+      font-size: 0.95rem;
+      text-align: right;
+      min-width: 55px;
     }
     .controls {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.35rem;
     }
     .btn {
       background: var(--accent);
@@ -209,21 +284,28 @@
       border: none;
       width: 32px;
       height: 32px;
-      border-radius: 8px;
-      font-size: 1.2rem;
+      min-width: 32px;
+      border-radius: 6px;
+      font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .btn:hover {
       background: var(--accent-hover);
     }
+    .btn:active {
+      transform: scale(0.92);
+    }
     .qty {
       font-weight: 600;
-      min-width: 24px;
+      min-width: 18px;
+      font-size: 0.9rem;
       text-align: center;
     }
     
@@ -237,7 +319,7 @@
       -webkit-backdrop-filter: blur(10px);
       border-top: 1px solid var(--card-border);
       z-index: 1000;
-      padding: 1rem;
+      padding: 0.75rem 1rem;
       box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
     }
     .cart-summary {
@@ -250,10 +332,10 @@
     .cart-details {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s ease;
+      transition: max-height 0.35s ease;
     }
     .cart-details.open {
-      max-height: 50vh;
+      max-height: 40vh;
       overflow-y: auto;
       margin-top: 1rem;
       padding-top: 1rem;
@@ -278,17 +360,71 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      white-space: nowrap;
     }
     .checkout-btn:hover {
       background: var(--accent-hover);
     }
+    .checkout-btn:active {
+      background: var(--accent-hover);
+      transform: scale(0.97);
+    }
     
     .delivery-info {
-      padding: 0.75rem 1rem;
       background: rgba(255, 255, 255, 0.95);
       border-bottom: 1px solid var(--card-border);
     }
-    .delivery-info input[type="text"] {
+    .delivery-info-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      user-select: none;
+      gap: 0.5rem;
+    }
+    .delivery-info-header:hover {
+      background: rgba(0,0,0,0.02);
+    }
+    .delivery-info-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+    .delivery-info-summary {
+      font-size: 0.8rem;
+      color: #64748b;
+      flex: 1;
+      text-align: right;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .delivery-info-chevron {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      transition: transform 0.25s ease;
+      flex-shrink: 0;
+    }
+    .delivery-info-chevron.open {
+      transform: rotate(180deg);
+    }
+    .delivery-info-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 1rem;
+    }
+    .delivery-info-body.open {
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 0 1rem 0.75rem 1rem;
+    }
+    .delivery-info-body input[type="text"],
+    .delivery-info-body input[type="number"] {
       width: 100%;
       padding: 0.6rem;
       margin-bottom: 0.5rem;
@@ -299,10 +435,11 @@
       outline: none;
       transition: border-color 0.2s;
     }
-    .delivery-info input[type="text"]:focus {
+    .delivery-info-body input[type="text"]:focus,
+    .delivery-info-body input[type="number"]:focus {
       border-color: var(--accent);
     }
-    .delivery-info label {
+    .delivery-info-body label {
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -311,39 +448,75 @@
       margin-bottom: 0.5rem;
     }
     
-    .install-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--accent);
+    .install-banner {
+      display: none;
+      background: linear-gradient(90deg, #f97316, #fbbf24);
       color: #fff;
-      border: none;
       padding: 0.75rem 1.5rem;
-      border-radius: 12px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
       font-size: 0.9rem;
       font-weight: 600;
-      cursor: pointer;
-      display: none;
-      z-index: 1001;
+      border-bottom: 1px solid var(--card-border);
     }
-    .install-btn.show {
-      display: block;
+    .install-banner.show {
+      display: flex;
+    }
+    .install-banner-btn {
+      background: #fff;
+      color: var(--accent);
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .install-banner-btn:hover {
+      opacity: 0.9;
     }
     
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: var(--bg-color); }
     ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.3); }
+
+    @media (min-width: 1200px) {
+      .products-list {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (min-width: 1800px) {
+      .products-list {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .category-nav {
+        min-width: 260px;
+        max-width: 260px;
+      }
+    }
+    /* Safe area support for notched phones */
+    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+      .cart-footer {
+        padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+      }
+    }
   </style>
 </head>
 <body>
-  <button class="install-btn" id="installBtn">Install App</button>
   <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
   <div class="nav-overlay" id="navOverlay" onclick="toggleMenu()"></div>
   <header>
     <div class="header-title">MonAmie Order</div>
     <input type="text" id="searchInput" placeholder="Search menu..." oninput="filterMenu()">
   </header>
+  <div class="install-banner" id="installBanner">
+    <span>Install MonAmie App for a faster ordering experience!</span>
+    <button class="install-banner-btn" id="installBtn">Install</button>
+  </div>
   
   <div class="main-layout">
     <div class="category-nav" id="categoryNav"></div>
@@ -352,42 +525,52 @@
   
   <div class="cart-footer" id="cartFooter">
     <div class="delivery-info">
-      <div style="display: flex; gap: 1rem; margin-bottom: 0.75rem;">
-        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
-          <input type="radio" name="deliveryType" value="lieferung" checked onchange="toggleDeliveryType()"> Lieferung
-        </label>
-        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
-          <input type="radio" name="deliveryType" value="abholung" onchange="toggleDeliveryType()"> Abholung
-        </label>
+      <div class="delivery-info-header" id="deliveryInfoHeader" onclick="toggleDeliveryInfo()">
+        <span class="delivery-info-label">🚚 Bestelldetails</span>
+        <span class="delivery-info-summary" id="deliveryInfoSummary">Lieferung · Clausthal-Zellerfeld</span>
+        <span class="delivery-info-chevron open" id="deliveryInfoChevron">▲</span>
       </div>
-      <div id="lieferungFields">
-        <input type="text" id="doorName" placeholder="Name an der Tür" style="width: 100%; padding: 0.6rem; margin-bottom: 0.5rem; border: 1px solid var(--card-border); border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
-        <div style="margin-bottom: 0.5rem;">
+      <div class="delivery-info-body open" id="deliveryInfoBody">
+        <div style="display: flex; gap: 1rem; margin-bottom: 0.75rem;">
           <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
-            <input type="radio" name="location" value="clausthal" onchange="handleLocationChange()"> Clausthal-Zellerfeld (38678)
+            <input type="radio" name="deliveryType" value="lieferung" checked onchange="toggleDeliveryType()"> Lieferung
           </label>
           <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
-            <input type="radio" name="location" value="other" onchange="handleLocationChange()"> Andere Adresse
+            <input type="radio" name="deliveryType" value="abholung" onchange="toggleDeliveryType()"> Abholung
           </label>
         </div>
-        <div id="otherAddressField">
-          <input type="text" id="doorAddress" placeholder="Adresse an der Tür (6,00€ Liefergebühr)" style="width: 100%; padding: 0.6rem; border: 1px solid var(--card-border); border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
+        <div id="lieferungFields">
+          <input type="text" id="doorName" placeholder="Name an der Tür" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
+          <div style="margin-bottom: 0.5rem;">
+            <label>
+              <input type="radio" name="location" value="clausthal" checked onchange="handleLocationChange()"> Clausthal-Zellerfeld (38678)
+            </label>
+            <label>
+              <input type="radio" name="location" value="other" onchange="handleLocationChange()"> Andere Adresse
+            </label>
+          </div>
+          <div id="otherAddressField">
+            <input type="text" id="doorAddress" placeholder="Lieferadresse (6,00€ Liefergebühr)" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
+          </div>
+          <div id="clausthalNote" style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;">
+            Liefergebühr: 1,50€ (Clausthal-Zellerfeld)
+          </div>
+          <div id="otherNote" style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem; display: none;">
+            Liefergebühr: 6,00€ (Andere Adresse)
+          </div>
         </div>
-        <div id="clausthalNote" style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;">
-          Liefergebühr: 1,50€ (Clausthal-Zellerfeld)
-        </div>
-        <div id="otherNote" style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem; display: none;">
-          Liefergebühr: 6,00€ (Andere Adresse)
+        <div id="abholungFields" style="display: none;">
+          <input type="number" id="abholTime" placeholder="Geschätzte Abholzeit (in Minuten)" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'" min="1">
         </div>
       </div>
     </div>
     <div class="cart-summary" onclick="toggleCart()">
-      <div>
+      <div style="min-width: 0;">
         <span id="itemCount">0</span> Items | <span id="totalPrice">€0,00</span>
         <br><small style="color: #64748b;">Tap to expand</small>
       </div>
-      <div style="display: flex; align-items: center; gap: 1rem;">
-        <button class="checkout-btn" onclick="event.stopPropagation(); checkout()" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">Order via WhatsApp</button>
+      <div style="display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;">
+        <button class="checkout-btn" onclick="event.stopPropagation(); checkout()">Order via WhatsApp</button>
         <span class="cart-expand-icon" id="cartExpandIcon">▼</span>
       </div>
     </div>
@@ -574,9 +757,30 @@
         { id: 'erdinger', name: 'Erdinger Weißbier (0,5l)', price: 4.90,desc: '0,5l' },
         { id: 'erdinger_alkfrei', name: 'Erdinger Alkoholfrei (0,5l)', price: 4.90,desc: '0,5l Alkoholfrei' },
       ],
+      'Desserts': [
+        { id: 'baklava', name: 'Baklava (4 Stück)', price: 4.20, desc: '4 Stück Baklava' },
+        { id: 'kuchen', name: 'Kuchen (pro Stück)', price: 2.50, desc: 'Pro Stück' },
+      ],
     };
 
     let cart = JSON.parse(localStorage.getItem('cart')) || {};
+    
+    // Clean up cart from local storage if any items are no longer in PRODUCTS
+    let cartCleaned = false;
+    Object.keys(cart).forEach(id => {
+      let found = false;
+      Object.values(PRODUCTS).forEach(category => {
+        if (category.some(p => p.id === id)) found = true;
+      });
+      if (!found) {
+        delete cart[id];
+        cartCleaned = true;
+      }
+    });
+    if (cartCleaned) {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
     let cartVisible = false;
     let menuOpen = false;
 
@@ -646,15 +850,17 @@
           const qty = cart[product.id] || 0;
           
           productDiv.innerHTML = `
-            <div class="product-header">
+            <div class="product-info">
               <div class="product-name">${product.name}</div>
-              <div class="product-price">€${product.price.toFixed(2).replace('.', ',')}</div>
+              ${product.desc ? `<div class="product-desc">${product.desc}</div>` : ''}
             </div>
-            ${product.desc ? `<div class="product-desc">${product.desc}</div>` : ''}
-            <div class="controls">
-              ${qty > 0 ? `<button class="btn" onclick="removeItem('${product.id}')">−</button>` : ''}
-              ${qty > 0 ? `<span class="qty">${qty}</span>` : ''}
-              <button class="btn" onclick="addItem('${product.id}')">+</button>
+            <div class="product-actions">
+              <div class="product-price">€${product.price.toFixed(2).replace('.', ',')}</div>
+              <div class="controls">
+                ${qty > 0 ? `<button class="btn" onclick="removeItem('${product.id}')">−</button>` : ''}
+                ${qty > 0 ? `<span class="qty">${qty}</span>` : ''}
+                <button class="btn" onclick="addItem('${product.id}')">+</button>
+              </div>
             </div>
           `;
           list.appendChild(productDiv);
@@ -688,6 +894,7 @@
     }
 
     function calculateTotal() {
+      if (getTotalItems() === 0) return 0;
       let total = 0;
       Object.entries(cart).forEach(([id, qty]) => {
         Object.values(PRODUCTS).forEach(category => {
@@ -761,18 +968,46 @@
     function toggleDeliveryType() {
       const isAbholung = document.querySelector('input[name="deliveryType"]:checked').value === 'abholung';
       const lieferungFields = document.getElementById('lieferungFields');
+      const abholungFields = document.getElementById('abholungFields');
       
       if (isAbholung) {
         lieferungFields.style.display = 'none';
+        abholungFields.style.display = 'block';
       } else {
         lieferungFields.style.display = 'block';
+        abholungFields.style.display = 'none';
       }
       
+      updateDeliveryInfoSummary();
       updateTotal();
     }
 
+    function updateDeliveryInfoSummary() {
+      const summaryEl = document.getElementById('deliveryInfoSummary');
+      if (!summaryEl) return;
+      const deliveryTypeEl = document.querySelector('input[name="deliveryType"]:checked');
+      const isAbholung = deliveryTypeEl ? deliveryTypeEl.value === 'abholung' : false;
+      if (isAbholung) {
+        summaryEl.textContent = 'Abholung';
+      } else {
+        const locationEl = document.querySelector('input[name="location"]:checked');
+        const location = locationEl ? locationEl.value : 'clausthal';
+        summaryEl.textContent = location === 'clausthal' ? 'Lieferung · Clausthal-Zellerfeld' : 'Lieferung · Andere Adresse';
+      }
+    }
+
+    let deliveryInfoOpen = true;
+    function toggleDeliveryInfo() {
+      deliveryInfoOpen = !deliveryInfoOpen;
+      const body = document.getElementById('deliveryInfoBody');
+      const chevron = document.getElementById('deliveryInfoChevron');
+      body.classList.toggle('open', deliveryInfoOpen);
+      chevron.classList.toggle('open', deliveryInfoOpen);
+    }
+
     function handleLocationChange() {
-      const location = document.querySelector('input[name="location"]:checked').value;
+      const locationEl = document.querySelector('input[name="location"]:checked');
+      const location = locationEl ? locationEl.value : 'clausthal';
       const otherField = document.getElementById('otherAddressField');
       const clausthalNote = document.getElementById('clausthalNote');
       const otherNote = document.getElementById('otherNote');
@@ -782,22 +1017,25 @@
         otherField.style.display = 'block';
         clausthalNote.style.display = 'none';
         otherNote.style.display = 'block';
-        doorAddress.value = '';
+        doorAddress.placeholder = 'Lieferadresse (6,00€ Liefergebühr)';
       } else {
-        otherField.style.display = 'none';
+        otherField.style.display = 'block';
         clausthalNote.style.display = 'block';
         otherNote.style.display = 'none';
-        doorAddress.value = 'Clausthal-Zellerfeld (38678)';
+        doorAddress.placeholder = 'Lieferadresse (Clausthal-Zellerfeld)';
       }
       
+      updateDeliveryInfoSummary();
       updateTotal();
     }
 
     function calculateDeliveryFee() {
-      const isAbholung = document.querySelector('input[name="deliveryType"]:checked').value === 'abholung';
+      const deliveryTypeEl = document.querySelector('input[name="deliveryType"]:checked');
+      const isAbholung = deliveryTypeEl ? deliveryTypeEl.value === 'abholung' : false;
       if (isAbholung) return 0;
       
-      const location = document.querySelector('input[name="location"]:checked').value;
+      const locationEl = document.querySelector('input[name="location"]:checked');
+      const location = locationEl ? locationEl.value : 'clausthal';
       if (location === 'clausthal') {
         return 1.50;
       }
@@ -811,14 +1049,22 @@
         return;
       }
       
-      const isAbholung = document.querySelector('input[name="deliveryType"]:checked').value === 'abholung';
-      const location = isAbholung ? '' : document.querySelector('input[name="location"]:checked').value;
+      const deliveryTypeEl = document.querySelector('input[name="deliveryType"]:checked');
+      const isAbholung = deliveryTypeEl ? deliveryTypeEl.value === 'abholung' : false;
+      const locationEl = document.querySelector('input[name="location"]:checked');
+      const location = isAbholung ? '' : (locationEl ? locationEl.value : 'clausthal');
       let doorName = '';
       let doorAddress = '';
       let deliveryInfo = '';
       
       if (isAbholung) {
-        deliveryInfo = '\n\nAbholung (Keine Liefergebühr)';
+        const abholTime = document.getElementById('abholTime').value.trim();
+        if (!abholTime) {
+          alert('Bitte geben Sie die geschätzte Abholzeit an.');
+          document.getElementById('abholTime').focus();
+          return;
+        }
+        deliveryInfo = `\n\nAbholung (Keine Liefergebühr)\nAbholzeit: ca. ${abholTime} Minuten`;
       } else {
         doorName = document.getElementById('doorName').value.trim();
         
@@ -828,19 +1074,15 @@
           return;
         }
         
-        if (location === 'other') {
-          doorAddress = document.getElementById('doorAddress').value.trim();
-          if (!doorAddress) {
-            alert('Bitte geben Sie die Adresse an der Tür ein');
-            document.getElementById('doorAddress').focus();
-            return;
-          }
-        } else {
-          doorAddress = 'Clausthal-Zellerfeld (38678)';
+        doorAddress = document.getElementById('doorAddress').value.trim();
+        if (!doorAddress) {
+          alert('Bitte geben Sie die Lieferadresse ein');
+          document.getElementById('doorAddress').focus();
+          return;
         }
         
         const fee = calculateDeliveryFee();
-        deliveryInfo = `\n\nName an der Tür: ${doorName}\nAdresse: ${doorAddress}\nLiefergebühr: €${fee.toFixed(2).replace('.', ',')}`;
+        deliveryInfo = `\n\nName an der Tür: ${doorName}\nLieferadresse: ${doorAddress}\nLiefergebühr: €${fee.toFixed(2).replace('.', ',')}`;
       }
       
       const items = [];
@@ -862,7 +1104,7 @@
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       installPrompt = e;
-      document.getElementById('installBtn').classList.add('show');
+      document.getElementById('installBanner').classList.add('show');
     });
 
     document.getElementById('installBtn').addEventListener('click', async () => {
@@ -871,7 +1113,13 @@
         const { outcome } = await installPrompt.userChoice;
         console.log(`User response: ${outcome}`);
         installPrompt = null;
+        document.getElementById('installBanner').classList.remove('show');
       }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      document.getElementById('installBanner').classList.remove('show');
+      installPrompt = null;
     });
 
     // Service Worker
@@ -882,5 +1130,15 @@
     renderMenu();
     handleLocationChange();
   </script>
+
+  <footer style="margin-top: 5rem; padding: 3rem 1.5rem 2rem; text-align: center; font-family: 'Outfit', sans-serif; border-top: 1px solid var(--card-border);">
+    <div style="font-size: 1rem; font-weight: 700; color: var(--text-color); letter-spacing: 0.04em; margin-bottom: 0.4rem;">MonAmie Order</div>
+    <div style="font-size: 0.78rem; color: #94a3b8; letter-spacing: 0.02em;">
+      Designed &amp; built by
+      <a href="https://toklutimur.uk" target="_blank" rel="noopener"
+         style="color: var(--accent); text-decoration: none; font-weight: 600; transition: opacity 0.2s;"
+         onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Fırat Tekmanlı</a>
+    </div>
+  </footer>
 </body>
 </html>
