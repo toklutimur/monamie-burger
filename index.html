@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,19 +18,26 @@
       --accent: #f97316;
       --accent-hover: #ea580c;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      font-family: 'Outfit', sans-serif; 
-      background: var(--bg-color); 
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-color);
       color: var(--text-color);
       padding-bottom: 260px;
     }
-    header { 
+
+    header {
       background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--card-border);
-      padding: 0.75rem 1.5rem; 
+      padding: 0.75rem 1.5rem;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -39,9 +47,10 @@
       align-items: center;
       justify-content: flex-start;
     }
+
     .header-title {
-      text-align: left; 
-      font-size: 1.4rem; 
+      text-align: left;
+      font-size: 1.4rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -52,6 +61,7 @@
       -webkit-text-fill-color: transparent;
       white-space: nowrap;
     }
+
     #searchInput {
       flex: 1;
       max-width: 300px;
@@ -64,15 +74,18 @@
       outline: none;
       transition: border-color 0.2s;
     }
+
     #searchInput:focus {
       border-color: var(--accent);
     }
+
     .main-layout {
       display: flex;
       align-items: flex-start;
       max-width: 100%;
       margin: 0 auto;
     }
+
     .category-nav {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -91,8 +104,11 @@
       scroll-behavior: smooth;
       transition: transform 0.3s ease;
     }
-    .category-nav::-webkit-scrollbar { display: none; }
-    
+
+    .category-nav::-webkit-scrollbar {
+      display: none;
+    }
+
     .menu-toggle {
       display: none;
       position: fixed;
@@ -108,7 +124,7 @@
       font-size: 1.2rem;
       cursor: pointer;
     }
-    
+
     .category-pill {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -125,17 +141,35 @@
       flex-shrink: 0;
       user-select: none;
     }
-    .category-pill:hover, .category-pill.active {
+
+    .category-pill:hover,
+    .category-pill.active {
       background: var(--accent);
       color: #fff;
       border-color: var(--accent);
     }
-    .container { flex: 1; padding: 1.5rem; min-width: 0; }
-    
+
+    .container {
+      flex: 1;
+      padding: 1.5rem;
+      min-width: 0;
+    }
+
     @media (max-width: 768px) {
-      body { padding-bottom: 300px; }
-      .menu-toggle { display: flex; align-items: center; justify-content: center; }
-      .main-layout { flex-direction: column; }
+      body {
+        padding-bottom: 300px;
+      }
+
+      .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .main-layout {
+        flex-direction: column;
+      }
+
       .category-nav {
         position: fixed;
         left: 0;
@@ -159,9 +193,11 @@
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
       }
+
       .category-nav.open {
         transform: translateX(0);
       }
+
       .nav-overlay {
         display: none;
         position: fixed;
@@ -174,48 +210,58 @@
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
       }
+
       .nav-overlay.show {
         display: block;
       }
+
       .category-pill {
         white-space: normal;
         padding: 0.75rem 1rem;
         border-radius: 12px;
         text-align: center;
       }
+
       header {
         padding-left: 70px;
       }
+
       /* Cart footer: stack vertically on very small screens */
       .cart-summary {
         flex-wrap: wrap;
         gap: 0.5rem;
       }
+
       .checkout-btn {
         width: 100%;
         text-align: center;
       }
+
       .products-list {
         grid-template-columns: 1fr;
       }
     }
+
     @media (max-width: 480px) {
       header {
         gap: 0.75rem;
       }
+
       #searchInput {
         font-size: 0.85rem;
         padding: 0.5rem 0.75rem;
       }
-      .cart-summary > div:first-child {
+
+      .cart-summary>div:first-child {
         flex: 1 1 100%;
       }
-      .cart-summary > div:last-child {
+
+      .cart-summary>div:last-child {
         flex: 1 1 100%;
         justify-content: space-between;
       }
     }
-    
+
     .category-title {
       font-size: 1.2rem;
       font-weight: 700;
@@ -224,12 +270,14 @@
       border-left: 4px solid var(--accent);
       padding-left: 0.5rem;
     }
+
     .products-list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 0.5rem;
       margin-bottom: 1.5rem;
     }
+
     .product {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -241,31 +289,37 @@
       align-items: center;
       gap: 0.75rem;
     }
+
     .product:hover {
       border-color: var(--accent);
       box-shadow: 0 4px 12px rgba(249, 115, 22, 0.08);
     }
+
     .product-info {
       flex: 1;
       min-width: 0;
     }
+
     .product-name {
       font-weight: 600;
       font-size: 0.95rem;
       line-height: 1.3;
     }
+
     .product-desc {
       font-size: 0.8rem;
       color: #64748b;
       margin-top: 0.15rem;
       line-height: 1.3;
     }
+
     .product-actions {
       display: flex;
       align-items: center;
       gap: 0.75rem;
       flex-shrink: 0;
     }
+
     .product-price {
       font-weight: 700;
       color: var(--accent);
@@ -273,11 +327,13 @@
       text-align: right;
       min-width: 55px;
     }
+
     .controls {
       display: flex;
       align-items: center;
       gap: 0.35rem;
     }
+
     .btn {
       background: var(--accent);
       color: #fff;
@@ -296,19 +352,22 @@
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
     }
+
     .btn:hover {
       background: var(--accent-hover);
     }
+
     .btn:active {
       transform: scale(0.92);
     }
+
     .qty {
       font-weight: 600;
       min-width: 18px;
       font-size: 0.9rem;
       text-align: center;
     }
-    
+
     .cart-footer {
       position: fixed;
       bottom: 0;
@@ -320,8 +379,9 @@
       border-top: 1px solid var(--card-border);
       z-index: 1000;
       padding: 0.75rem 1rem;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
     }
+
     .cart-summary {
       display: flex;
       justify-content: space-between;
@@ -329,11 +389,13 @@
       cursor: pointer;
       padding: 0.5rem 0;
     }
+
     .cart-details {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.35s ease;
     }
+
     .cart-details.open {
       max-height: 40vh;
       overflow-y: auto;
@@ -341,6 +403,7 @@
       padding-top: 1rem;
       border-top: 1px solid var(--card-border);
     }
+
     .cart-item {
       display: flex;
       justify-content: space-between;
@@ -349,7 +412,11 @@
       border-bottom: 1px solid var(--card-border);
       color: var(--text-color);
     }
-    .cart-item:last-child { border-bottom: none; }
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
     .checkout-btn {
       background: var(--accent);
       color: #fff;
@@ -364,18 +431,21 @@
       touch-action: manipulation;
       white-space: nowrap;
     }
+
     .checkout-btn:hover {
       background: var(--accent-hover);
     }
+
     .checkout-btn:active {
       background: var(--accent-hover);
       transform: scale(0.97);
     }
-    
+
     .delivery-info {
       background: rgba(255, 255, 255, 0.95);
       border-bottom: 1px solid var(--card-border);
     }
+
     .delivery-info-header {
       display: flex;
       align-items: center;
@@ -385,14 +455,17 @@
       user-select: none;
       gap: 0.5rem;
     }
+
     .delivery-info-header:hover {
-      background: rgba(0,0,0,0.02);
+      background: rgba(0, 0, 0, 0.02);
     }
+
     .delivery-info-label {
       font-size: 0.85rem;
       font-weight: 600;
       color: var(--text-color);
     }
+
     .delivery-info-summary {
       font-size: 0.8rem;
       color: #64748b;
@@ -403,26 +476,31 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
     .delivery-info-chevron {
       font-size: 0.75rem;
       color: #94a3b8;
       transition: transform 0.25s ease;
       flex-shrink: 0;
     }
+
     .delivery-info-chevron.open {
       transform: rotate(180deg);
     }
+
     .delivery-info-body {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s ease, padding 0.3s ease;
       padding: 0 1rem;
     }
+
     .delivery-info-body.open {
       max-height: 400px;
       overflow-y: auto;
       padding: 0 1rem 0.75rem 1rem;
     }
+
     .delivery-info-body input[type="text"],
     .delivery-info-body input[type="number"] {
       width: 100%;
@@ -435,10 +513,12 @@
       outline: none;
       transition: border-color 0.2s;
     }
+
     .delivery-info-body input[type="text"]:focus,
     .delivery-info-body input[type="number"]:focus {
       border-color: var(--accent);
     }
+
     .delivery-info-body label {
       display: flex;
       align-items: center;
@@ -447,7 +527,7 @@
       font-size: 0.9rem;
       margin-bottom: 0.5rem;
     }
-    
+
     .install-banner {
       display: none;
       background: linear-gradient(90deg, #f97316, #fbbf24);
@@ -460,9 +540,11 @@
       font-weight: 600;
       border-bottom: 1px solid var(--card-border);
     }
+
     .install-banner.show {
       display: flex;
     }
+
     .install-banner-btn {
       background: #fff;
       color: var(--accent);
@@ -475,29 +557,45 @@
       transition: opacity 0.2s;
       white-space: nowrap;
     }
+
     .install-banner-btn:hover {
       opacity: 0.9;
     }
-    
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg-color); }
-    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.3); }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-color);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.3);
+    }
 
     @media (min-width: 1200px) {
       .products-list {
         grid-template-columns: repeat(3, 1fr);
       }
     }
+
     @media (min-width: 1800px) {
       .products-list {
         grid-template-columns: repeat(4, 1fr);
       }
+
       .category-nav {
         min-width: 260px;
         max-width: 260px;
       }
     }
+
     /* Safe area support for notched phones */
     @supports (padding-bottom: env(safe-area-inset-bottom)) {
       .cart-footer {
@@ -506,6 +604,7 @@
     }
   </style>
 </head>
+
 <body>
   <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
   <div class="nav-overlay" id="navOverlay" onclick="toggleMenu()"></div>
@@ -517,20 +616,20 @@
     <span>Install MonAmie App for a faster ordering experience!</span>
     <button class="install-banner-btn" id="installBtn">Install</button>
   </div>
-  
+
   <div class="main-layout">
     <div class="category-nav" id="categoryNav"></div>
     <div class="container" id="menu"></div>
   </div>
-  
+
   <div class="cart-footer" id="cartFooter">
     <div class="delivery-info">
       <div class="delivery-info-header" id="deliveryInfoHeader" onclick="toggleDeliveryInfo()">
         <span class="delivery-info-label">🚚 Bestelldetails</span>
         <span class="delivery-info-summary" id="deliveryInfoSummary">Lieferung · Clausthal-Zellerfeld</span>
-        <span class="delivery-info-chevron open" id="deliveryInfoChevron">▲</span>
+        <span class="delivery-info-chevron" id="deliveryInfoChevron">▼</span>
       </div>
-      <div class="delivery-info-body open" id="deliveryInfoBody">
+      <div class="delivery-info-body" id="deliveryInfoBody">
         <div style="display: flex; gap: 1rem; margin-bottom: 0.75rem;">
           <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
             <input type="radio" name="deliveryType" value="lieferung" checked onchange="toggleDeliveryType()"> Lieferung
@@ -540,17 +639,20 @@
           </label>
         </div>
         <div id="lieferungFields">
-          <input type="text" id="doorName" placeholder="Name an der Tür" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
+          <input type="text" id="doorName" placeholder="Name an der Tür"
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
           <div style="margin-bottom: 0.5rem;">
             <label>
-              <input type="radio" name="location" value="clausthal" checked onchange="handleLocationChange()"> Clausthal-Zellerfeld (38678)
+              <input type="radio" name="location" value="clausthal" checked onchange="handleLocationChange()">
+              Clausthal-Zellerfeld (38678)
             </label>
             <label>
               <input type="radio" name="location" value="other" onchange="handleLocationChange()"> Andere Adresse
             </label>
           </div>
           <div id="otherAddressField">
-            <input type="text" id="doorAddress" placeholder="Lieferadresse (6,00€ Liefergebühr)" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
+            <input type="text" id="doorAddress" placeholder="Lieferadresse (6,00€ Liefergebühr)"
+              onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
           </div>
           <div id="clausthalNote" style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;">
             Liefergebühr: 1,50€ (Clausthal-Zellerfeld)
@@ -560,7 +662,9 @@
           </div>
         </div>
         <div id="abholungFields" style="display: none;">
-          <input type="number" id="abholTime" placeholder="Geschätzte Abholzeit (in Minuten)" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'" min="1">
+          <input type="number" id="abholTime" placeholder="Geschätzte Abholzeit (in Minuten)"
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'"
+            min="1">
         </div>
       </div>
     </div>
@@ -582,42 +686,42 @@
   <script>
     const PRODUCTS = {
       'Chicken Menüs': [
-        { id: 'clausthalburgermenu', name: 'Clausthal Burger Menü', price: 15.50,desc: 'Käse überbacken, mit Clausthal Salat' },
-        { id: 'yoyo', name: 'YoYo Menü', price: 14.00,desc: '1x YoYo Burger mit Jalapeño und Cheese "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo, ca. 130 g HotWings (2-3 Stk.)' },
-        { id: 'bbq', name: 'BBQ Menü', price: 10.00,desc: '1x BBQ Burger mit Cheese "L", 1x Clausthalsalat' },
-        { id: 'kingwings', name: 'King Wings Menü', price: 13.50,desc: 'Deep-Fried Chicken Wings (Scharf) ca. 400g (7-10), 1x Klein Pommes oder Wedges' },
-        { id: 'a1', name: 'A1', price: 13.50,desc: 'HotWings ca. 400g (7-10 Stk.), 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'a2', name: 'A2 (Crispyfilets)', price: 11.50,desc: '5x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'a3', name: 'A3 (2x Monamie Burger)', price: 14.50,desc: '2x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'a4', name: 'A4', price: 11.50,desc: '1x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Clausthal Salat, 1x Ketchup/Mayo' },
-        { id: 'bigmama', name: 'Big Mama', price: 14.00,desc: '1x Big Mama Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'happybox', name: 'Happy Box', price: 7.90,desc: '1x Quick Chicken Burger oder 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Überraschung, 1x Caprisonne, 1x Ketchup/Mayo' },
+        { id: 'clausthalburgermenu', name: 'Clausthal Burger Menü', price: 15.50, desc: 'Käse überbacken, mit Clausthal Salat' },
+        { id: 'yoyo', name: 'YoYo Menü', price: 14.00, desc: '1x YoYo Burger mit Jalapeño und Cheese "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo, ca. 130 g HotWings (2-3 Stk.)' },
+        { id: 'bbq', name: 'BBQ Menü', price: 10.00, desc: '1x BBQ Burger mit Cheese "L", 1x Clausthalsalat' },
+        { id: 'kingwings', name: 'King Wings Menü', price: 13.50, desc: 'Deep-Fried Chicken Wings (Scharf) ca. 400g (7-10), 1x Klein Pommes oder Wedges' },
+        { id: 'a1', name: 'A1', price: 13.50, desc: 'HotWings ca. 400g (7-10 Stk.), 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'a2', name: 'A2 (Crispyfilets)', price: 11.50, desc: '5x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'a3', name: 'A3 (2x Monamie Burger)', price: 14.50, desc: '2x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'a4', name: 'A4', price: 11.50, desc: '1x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Clausthal Salat, 1x Ketchup/Mayo' },
+        { id: 'bigmama', name: 'Big Mama', price: 14.00, desc: '1x Big Mama Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'happybox', name: 'Happy Box', price: 7.90, desc: '1x Quick Chicken Burger oder 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Überraschung, 1x Caprisonne, 1x Ketchup/Mayo' },
         { id: 'nuggetsbox', name: 'Nuggets Box', price: 7.50, desc: 'Chicken Nuggets Box' },
         { id: 'crispybox', name: 'Crispy Box', price: 7.50, desc: 'Crispy Chicken Box' },
         { id: 'falafelbox', name: 'Falafel Box', price: 7.50, desc: 'Falafel Box' },
         { id: 'hotwingsbox', name: 'HotWings Box', price: 7.50, desc: 'Hot Wings Box' },
-        { id: 'crushburger', name: 'Crush Menü', price: 14.00,desc: '1x Crush Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'doublcrush', name: 'Double Crush Menü', price: 16.00,desc: '1x Double Crush Burger mit Cheese "XXL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'b3', name: 'B3', price: 13.00,desc: '1x Monamie Burger "L", 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'chickenwrapmenu', name: 'Chicken-Wrap Menü', price: 11.00,desc: '1x Chickenwrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'nuggetwrapmenu', name: 'Nugget-Wrap Menü', price: 11.00,desc: '1x Nugget-Wrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'filetburgermenu', name: 'Filet Burger Menü', price: 12.00,desc: '1x Filet Burger, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'nuggetburgermenu', name: 'Nugget Burger Menü', price: 11.50,desc: '1x Nugget Burger, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'redreaper', name: 'Red Reaper Menü', price: 11.00,desc: '1x Red Reaper Burger "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'bbqwrapmenu', name: 'BBQ-Wrap Menü', price: 11.00,desc: '1x BBQ-Wrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'crushburger', name: 'Crush Menü', price: 14.00, desc: '1x Crush Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'doublcrush', name: 'Double Crush Menü', price: 16.00, desc: '1x Double Crush Burger mit Cheese "XXL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'b3', name: 'B3', price: 13.00, desc: '1x Monamie Burger "L", 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'chickenwrapmenu', name: 'Chicken-Wrap Menü', price: 11.00, desc: '1x Chickenwrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'nuggetwrapmenu', name: 'Nugget-Wrap Menü', price: 11.00, desc: '1x Nugget-Wrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'filetburgermenu', name: 'Filet Burger Menü', price: 12.00, desc: '1x Filet Burger, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'nuggetburgermenu', name: 'Nugget Burger Menü', price: 11.50, desc: '1x Nugget Burger, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'redreaper', name: 'Red Reaper Menü', price: 11.00, desc: '1x Red Reaper Burger "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+        { id: 'bbqwrapmenu', name: 'BBQ-Wrap Menü', price: 11.00, desc: '1x BBQ-Wrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
       ],
       'Beef Burger Menüs': [
-        { id: 'beefburger', name: 'Beef Burger', price: 9.00,desc: '1x Beef Burger "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'doublebeef', name: 'Double Beef Burger', price: 13.00,desc: '1x Beef Burger "XL" (2x 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'cheeseburger', name: 'Cheeseburger', price: 10.00,desc: '1x Beef Burger mit Cheese "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'doublecheese', name: 'Double Cheeseburger', price: 13.50,desc: '1x Beef Burger mit Cheese "XL" (2x 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'royalbeef', name: 'Royal Beef Burger', price: 13.00,desc: '1x Beef Burger "XL" (180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'royalcheese', name: 'Royal Cheeseburger', price: 13.50,desc: '1x Beef Burger mit Cheese (180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'doubleroy', name: 'Double Royal Beef Burger', price: 15.50,desc: '1x Beef Burger "XXL" (2x 180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'doubleroyalcheese', name: 'Double Royal Cheeseburger', price: 16.00,desc: '1x Beef Burger mit Cheese "XXL" (2x 180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'brobeef', name: 'Bro Beef Burger Menü', price: 15.00,desc: '2x Beef Burger "L" (je 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'chilibeef', name: 'Chili Beef Menü', price: 13.00,desc: '1x Beef Burger mit Jalapeño und Cheese "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 3x Chili Cheese, 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'beefwrap', name: 'Beef Wrap', price: 13.00,desc: '1x Beef Wrap (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'beefburger', name: 'Beef Burger', price: 9.00, desc: '1x Beef Burger "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'doublebeef', name: 'Double Beef Burger', price: 13.00, desc: '1x Beef Burger "XL" (2x 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'cheeseburger', name: 'Cheeseburger', price: 10.00, desc: '1x Beef Burger mit Cheese "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'doublecheese', name: 'Double Cheeseburger', price: 13.50, desc: '1x Beef Burger mit Cheese "XL" (2x 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'royalbeef', name: 'Royal Beef Burger', price: 13.00, desc: '1x Beef Burger "XL" (180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'royalcheese', name: 'Royal Cheeseburger', price: 13.50, desc: '1x Beef Burger mit Cheese (180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'doubleroy', name: 'Double Royal Beef Burger', price: 15.50, desc: '1x Beef Burger "XXL" (2x 180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'doubleroyalcheese', name: 'Double Royal Cheeseburger', price: 16.00, desc: '1x Beef Burger mit Cheese "XXL" (2x 180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'brobeef', name: 'Bro Beef Burger Menü', price: 15.00, desc: '2x Beef Burger "L" (je 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'chilibeef', name: 'Chili Beef Menü', price: 13.00, desc: '1x Beef Burger mit Jalapeño und Cheese "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 3x Chili Cheese, 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+        { id: 'beefwrap', name: 'Beef Wrap', price: 13.00, desc: '1x Beef Wrap (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
       ],
       'Burger': [
         { id: 's_quickchicken', name: 'Quick Chicken Burger "S"', price: 2.50, desc: 'Single Burger' },
@@ -642,7 +746,7 @@
         { id: 's_doublecheese', name: 'Double Cheeseburger', price: 9.50, desc: 'Single Burger' },
         { id: 's_doubleroyal', name: 'Double Royal Beef Burger', price: 12.90, desc: 'Single Burger' },
         { id: 's_doubleroyalcheese', name: 'Double Royal Cheeseburger', price: 13.50, desc: 'Single Burger' },
-        { id: 'clausthalburger', name: 'Clausthal Burger', price: 12.00,desc: 'Käse überbacken, mit Clausthal Salat' },
+        { id: 'clausthalburger', name: 'Clausthal Burger', price: 12.00, desc: 'Käse überbacken, mit Clausthal Salat' },
       ],
       'Wraps & Dürüm': [
         { id: 's_chickenwrap', name: 'Chicken-Wrap', price: 8.50, desc: 'Single Wrap' },
@@ -650,121 +754,121 @@
         { id: 's_beefwrap', name: 'Beef-Wrap', price: 9.50, desc: 'Single Wrap' },
         { id: 's_nuggetwrap', name: 'Nugget-Wrap', price: 8.50, desc: 'Single Wrap' },
         { id: 's_bbqwrap', name: 'BBQ-Wrap', price: 8.50, desc: 'Single Wrap' },
-        { id: 'duerum1', name: 'Dürüm mit Hähnchenspieß (Tavuk Dürüm)', price: 13.00,desc: 'Hähnchen am Spieß gerollt mit Salat und Soße' },
-        { id: 'duerum2', name: 'Dürüm mit Siskebab (Kusbasi Dürüm)', price: 15.00,desc: 'Rinderspieß gerollt mit Salat und Soße' },
-        { id: 'duerum3', name: 'Adana Dürüm', price: 13.00,desc: 'Gegrillter Hackfleischspieß gerollt mit Salat und Soße' },
-        { id: 'falafelduerum', name: 'Falafel Dürüm', price: 11.00,desc: 'Falafel Dürüm' },
-        { id: 'pomwrap', name: 'Pomwrap', price: 5.00,desc: '1x Knusprige Pommes in einem frischen Wrap' },
+        { id: 'duerum1', name: 'Dürüm mit Hähnchenspieß (Tavuk Dürüm)', price: 13.00, desc: 'Hähnchen am Spieß gerollt mit Salat und Soße' },
+        { id: 'duerum2', name: 'Dürüm mit Siskebab (Kusbasi Dürüm)', price: 15.00, desc: 'Rinderspieß gerollt mit Salat und Soße' },
+        { id: 'duerum3', name: 'Adana Dürüm', price: 13.00, desc: 'Gegrillter Hackfleischspieß gerollt mit Salat und Soße' },
+        { id: 'falafelduerum', name: 'Falafel Dürüm', price: 11.00, desc: 'Falafel Dürüm' },
+        { id: 'pomwrap', name: 'Pomwrap', price: 5.00, desc: '1x Knusprige Pommes in einem frischen Wrap' },
       ],
       'Grill-Spezialitäten': [
-        { id: 'adanakebab', name: 'Adana Kebab (Scharf)', price: 17.50,desc: 'Scharfes gehacktes vom Rind am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'urfakebab', name: 'Urfa Kebab', price: 17.50,desc: 'Gehacktes vom Rind am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'siskebab', name: 'Sis Kebab (Schisch Kebab)', price: 19.00,desc: 'Rinderspieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'kanat', name: 'Hähnchenflügel (Kanat)', price: 17.50,desc: 'Schön gegrillte Hähnchenflügel, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'tavukgoesue', name: 'Hähnchenbrustfilet (Tavuk Göğsü)', price: 17.50,desc: 'Schön gegrillte Hähnchenbrust, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'tavuksis', name: 'Hähnchenspieß (Tavuk Sis)', price: 17.50,desc: 'Hähnchenstücke am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'koefte', name: 'Köfteteller', price: 17.50,desc: 'Gegrillte Frikadellen aus Rindfleisch, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'adanakebab', name: 'Adana Kebab (Scharf)', price: 17.50, desc: 'Scharfes gehacktes vom Rind am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'urfakebab', name: 'Urfa Kebab', price: 17.50, desc: 'Gehacktes vom Rind am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'siskebab', name: 'Sis Kebab (Schisch Kebab)', price: 19.00, desc: 'Rinderspieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'kanat', name: 'Hähnchenflügel (Kanat)', price: 17.50, desc: 'Schön gegrillte Hähnchenflügel, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'tavukgoesue', name: 'Hähnchenbrustfilet (Tavuk Göğsü)', price: 17.50, desc: 'Schön gegrillte Hähnchenbrust, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'tavuksis', name: 'Hähnchenspieß (Tavuk Sis)', price: 17.50, desc: 'Hähnchenstücke am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'koefte', name: 'Köfteteller', price: 17.50, desc: 'Gegrillte Frikadellen aus Rindfleisch, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
       ],
       'Combi-Grill': [
-        { id: 'comb1', name: 'Hähnchenspieß und Rinderspieß (Tavuk sis ve Kusbasi)', price: 19.00,desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'comb2', name: 'Hähnchenspieß und Adana (Tavuk Sis ve Adana)', price: 18.50,desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'comb3', name: 'Rinderspieß und Adana (Kusbasi ve Adana)', price: 19.00,desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'comb4', name: 'Hähnchenspieß und Köfte (Tavuk Sis ve Köfte)', price: 18.50,desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'comb5', name: 'Adana und Köfte', price: 18.50,desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'comb1', name: 'Hähnchenspieß und Rinderspieß (Tavuk sis ve Kusbasi)', price: 19.00, desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'comb2', name: 'Hähnchenspieß und Adana (Tavuk Sis ve Adana)', price: 18.50, desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'comb3', name: 'Rinderspieß und Adana (Kusbasi ve Adana)', price: 19.00, desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'comb4', name: 'Hähnchenspieß und Köfte (Tavuk Sis ve Köfte)', price: 18.50, desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+        { id: 'comb5', name: 'Adana und Köfte', price: 18.50, desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
       ],
       'Vegetarisch': [
-        { id: 'hallohalloumi', name: 'Hallo Halloumi', price: 11.00,desc: '1x Halloumi Burger "L", 1x Pommes Klein, 1x Ketchup/Mayo' },
-        { id: 'halloumiteller', name: 'Halloumi Teller', price: 13.00,desc: '6 Halloumi Stücke, Salat, Pommes, Soße' },
-        { id: 'veggietwister', name: 'Veggie Twister', price: 8.50,desc: '1x Veggie Twister, 1x Pommes Klein, 1x Ketchup/Mayo' },
-        { id: 'veggiemenu', name: 'Veggie Menü', price: 11.00,desc: '1x Veggie Burger "L", 1x Pommes Klein, 1x Ketchup/Mayo' },
-        { id: 'falafelteller', name: 'Falafel Teller', price: 13.00,desc: 'Falafel Teller' },
+        { id: 'hallohalloumi', name: 'Hallo Halloumi', price: 11.00, desc: '1x Halloumi Burger "L", 1x Pommes Klein, 1x Ketchup/Mayo' },
+        { id: 'halloumiteller', name: 'Halloumi Teller', price: 13.00, desc: '6 Halloumi Stücke, Salat, Pommes, Soße' },
+        { id: 'veggietwister', name: 'Veggie Twister', price: 8.50, desc: '1x Veggie Twister, 1x Pommes Klein, 1x Ketchup/Mayo' },
+        { id: 'veggiemenu', name: 'Veggie Menü', price: 11.00, desc: '1x Veggie Burger "L", 1x Pommes Klein, 1x Ketchup/Mayo' },
+        { id: 'falafelteller', name: 'Falafel Teller', price: 13.00, desc: 'Falafel Teller' },
       ],
       'Vorspeisen': [
-        { id: 'joghurt', name: 'Joghurt', price: 6.00,desc: 'Joghurt' },
-        { id: 'reis', name: 'Reis', price: 6.00,desc: 'Reis' },
-        { id: 'bulgur', name: 'Bulgur', price: 6.00,desc: 'Bulgur' },
-        { id: 'aciezme', name: 'Aci Ezme (Scharfe Soße)', price: 6.00,desc: 'Scharfe Soße' },
+        { id: 'joghurt', name: 'Joghurt', price: 6.00, desc: 'Joghurt' },
+        { id: 'reis', name: 'Reis', price: 6.00, desc: 'Reis' },
+        { id: 'bulgur', name: 'Bulgur', price: 6.00, desc: 'Bulgur' },
+        { id: 'aciezme', name: 'Aci Ezme (Scharfe Soße)', price: 6.00, desc: 'Scharfe Soße' },
       ],
       'Chicken Snacks': [
-        { id: 'hotwings230', name: 'HotWings (230g/4-6 Stk.)', price: 7.00,desc: 'HotWings ca. 230g (4-6 Stück)' },
-        { id: 'hotwings350', name: 'HotWings (350g/7-9 Stk.)', price: 10.50,desc: 'HotWings ca. 350g (7-9 Stück)' },
-        { id: 'hotwings540', name: 'HotWings (540g/10-14 Stk.)', price: 16.20,desc: 'HotWings ca. 540g (10-14 Stück)' },
-        { id: 'crispy4', name: 'Crispy Filet (4x)', price: 7.00,desc: '4x Crispyfilets' },
-        { id: 'crispy6', name: 'Crispy Filet (6x)', price: 9.90,desc: '6x Crispyfilets' },
-        { id: 'crispy9', name: 'Crispy Filet (9x)', price: 15.20,desc: '9x Crispyfilets' },
-        { id: 'chickenbites6', name: 'Chicken Bites (6x)', price: 5.50,desc: '6x Chicken Bites' },
-        { id: 'chickenbites9', name: 'Chicken Bites (9x)', price: 8.00,desc: '9x Chicken Bites' },
-        { id: 'chickenbites15', name: 'Chicken Bites (15x)', price: 13.00,desc: '15x Chicken Bites' },
-        { id: 'geflugel', name: 'Geflügel-Bratwurst Menü', price: 9.00,desc: '1x Geflügel-Bratwurst, 1x Klein Pommes oder Wedges' },
+        { id: 'hotwings230', name: 'HotWings (230g/4-6 Stk.)', price: 7.00, desc: 'HotWings ca. 230g (4-6 Stück)' },
+        { id: 'hotwings350', name: 'HotWings (350g/7-9 Stk.)', price: 10.50, desc: 'HotWings ca. 350g (7-9 Stück)' },
+        { id: 'hotwings540', name: 'HotWings (540g/10-14 Stk.)', price: 16.20, desc: 'HotWings ca. 540g (10-14 Stück)' },
+        { id: 'crispy4', name: 'Crispy Filet (4x)', price: 7.00, desc: '4x Crispyfilets' },
+        { id: 'crispy6', name: 'Crispy Filet (6x)', price: 9.90, desc: '6x Crispyfilets' },
+        { id: 'crispy9', name: 'Crispy Filet (9x)', price: 15.20, desc: '9x Crispyfilets' },
+        { id: 'chickenbites6', name: 'Chicken Bites (6x)', price: 5.50, desc: '6x Chicken Bites' },
+        { id: 'chickenbites9', name: 'Chicken Bites (9x)', price: 8.00, desc: '9x Chicken Bites' },
+        { id: 'chickenbites15', name: 'Chicken Bites (15x)', price: 13.00, desc: '15x Chicken Bites' },
+        { id: 'geflugel', name: 'Geflügel-Bratwurst Menü', price: 9.00, desc: '1x Geflügel-Bratwurst, 1x Klein Pommes oder Wedges' },
       ],
       'Finger Food': [
-        { id: 'nuggets6', name: 'Chicken Nuggets (6x)', price: 4.50,desc: '6x Chicken Nuggets' },
-        { id: 'nuggets10', name: 'Chicken Nuggets (10x)', price: 7.50,desc: '10x Chicken Nuggets' },
-        { id: 'chili6', name: 'Chili Cheese (6x)', price: 4.50,desc: '6x Chili Cheese Nuggets' },
-        { id: 'chili10', name: 'Chili Cheese (10x)', price: 7.50,desc: '10x Chili Cheese Nuggets' },
-        { id: 'onion6', name: 'Onion Rings (6x)', price: 4.50,desc: '6x Onion Rings' },
-        { id: 'onion10', name: 'Onion Rings (10x)', price: 7.50,desc: '10x Onion Rings' },
-        { id: 'mozz6', name: 'Mozzarella Sticks (6x)', price: 4.50,desc: '6x Mozzarella Sticks' },
-        { id: 'mozz10', name: 'Mozzarella Sticks (10x)', price: 7.50,desc: '10x Mozzarella Sticks' },
-        { id: 'kroketten6', name: 'Kroketten (6x)', price: 4.50,desc: '6x Kroketten' },
-        { id: 'kroketten10', name: 'Kroketten (10x)', price: 7.50,desc: '10x Kroketten' },
+        { id: 'nuggets6', name: 'Chicken Nuggets (6x)', price: 4.50, desc: '6x Chicken Nuggets' },
+        { id: 'nuggets10', name: 'Chicken Nuggets (10x)', price: 7.50, desc: '10x Chicken Nuggets' },
+        { id: 'chili6', name: 'Chili Cheese (6x)', price: 4.50, desc: '6x Chili Cheese Nuggets' },
+        { id: 'chili10', name: 'Chili Cheese (10x)', price: 7.50, desc: '10x Chili Cheese Nuggets' },
+        { id: 'onion6', name: 'Onion Rings (6x)', price: 4.50, desc: '6x Onion Rings' },
+        { id: 'onion10', name: 'Onion Rings (10x)', price: 7.50, desc: '10x Onion Rings' },
+        { id: 'mozz6', name: 'Mozzarella Sticks (6x)', price: 4.50, desc: '6x Mozzarella Sticks' },
+        { id: 'mozz10', name: 'Mozzarella Sticks (10x)', price: 7.50, desc: '10x Mozzarella Sticks' },
+        { id: 'kroketten6', name: 'Kroketten (6x)', price: 4.50, desc: '6x Kroketten' },
+        { id: 'kroketten10', name: 'Kroketten (10x)', price: 7.50, desc: '10x Kroketten' },
       ],
       'Buckets': [
-        { id: 'bucket2', name: 'Small Mix Bucket (2p)', price: 29.90,desc: 'Gönnt Euch zu zweit den Bucket mit ca. 540g HotWings (10-14 Stück) und 10 mild gewürzten Crispy Filets. Dazu gibt es 2 Beilagen nach Wahl und 3 Dips.' },
-        { id: 'bucket3', name: 'Medium Mix Bucket (3p)', price: 34.90,desc: 'Unser beliebter Bucket für 3 Personen mit ca. 400g HotWings (7-10 Stück), 8 knusprigen Crispy Filets und 8 mild gewürzten Filet Bites. Dazu gibt es 3 Beilagen nach Wahl und 4 Dips.' },
-        { id: 'bucketparty', name: 'Party Bucket (4p)', price: 44.90,desc: 'Unser Bucket für großen Hunger mit 4 Quick Chicken Burger "S", ca. 640g HotWings (12-16 Stück) und 8 knusprig leckeren Crispy Filets. Dazu gibt es 4 Beilagen Deiner Wahl und 2 Dips.' },
-        { id: 'bucketfilet', name: 'Filet Bucket', price: 24.90,desc: '14 Filet Bites, 4 Crispy Filets, 2 Beilagen nach Wahl, 2 Dips nach Wahl.' },
-        { id: 'bucketsnack', name: 'Snack Bucket', price: 22.00,desc: '6 Mozzarella, 6 Zwiebelringe, 6 Kroketten, 6 Nuggets, 6 Chilli Cheese, nach Wahl 4 Dip.' },
+        { id: 'bucket2', name: 'Small Mix Bucket (2p)', price: 29.90, desc: 'Gönnt Euch zu zweit den Bucket mit ca. 540g HotWings (10-14 Stück) und 10 mild gewürzten Crispy Filets. Dazu gibt es 2 Beilagen nach Wahl und 3 Dips.' },
+        { id: 'bucket3', name: 'Medium Mix Bucket (3p)', price: 34.90, desc: 'Unser beliebter Bucket für 3 Personen mit ca. 400g HotWings (7-10 Stück), 8 knusprigen Crispy Filets und 8 mild gewürzten Filet Bites. Dazu gibt es 3 Beilagen nach Wahl und 4 Dips.' },
+        { id: 'bucketparty', name: 'Party Bucket (4p)', price: 44.90, desc: 'Unser Bucket für großen Hunger mit 4 Quick Chicken Burger "S", ca. 640g HotWings (12-16 Stück) und 8 knusprig leckeren Crispy Filets. Dazu gibt es 4 Beilagen Deiner Wahl und 2 Dips.' },
+        { id: 'bucketfilet', name: 'Filet Bucket', price: 24.90, desc: '14 Filet Bites, 4 Crispy Filets, 2 Beilagen nach Wahl, 2 Dips nach Wahl.' },
+        { id: 'bucketsnack', name: 'Snack Bucket', price: 22.00, desc: '6 Mozzarella, 6 Zwiebelringe, 6 Kroketten, 6 Nuggets, 6 Chilli Cheese, nach Wahl 4 Dip.' },
       ],
       'Beilagen': [
-        { id: 'pomssmall', name: 'Pommes Klein', price: 2.90,desc: 'Klassische Pommes' },
-        { id: 'pomslarge', name: 'Pommes Groß', price: 3.90,desc: 'Klassische Pommes' },
-        { id: 'wedgessmall', name: 'Wedges Klein', price: 2.90,desc: 'Wedges' },
-        { id: 'wedgeslarge', name: 'Wedges Groß', price: 3.90,desc: 'Wedges' },
-        { id: 'salat', name: 'Clausthalsalat', price: 3.50,desc: 'Frischer Salat' },
-        { id: 'gemischtersalat', name: 'Gemischter Salat (Klein)', price: 3.50,desc: 'Gemischter Salat' },
-        { id: 'yoyochili', name: 'Yoyo\'s Chili Pommes', price: 4.50,desc: 'Yoyo\'s Chili Pommes' },
+        { id: 'pomssmall', name: 'Pommes Klein', price: 2.90, desc: 'Klassische Pommes' },
+        { id: 'pomslarge', name: 'Pommes Groß', price: 3.90, desc: 'Klassische Pommes' },
+        { id: 'wedgessmall', name: 'Wedges Klein', price: 2.90, desc: 'Wedges' },
+        { id: 'wedgeslarge', name: 'Wedges Groß', price: 3.90, desc: 'Wedges' },
+        { id: 'salat', name: 'Clausthalsalat', price: 3.50, desc: 'Frischer Salat' },
+        { id: 'gemischtersalat', name: 'Gemischter Salat (Klein)', price: 3.50, desc: 'Gemischter Salat' },
+        { id: 'yoyochili', name: 'Yoyo\'s Chili Pommes', price: 4.50, desc: 'Yoyo\'s Chili Pommes' },
       ],
       'Dips & Soßen': [
-        { id: 'bbqsauce', name: 'BBQ Soße', price: 0.70,desc: 'BBQ Soße' },
-        { id: 'knoblauch', name: 'Knoblauchsauce', price: 0.70,desc: 'Knoblauchsauce' },
-        { id: 'ketchup', name: 'Ketchup', price: 0.50,desc: 'Ketchup' },
-        { id: 'mayo', name: 'Mayonnaise', price: 0.50,desc: 'Mayonnaise' },
+        { id: 'bbqsauce', name: 'BBQ Soße', price: 0.70, desc: 'BBQ Soße' },
+        { id: 'knoblauch', name: 'Knoblauchsauce', price: 0.70, desc: 'Knoblauchsauce' },
+        { id: 'ketchup', name: 'Ketchup', price: 0.50, desc: 'Ketchup' },
+        { id: 'mayo', name: 'Mayonnaise', price: 0.50, desc: 'Mayonnaise' },
       ],
       'Softdrinks': [
-        { id: 'cola', name: 'Cola/Fanta/Sprite (0,33l)', price: 2.50,desc: '0,33l' },
-        { id: 'cola125', name: 'Cola/Fanta/Sprite (1,25l)', price: 7.00,desc: '1,25l' },
-        { id: 'apfelschorle', name: 'Apfelschorle (0,33l)', price: 2.50,desc: '0,33l' },
-        { id: 'water', name: 'Wasser (0,33l)', price: 2.20,desc: '0,33l' },
-        { id: 'gingerale', name: 'Ginger Ale (0,33l)', price: 2.90,desc: '0,33l' },
-        { id: 'bitterlemon', name: 'Bitter Lemon (0,33l)', price: 2.90,desc: '0,33l' },
-        { id: 'tonic', name: 'Tonic Wasser (0,33l)', price: 2.90,desc: '0,33l' },
-        { id: 'schokolade', name: 'Kalte Schokolade (0,5l)', price: 3.00,desc: '0,5l' },
-        { id: 'erdbeermilch', name: 'Kalte Erdbeermilch (0,5l)', price: 3.00,desc: '0,5l' },
-        { id: 'icetea', name: 'Ice Tea (0,33l)', price: 2.50,desc: '0,33l' },
-        { id: 'ayran', name: 'Ayran (0,25l)', price: 2.50,desc: '0,25l' },
-        { id: 'uludag', name: 'Uludag (0,33l)', price: 2.50,desc: '0,33l' },
-        { id: 'apfelsaft', name: 'Apfelsaft (0,2l)', price: 2.90,desc: '0,2l' },
-        { id: 'kirschsaft', name: 'Kirschsaft (0,2l)', price: 2.90,desc: '0,2l' },
-        { id: 'orangensaft', name: 'Orangensaft (0,2l)', price: 2.90,desc: '0,2l' },
+        { id: 'cola', name: 'Cola/Fanta/Sprite (0,33l)', price: 2.50, desc: '0,33l' },
+        { id: 'cola125', name: 'Cola/Fanta/Sprite (1,25l)', price: 7.00, desc: '1,25l' },
+        { id: 'apfelschorle', name: 'Apfelschorle (0,33l)', price: 2.50, desc: '0,33l' },
+        { id: 'water', name: 'Wasser (0,33l)', price: 2.20, desc: '0,33l' },
+        { id: 'gingerale', name: 'Ginger Ale (0,33l)', price: 2.90, desc: '0,33l' },
+        { id: 'bitterlemon', name: 'Bitter Lemon (0,33l)', price: 2.90, desc: '0,33l' },
+        { id: 'tonic', name: 'Tonic Wasser (0,33l)', price: 2.90, desc: '0,33l' },
+        { id: 'schokolade', name: 'Kalte Schokolade (0,5l)', price: 3.00, desc: '0,5l' },
+        { id: 'erdbeermilch', name: 'Kalte Erdbeermilch (0,5l)', price: 3.00, desc: '0,5l' },
+        { id: 'icetea', name: 'Ice Tea (0,33l)', price: 2.50, desc: '0,33l' },
+        { id: 'ayran', name: 'Ayran (0,25l)', price: 2.50, desc: '0,25l' },
+        { id: 'uludag', name: 'Uludag (0,33l)', price: 2.50, desc: '0,33l' },
+        { id: 'apfelsaft', name: 'Apfelsaft (0,2l)', price: 2.90, desc: '0,2l' },
+        { id: 'kirschsaft', name: 'Kirschsaft (0,2l)', price: 2.90, desc: '0,2l' },
+        { id: 'orangensaft', name: 'Orangensaft (0,2l)', price: 2.90, desc: '0,2l' },
       ],
       'Biere': [
-        { id: 'krombacher', name: 'Krombacher Pils (0,33l)', price: 3.90,desc: '0,33l' },
-        { id: 'korbi_alkfrei', name: 'Krombacher Alkoholfrei (0,33l)', price: 3.90,desc: '0,33l Alkoholfrei' },
-        { id: 'koestritzer', name: 'Köstritzer Schwarzbier (0,33l)', price: 3.90,desc: '0,33l' },
-        { id: 'radler', name: 'Radler (0,33l)', price: 3.90,desc: '0,33l' },
-        { id: 'radler_alkfrei', name: 'Radler Alkoholfrei (0,33l)', price: 3.90,desc: '0,33l Alkoholfrei' },
-        { id: 'erdinger', name: 'Erdinger Weißbier (0,5l)', price: 4.90,desc: '0,5l' },
-        { id: 'erdinger_alkfrei', name: 'Erdinger Alkoholfrei (0,5l)', price: 4.90,desc: '0,5l Alkoholfrei' },
+        { id: 'krombacher', name: 'Krombacher Pils (0,33l)', price: 3.90, desc: '0,33l' },
+        { id: 'korbi_alkfrei', name: 'Krombacher Alkoholfrei (0,33l)', price: 3.90, desc: '0,33l Alkoholfrei' },
+        { id: 'koestritzer', name: 'Köstritzer Schwarzbier (0,33l)', price: 3.90, desc: '0,33l' },
+        { id: 'radler', name: 'Radler (0,33l)', price: 3.90, desc: '0,33l' },
+        { id: 'radler_alkfrei', name: 'Radler Alkoholfrei (0,33l)', price: 3.90, desc: '0,33l Alkoholfrei' },
+        { id: 'erdinger', name: 'Erdinger Weißbier (0,5l)', price: 4.90, desc: '0,5l' },
+        { id: 'erdinger_alkfrei', name: 'Erdinger Alkoholfrei (0,5l)', price: 4.90, desc: '0,5l Alkoholfrei' },
       ],
       'Desserts': [
-        { id: 'baklava', name: 'Baklava (4 Stück)', price: 4.20, desc: '4 Stück Baklava' },
+        { id: 'baklava', name: 'Baklava (4 Stück)', price: 4.00, desc: '4 Stück Baklava' },
         { id: 'kuchen', name: 'Kuchen (pro Stück)', price: 2.50, desc: 'Pro Stück' },
       ],
     };
 
     let cart = JSON.parse(localStorage.getItem('cart')) || {};
-    
+
     // Clean up cart from local storage if any items are no longer in PRODUCTS
     let cartCleaned = false;
     Object.keys(cart).forEach(id => {
@@ -806,49 +910,49 @@
       const menu = document.getElementById('menu');
       const categoryNav = document.getElementById('categoryNav');
       menu.innerHTML = '';
-      if(categoryNav && searchQuery === '') categoryNav.innerHTML = '';
-      
+      if (categoryNav && searchQuery === '') categoryNav.innerHTML = '';
+
       Object.entries(PRODUCTS).forEach(([category, products]) => {
-        const filteredProducts = products.filter(p => 
-          p.name.toLowerCase().includes(searchQuery) || 
+        const filteredProducts = products.filter(p =>
+          p.name.toLowerCase().includes(searchQuery) ||
           (p.desc && p.desc.toLowerCase().includes(searchQuery))
         );
-        
+
         if (filteredProducts.length === 0) return;
-        
-        if(categoryNav && searchQuery === '') {
+
+        if (categoryNav && searchQuery === '') {
           const pill = document.createElement('div');
           pill.className = 'category-pill';
           pill.textContent = category;
           pill.onclick = () => {
-             const target = document.getElementById('cat-' + category.replace(/\s+/g, '-'));
-             if (target) {
-               const y = target.getBoundingClientRect().top + window.scrollY - 180;
-               window.scrollTo({top: y, behavior: 'smooth'});
-               if (window.innerWidth <= 768) toggleMenu();
-             }
+            const target = document.getElementById('cat-' + category.replace(/\s+/g, '-'));
+            if (target) {
+              const y = target.getBoundingClientRect().top + window.scrollY - 180;
+              window.scrollTo({ top: y, behavior: 'smooth' });
+              if (window.innerWidth <= 768) toggleMenu();
+            }
           };
           categoryNav.appendChild(pill);
         }
-        
+
         const categoryDiv = document.createElement('div');
         categoryDiv.className = 'category';
         categoryDiv.id = 'cat-' + category.replace(/\s+/g, '-');
-        
+
         const title = document.createElement('div');
         title.className = 'category-title';
         title.textContent = category;
         categoryDiv.appendChild(title);
-        
+
         const list = document.createElement('div');
         list.className = 'products-list';
-        
+
         filteredProducts.forEach(product => {
           const productDiv = document.createElement('div');
           productDiv.className = 'product';
-          
+
           const qty = cart[product.id] || 0;
-          
+
           productDiv.innerHTML = `
             <div class="product-info">
               <div class="product-name">${product.name}</div>
@@ -865,11 +969,11 @@
           `;
           list.appendChild(productDiv);
         });
-        
+
         categoryDiv.appendChild(list);
         menu.appendChild(categoryDiv);
       });
-      
+
       updateTotal();
     }
 
@@ -916,7 +1020,7 @@
       document.getElementById('totalPrice').textContent = '€' + total.toFixed(2).replace('.', ',');
       updateCartDetails();
     }
-    
+
     function updateCartDetails() {
       const cartDiv = document.getElementById('cartItems');
       const detailsDiv = document.getElementById('cartDetails');
@@ -925,7 +1029,7 @@
         document.getElementById('cartExpandIcon').classList.remove('open');
         return;
       }
-      
+
       let html = '';
       Object.entries(cart).forEach(([id, qty]) => {
         Object.values(PRODUCTS).forEach(category => {
@@ -950,7 +1054,7 @@
       html += `<div style="margin-top: 1rem; font-weight: 700; text-align: right; padding-bottom: 0.5rem;">Total: €${calculateTotal().toFixed(2).replace('.', ',')}</div>`;
       cartDiv.innerHTML = html;
     }
-    
+
     function toggleCart() {
       const detailsDiv = document.getElementById('cartDetails');
       const icon = document.getElementById('cartExpandIcon');
@@ -969,7 +1073,7 @@
       const isAbholung = document.querySelector('input[name="deliveryType"]:checked').value === 'abholung';
       const lieferungFields = document.getElementById('lieferungFields');
       const abholungFields = document.getElementById('abholungFields');
-      
+
       if (isAbholung) {
         lieferungFields.style.display = 'none';
         abholungFields.style.display = 'block';
@@ -977,7 +1081,7 @@
         lieferungFields.style.display = 'block';
         abholungFields.style.display = 'none';
       }
-      
+
       updateDeliveryInfoSummary();
       updateTotal();
     }
@@ -996,7 +1100,7 @@
       }
     }
 
-    let deliveryInfoOpen = true;
+    let deliveryInfoOpen = false;
     function toggleDeliveryInfo() {
       deliveryInfoOpen = !deliveryInfoOpen;
       const body = document.getElementById('deliveryInfoBody');
@@ -1012,7 +1116,7 @@
       const clausthalNote = document.getElementById('clausthalNote');
       const otherNote = document.getElementById('otherNote');
       const doorAddress = document.getElementById('doorAddress');
-      
+
       if (location === 'other') {
         otherField.style.display = 'block';
         clausthalNote.style.display = 'none';
@@ -1024,7 +1128,7 @@
         otherNote.style.display = 'none';
         doorAddress.placeholder = 'Lieferadresse (Clausthal-Zellerfeld)';
       }
-      
+
       updateDeliveryInfoSummary();
       updateTotal();
     }
@@ -1033,7 +1137,7 @@
       const deliveryTypeEl = document.querySelector('input[name="deliveryType"]:checked');
       const isAbholung = deliveryTypeEl ? deliveryTypeEl.value === 'abholung' : false;
       if (isAbholung) return 0;
-      
+
       const locationEl = document.querySelector('input[name="location"]:checked');
       const location = locationEl ? locationEl.value : 'clausthal';
       if (location === 'clausthal') {
@@ -1048,7 +1152,7 @@
         alert('Bitte fügen Sie Artikel hinzu, bevor Sie bestellen');
         return;
       }
-      
+
       const deliveryTypeEl = document.querySelector('input[name="deliveryType"]:checked');
       const isAbholung = deliveryTypeEl ? deliveryTypeEl.value === 'abholung' : false;
       const locationEl = document.querySelector('input[name="location"]:checked');
@@ -1056,7 +1160,7 @@
       let doorName = '';
       let doorAddress = '';
       let deliveryInfo = '';
-      
+
       if (isAbholung) {
         const abholTime = document.getElementById('abholTime').value.trim();
         if (!abholTime) {
@@ -1067,24 +1171,24 @@
         deliveryInfo = `\n\nAbholung (Keine Liefergebühr)\nAbholzeit: ca. ${abholTime} Minuten`;
       } else {
         doorName = document.getElementById('doorName').value.trim();
-        
+
         if (!doorName) {
           alert('Bitte geben Sie den Namen an der Tür ein');
           document.getElementById('doorName').focus();
           return;
         }
-        
+
         doorAddress = document.getElementById('doorAddress').value.trim();
         if (!doorAddress) {
           alert('Bitte geben Sie die Lieferadresse ein');
           document.getElementById('doorAddress').focus();
           return;
         }
-        
+
         const fee = calculateDeliveryFee();
         deliveryInfo = `\n\nName an der Tür: ${doorName}\nLieferadresse: ${doorAddress}\nLiefergebühr: €${fee.toFixed(2).replace('.', ',')}`;
       }
-      
+
       const items = [];
       Object.entries(cart).forEach(([id, qty]) => {
         Object.values(PRODUCTS).forEach(category => {
@@ -1092,7 +1196,7 @@
           if (product) items.push(`${qty}x ${product.name}`);
         });
       });
-      
+
       const message = `Bestellung:\n${items.join('\n')}\n\nGesamt: €${calculateTotal().toFixed(2).replace('.', ',')}${deliveryInfo}${cart['kuchen'] ? '\n\n⚠️ Bitte Kuchenart angeben!' : ''}`;
       const encoded = encodeURIComponent(message);
       window.open(`https://wa.me/4915253415522?text=${encoded}`, '_blank');
@@ -1100,7 +1204,7 @@
 
     // PWA Install
     let installPrompt = null;
-    
+
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       installPrompt = e;
@@ -1126,19 +1230,23 @@
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(err => console.log('SW failed:', err));
     }
-  
+
     renderMenu();
     handleLocationChange();
   </script>
 
-  <footer style="margin-top: 5rem; padding: 3rem 1.5rem 2rem; text-align: center; font-family: 'Outfit', sans-serif; border-top: 1px solid var(--card-border);">
-    <div style="font-size: 1rem; font-weight: 700; color: var(--text-color); letter-spacing: 0.04em; margin-bottom: 0.4rem;">MonAmie Order</div>
+  <footer
+    style="margin-top: 5rem; padding: 3rem 1.5rem 2rem; text-align: center; font-family: 'Outfit', sans-serif; border-top: 1px solid var(--card-border);">
+    <div
+      style="font-size: 1rem; font-weight: 700; color: var(--text-color); letter-spacing: 0.04em; margin-bottom: 0.4rem;">
+      MonAmie Order</div>
     <div style="font-size: 0.78rem; color: #94a3b8; letter-spacing: 0.02em;">
       Designed &amp; built by
       <a href="https://toklutimur.uk" target="_blank" rel="noopener"
-         style="color: var(--accent); text-decoration: none; font-weight: 600; transition: opacity 0.2s;"
-         onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Fırat Tekmanlı</a>
+        style="color: var(--accent); text-decoration: none; font-weight: 600; transition: opacity 0.2s;"
+        onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Fırat Tekmanlı</a>
     </div>
   </footer>
 </body>
+
 </html>
