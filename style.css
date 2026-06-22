@@ -373,6 +373,134 @@
       }
     }
 
+    /* ===== RIGHT SCROLL INDICATOR ===== */
+    .scroll-indicator {
+      position: fixed;
+      right: 0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 500;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0;
+      padding: 0.5rem 0;
+      background: none;
+      /* Fade transition — visible while scrolling, fades when idle */
+      opacity: 1;
+      transition: opacity 0.6s ease;
+    }
+
+    .scroll-indicator.idle {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Vertical line track behind dots */
+    .scroll-indicator::before {
+      content: '';
+      position: absolute;
+      right: 5px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--card-border);
+      border-radius: 2px;
+      z-index: 0;
+    }
+
+    .scroll-indicator-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      cursor: pointer;
+      padding: 6px 20px 6px 0; /* space for track on the right */
+      -webkit-tap-highlight-color: transparent;
+      width: 100%;
+      min-height: 32px;
+      /* default scale/opacity for distance >= 3 */
+      --item-scale: 1;
+      --item-opacity: 0.35;
+    }
+
+    /* Size gradient based on distance from active item */
+    .scroll-indicator-item[data-dist="0"] {
+      --item-scale: 1.25;
+      --item-opacity: 1;
+    }
+    .scroll-indicator-item[data-dist="1"] {
+      --item-scale: 1.1;
+      --item-opacity: 0.7;
+    }
+    .scroll-indicator-item[data-dist="2"] {
+      --item-scale: 1.05;
+      --item-opacity: 0.5;
+    }
+
+    /* Permanently visible dim labels */
+    .scroll-indicator-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--text-color);
+      opacity: var(--item-opacity);
+      transform: scale(var(--item-scale));
+      transform-origin: right center;
+      white-space: nowrap;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      text-transform: capitalize;
+    }
+
+    .scroll-indicator-item:hover .scroll-indicator-label {
+      opacity: 0.8;
+    }
+
+    /* Active state: text lights up */
+    .scroll-indicator-item[data-dist="0"] .scroll-indicator-label {
+      color: var(--red);
+      font-weight: 800;
+      text-shadow: 0 0 8px rgba(223,34,35,0.4);
+    }
+
+    /* Single sliding glowing dot */
+    .scroll-indicator-slider {
+      position: absolute;
+      right: 1px; /* Center over the 2px track at right: 5px */
+      top: 0;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 8px var(--red), 0 0 15px rgba(223,34,35,0.6);
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Mobile adjustments: slightly smaller text so it fits 16 items */
+    @media (max-width: 768px) {
+      .scroll-indicator {
+        right: 0.2rem;
+        padding: 0.25rem 0;
+      }
+      .scroll-indicator-label {
+        font-size: 0.65rem;
+      }
+      .scroll-indicator-item {
+        padding: 4px 16px 4px 0;
+        min-height: 26px;
+      }
+      .scroll-indicator-slider {
+        width: 8px;
+        height: 8px;
+        right: 2px;
+      }
+      .scroll-indicator::before {
+        right: 5px;
+      }
+    }
+
     .main-layout {
       display: flex;
       align-items: flex-start;
@@ -708,15 +836,54 @@
         font-size: 0.8rem;
         min-width: 14px;
       }
+      .category-title {
+        margin-bottom: -2.5rem;
+      }
     }
 
     .category-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin: 1.5rem 0 0.75rem 0;
-      color: var(--red);
-      border-left: 4px solid var(--red);
-      padding-left: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 2.5rem 0 -3.5rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Horizontal rule left of label */
+    .category-title::before {
+      content: '';
+      flex: 0 0 1.5rem;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--red));
+      border-radius: 2px;
+    }
+
+    /* Horizontal rule right of label — stretches to fill remaining space */
+    .category-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(to right, var(--red), rgba(223,34,35,0.08));
+      border-radius: 2px;
+    }
+
+    /* The text pill is a <span> injected via JS — style it here */
+    .category-title-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--red) 0%, #b91c1c 100%);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      box-shadow: 0 3px 10px rgba(223,34,35,0.35), 0 1px 3px rgba(0,0,0,0.12);
+      white-space: nowrap;
     }
 
     .products-list {

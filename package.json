@@ -14,5 +14,9 @@
   "description": "",
   "devDependencies": {
     "vite": "^8.0.16"
+  },
+  "dependencies": {
+    "jsdom": "^29.1.1",
+    "puppeteer": "^24.43.1"
   }
 }

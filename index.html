@@ -8,7 +8,8 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#000000">
   <meta name="author" content="Fırat Tekmanlı">
-  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
 </head>
 
@@ -51,8 +52,7 @@
           <button class="lang-btn" onclick="changeLanguage('zh-CN')" title="中文" aria-label="中文">🇨🇳</button>
         </div>
         <!-- Mobile search icon -->
-        <button class="header-search-btn" id="mobileSearchBtn" aria-label="Ara"
-          onclick="toggleMobileSearch()">
+        <button class="header-search-btn" id="mobileSearchBtn" aria-label="Ara" onclick="toggleMobileSearch()">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M21 21l-4.3-4.3" />
             <circle cx="11" cy="11" r="7" />
@@ -98,14 +98,19 @@
     </div>
   </div>
 
+  <!-- Right-side scroll category indicator -->
+  <nav class="scroll-indicator" id="scrollIndicator" aria-label="Kategorie-Navigator"></nav>
+
   <div class="modal-overlay" id="cartModal" onclick="if(event.target === this) toggleCart()">
     <div class="modal-content" style="max-height: 90vh; display: flex; flex-direction: column;">
       <div class="modal-title" style="display: flex; justify-content: space-between; align-items: center;">
         <span>Mein Warenkorb</span>
-        <button onclick="toggleCart()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color);">&times;</button>
+        <button onclick="toggleCart()"
+          style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color);">&times;</button>
       </div>
       <div style="overflow-y: auto; flex: 1; margin: 1rem 0;">
-        <div class="delivery-info" style="border-bottom: none; border-radius: 12px; border: 1px solid var(--card-border); margin-bottom: 1rem;">
+        <div class="delivery-info"
+          style="border-bottom: none; border-radius: 12px; border: 1px solid var(--card-border); margin-bottom: 1rem;">
           <div class="delivery-info-header" id="deliveryInfoHeader" onclick="toggleDeliveryInfo()">
             <span class="delivery-info-label">🚚 Bestelldetails</span>
             <span class="delivery-info-summary" id="deliveryInfoSummary">Lieferung · Clausthal-Zellerfeld</span>
@@ -114,7 +119,8 @@
           <div class="delivery-info-body" id="deliveryInfoBody">
             <div style="display: flex; gap: 1rem; margin-bottom: 0.75rem;">
               <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
-                <input type="radio" name="deliveryType" value="lieferung" checked onchange="toggleDeliveryType()"> Lieferung
+                <input type="radio" name="deliveryType" value="lieferung" checked onchange="toggleDeliveryType()">
+                Lieferung
               </label>
               <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
                 <input type="radio" name="deliveryType" value="abholung" onchange="toggleDeliveryType()"> Abholung
@@ -150,13 +156,16 @@
             </div>
           </div>
         </div>
-        <div class="cart-details open" id="cartDetails" style="max-height: none; margin-top: 0; padding-top: 0; border-top: none;">
+        <div class="cart-details open" id="cartDetails"
+          style="max-height: none; margin-top: 0; padding-top: 0; border-top: none;">
           <div class="cart-details-inner" id="cartItems"></div>
         </div>
       </div>
-      <div class="cart-summary" style="padding-top: 1rem; border-top: 1px solid var(--card-border); cursor: default; justify-content: space-between;">
+      <div class="cart-summary"
+        style="padding-top: 1rem; border-top: 1px solid var(--card-border); cursor: default; justify-content: space-between;">
         <div style="min-width: 0;">
-          <span id="itemCount">0</span> Artikel | <span id="totalPrice" style="font-weight: bold; color: var(--accent);">€0,00</span>
+          <span id="itemCount">0</span> Artikel | <span id="totalPrice"
+            style="font-weight: bold; color: var(--accent);">€0,00</span>
         </div>
         <div style="display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;">
           <button class="checkout-btn" onclick="checkout()">Über WhatsApp bestellen</button>
@@ -167,9 +176,12 @@
 
   <div class="modal-overlay" id="customModal" onclick="if(event.target === this) closeCustomModal()">
     <div class="modal-content">
-      <img id="customModalImg" src="" alt="" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem; display: none;">
+      <img id="customModalImg" src="" alt=""
+        style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem; display: none;">
       <div class="modal-title" id="customModalTitle">Produkt anpassen</div>
-      <div id="customModalDesc" style="font-size: 0.85rem; color: var(--text-muted, #94a3b8); margin: 0.5rem 0 1rem 0; line-height: 1.5; padding: 0.75rem 1rem; background: var(--card-bg, rgba(255,255,255,0.04)); border-radius: 8px; border: 1px solid var(--card-border, rgba(255,255,255,0.08)); display: none;"></div>
+      <div id="customModalDesc"
+        style="font-size: 0.85rem; color: var(--text-muted, #94a3b8); margin: 0.5rem 0 1rem 0; line-height: 1.5; padding: 0.75rem 1rem; background: var(--card-bg, rgba(255,255,255,0.04)); border-radius: 8px; border: 1px solid var(--card-border, rgba(255,255,255,0.08)); display: none;">
+      </div>
       <div class="modal-subtitle" id="customModalSubtitle">Im Burger:</div>
       <div class="modal-options">
         <label class="modal-option" id="label-zwiebeln"><input type="checkbox" value="Ohne Zwiebeln" class="custom-cb"
@@ -234,8 +246,10 @@
         onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Fırat Tekmanlı</a>
     </div>
     <div style="font-size: 0.85rem; display: flex; justify-content: center; gap: 1.5rem;">
-      <a href="./impressum.html" style="color: var(--text-color); text-decoration: none; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Impressum</a>
-      <a href="./datenschutz.html" style="color: var(--text-color); text-decoration: none; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Datenschutz</a>
+      <a href="./impressum.html" style="color: var(--text-color); text-decoration: none; transition: opacity 0.2s;"
+        onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Impressum</a>
+      <a href="./datenschutz.html" style="color: var(--text-color); text-decoration: none; transition: opacity 0.2s;"
+        onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Datenschutz</a>
     </div>
   </footer>
 </body>
