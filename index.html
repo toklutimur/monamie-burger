@@ -48,6 +48,29 @@
       justify-content: flex-start;
     }
 
+    .header-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .language-flags {
+      display: flex;
+      gap: 0.4rem;
+      font-size: 1.1rem;
+    }
+
+    .flag-icon {
+      cursor: pointer;
+      transition: transform 0.2s;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .flag-icon:hover {
+      transform: scale(1.2);
+    }
+
     .header-title {
       text-align: left;
       font-size: 1.4rem;
@@ -237,9 +260,6 @@
         text-align: center;
       }
 
-      .products-list {
-        grid-template-columns: 1fr;
-      }
     }
 
     @media (max-width: 480px) {
@@ -273,59 +293,93 @@
 
     .products-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 0.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      row-gap: 4rem;
       margin-bottom: 1.5rem;
+      padding-top: 3.5rem;
     }
 
     .product {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 0.5rem 0.75rem;
+      border-radius: 20px;
+      padding: 1rem;
+      padding-top: 0;
       transition: all 0.2s;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      gap: 0.75rem;
+      position: relative;
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .product-img-wrapper {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.15));
+      border-radius: 50%;
+    }
+
+    .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      background-color: #f3f4f6;
     }
 
     .product:hover {
       border-color: var(--accent);
-      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.08);
+      box-shadow: 0 6px 17px rgba(0, 0, 0, 0.13);
     }
 
     .product-info {
+      width: 100%;
+      margin-top: 65px;
+      margin-bottom: 0.5rem;
       flex: 1;
-      min-width: 0;
+      display: flex;
+      flex-direction: column;
     }
 
     .product-name {
-      font-weight: 600;
-      font-size: 0.95rem;
-      line-height: 1.3;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.2;
+      color: var(--text-color);
+      margin-bottom: 0.25rem;
     }
 
     .product-desc {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: #64748b;
-      margin-top: 0.15rem;
       line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-top: 0.25rem;
     }
 
     .product-actions {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 0.75rem;
-      flex-shrink: 0;
+      width: 100%;
+      margin-top: auto;
+      padding-top: 0.5rem;
     }
 
     .product-price {
       font-weight: 700;
       color: var(--accent);
-      font-size: 0.95rem;
-      text-align: right;
-      min-width: 55px;
+      font-size: 1rem;
     }
 
     .controls {
@@ -602,6 +656,235 @@
         padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
       }
     }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.3s;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .modal-overlay.show {
+      visibility: visible;
+      opacity: 1;
+    }
+    .modal-content {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transform: translateY(20px);
+      transition: all 0.3s;
+    }
+    .modal-overlay.show .modal-content {
+      transform: translateY(0);
+    }
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: var(--text-color);
+    }
+    .modal-subtitle {
+      font-size: 0.95rem;
+      color: #64748b;
+      margin-bottom: 1.25rem;
+      font-weight: 500;
+    }
+    .modal-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .modal-option {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--text-color);
+    }
+    .modal-option input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #475569;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+    
+    /* Image Modal Styles */
+    #imageModal {
+      z-index: 3000;
+      background: rgba(0,0,0,0.85);
+    }
+    .image-modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: scale(0.9);
+      transition: transform 0.3s;
+    }
+    #imageModal.show .image-modal-content {
+      transform: scale(1);
+    }
+    .image-modal-content img {
+      max-width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
+    .image-modal-title {
+      color: #fff;
+      margin-top: 1rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    .image-modal-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: #fff;
+      font-size: 2.5rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+    
+    /* Google Translate Overrides */
+    body { top: 0 !important; }
+    .skiptranslate iframe, .goog-te-banner-frame { display: none !important; }
+    #goog-gt-tt { display: none !important; }
+    .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
+    .VIpgJd-Zvi9od-ORHb-OEVmcd { display: none !important; }
+
+    /* Hero Feature Section */
+    .hero-feature {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #f97316 0%, #fbbf24 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      color: #fff;
+      box-shadow: 0 10px 25px rgba(249, 115, 22, 0.3);
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-content {
+      flex: 1;
+      z-index: 1;
+    }
+    .hero-content h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.9;
+      margin-bottom: 0.5rem;
+    }
+    .hero-content h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+    .hero-content p {
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+      max-width: 400px;
+    }
+    .hero-content .btn-primary {
+      background: #fff;
+      color: var(--accent);
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      border: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hero-content .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .hero-image {
+      flex: 0 0 200px;
+      height: 200px;
+      position: relative;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+    }
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      padding: 10px;
+    }
+    @media (max-width: 768px) {
+      .hero-feature {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 1.5rem;
+      }
+      .hero-content p {
+        max-width: 100%;
+      }
+      .hero-image {
+        flex: 0 0 150px;
+        height: 150px;
+        margin-bottom: 1rem;
+      }
+    }
   </style>
 </head>
 
@@ -609,7 +892,17 @@
   <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
   <div class="nav-overlay" id="navOverlay" onclick="toggleMenu()"></div>
   <header>
-    <div class="header-title">MonAmie Order</div>
+    <div class="header-brand">
+      <div class="header-title">MonAmie Order</div>
+      <div class="language-flags">
+        <span class="flag-icon" title="German" onclick="changeLanguage('de')">🇩🇪</span>
+        <span class="flag-icon" title="Chinese" onclick="changeLanguage('zh-CN')">🇨🇳</span>
+        <span class="flag-icon" title="Turkish" onclick="changeLanguage('tr')">🇹🇷</span>
+        <span class="flag-icon" title="English" onclick="changeLanguage('en')">🇬🇧</span>
+        <span class="flag-icon" title="Arabic" onclick="changeLanguage('ar')">🇸🇦</span>
+        <span class="flag-icon" title="French" onclick="changeLanguage('fr')">🇫🇷</span>
+      </div>
+    </div>
     <input type="text" id="searchInput" placeholder="Search menu..." oninput="filterMenu()">
   </header>
   <div class="install-banner" id="installBanner">
@@ -619,7 +912,20 @@
 
   <div class="main-layout">
     <div class="category-nav" id="categoryNav"></div>
-    <div class="container" id="menu"></div>
+    <div class="container" id="menu">
+      <!-- Hero Feature Section -->
+      <div class="hero-feature">
+        <div class="hero-content">
+          <h2>Günün Menüsü</h2>
+          <h3>Clausthal Burger Menü</h3>
+          <p>Käse überbacken, mit Clausthal Salat. Öne çıkan lezzetimiz!</p>
+          <button class="btn-primary" onclick="scrollToCategory('Chicken Menüs')">Hemen Sipariş Ver</button>
+        </div>
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400" alt="Clausthal Burger">
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="cart-footer" id="cartFooter">
@@ -680,6 +986,31 @@
     </div>
     <div class="cart-details" id="cartDetails">
       <div class="cart-details-inner" id="cartItems"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="customModal" onclick="if(event.target === this) closeCustomModal()">
+    <div class="modal-content">
+      <div class="modal-title" id="customModalTitle">Produkt anpassen</div>
+      <div class="modal-subtitle" id="customModalSubtitle">Im Burger:</div>
+      <div class="modal-options">
+        <label class="modal-option" id="label-zwiebeln"><input type="checkbox" value="Ohne Zwiebeln" class="custom-cb" id="cb-zwiebeln"> Ohne Zwiebeln</label>
+        <label class="modal-option" id="label-salat"><input type="checkbox" value="Ohne Salat" class="custom-cb" id="cb-salat"> Ohne Salat</label>
+        <label class="modal-option" id="label-tomaten"><input type="checkbox" value="Ohne Tomaten" class="custom-cb" id="cb-tomaten"> Ohne Tomaten</label>
+        <label class="modal-option" id="label-gurken"><input type="checkbox" value="Ohne Gurken" class="custom-cb" id="cb-gurken"> Ohne Gurken</label>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeCustomModal()">Abbrechen</button>
+        <button class="btn-primary" onclick="confirmCustomModal()">Hinzufügen</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="imageModal" onclick="if(event.target === this) closeImageModal()">
+    <div class="image-modal-content">
+      <span class="image-modal-close" onclick="closeImageModal()">&times;</span>
+      <img id="imageModalImg" src="" alt="">
+      <div class="image-modal-title" id="imageModalTitle"></div>
     </div>
   </div>
 
@@ -867,14 +1198,74 @@
       ],
     };
 
+    const imageMap = {
+      'A1': 'A1.jpeg',
+      'A2 (Crispyfilets)': 'A2.jpeg',
+      'A3 (2x Monamie Burger)': 'A3.jpeg',
+      'A4': 'A4.jpeg',
+      'B3': 'B3.jpeg',
+      'BBQ-Wrap Menü': 'bbq wrap menü.jpeg',
+      'Beef Burger': 'beef burger menü.jpeg',
+      'Beef Wrap': 'beef wrap menü.jpeg',
+      'Big Mama': 'big mama menü.jpeg',
+      'Bro Beef Burger Menü': 'bro beef burger menü.jpeg',
+      'Cheeseburger': 'cheeseburger menü.jpeg',
+      'Chicken-Wrap Menü': 'chicken wrap menü.jpeg',
+      'Chili Beef Menü': 'chilli beefburger menü.jpeg',
+      'Clausthal Burger Menü': 'clausthal burger menü.jpeg',
+      'Crispy Box': 'crispy box.jpeg',
+      'Crush Menü': 'crush burger menü.jpeg',
+      'Double Beef Burger': 'double beef menü.jpeg',
+      'Double Cheeseburger': 'double cheeseburger menü.jpeg',
+      'Double Crush Menü': 'double crush burger menü.jpeg',
+      'Double Royal Beef Burger': 'double royal beefburger menü.jpeg',
+      'Double Royal Cheeseburger': 'double royal cheeseburger menü.jpeg',
+      'Falafel Box': 'falafelbox.jpeg',
+      'Filet Bucket': 'fillet bucket.jpeg',
+      'HotWings Box': 'hot wings box.jpeg',
+      'King Wings Menü': 'king wings.jpeg',
+      'Medium Mix Bucket (3p)': 'medium mix bucket.jpeg',
+      'Nugget-Wrap Menü': 'nuget wrap menü.jpeg',
+      'Nuggets Box': 'nugget box.jpeg',
+      'Nugget Burger Menü': 'nugget burger menü.jpeg',
+      'Party Bucket (4p)': 'party bucket.jpeg',
+      'Pomwrap': 'pomwrap.jpeg',
+      'Royal Beef Burger': 'royal beef burger menü.jpeg',
+      'Royal Cheeseburger': 'royal cheese burger menü.jpeg',
+      'Small Mix Bucket (2p)': 'small mix bucket.jpeg',
+      'Snack Bucket': 'snack bucket.jpeg',
+      'YoYo Menü': 'yoyo menü.jpeg',
+    };
+
+    function getImgUrl(name) {
+      if (imageMap[name]) return 'menus/popular menus/' + imageMap[name];
+      if (name.toLowerCase().includes('burger')) return 'menus/popular menus/clausthal burger menü.jpeg';
+      if (name.toLowerCase().includes('wrap')) return 'menus/popular menus/chicken wrap menü.jpeg';
+      if (name.toLowerCase().includes('bucket')) return 'menus/popular menus/medium mix bucket.jpeg';
+      return null;
+    }
+
+    function openImageModal(imgUrl, title) {
+      document.getElementById('imageModalImg').src = imgUrl;
+      document.getElementById('imageModalTitle').textContent = title;
+      document.getElementById('imageModal').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageModal() {
+      document.getElementById('imageModal').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
     let cart = JSON.parse(localStorage.getItem('cart')) || {};
 
     // Clean up cart from local storage if any items are no longer in PRODUCTS
     let cartCleaned = false;
     Object.keys(cart).forEach(id => {
+      const baseId = id.split('|')[0];
       let found = false;
       Object.values(PRODUCTS).forEach(category => {
-        if (category.some(p => p.id === id)) found = true;
+        if (category.some(p => p.id === baseId)) found = true;
       });
       if (!found) {
         delete cart[id];
@@ -906,10 +1297,24 @@
       renderMenu(query);
     }
 
+    function scrollToCategory(categoryName) {
+      const target = document.getElementById('cat-' + categoryName.replace(/\s+/g, '-'));
+      if (target) {
+        const y = target.getBoundingClientRect().top + window.scrollY - 180;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        if (window.innerWidth <= 768) toggleMenu();
+      }
+    }
+
     function renderMenu(searchQuery = '') {
       const menu = document.getElementById('menu');
       const categoryNav = document.getElementById('categoryNav');
+      // Hero section'ı koru
+      const heroSection = menu.querySelector('.hero-feature');
       menu.innerHTML = '';
+      if (heroSection) {
+        menu.appendChild(heroSection);
+      }
       if (categoryNav && searchQuery === '') categoryNav.innerHTML = '';
 
       Object.entries(PRODUCTS).forEach(([category, products]) => {
@@ -951,19 +1356,31 @@
           const productDiv = document.createElement('div');
           productDiv.className = 'product';
 
-          const qty = cart[product.id] || 0;
+          const qty = Object.entries(cart).reduce((sum, [cartKey, amount]) => {
+            if (cartKey === product.id || cartKey.startsWith(product.id + '|')) {
+               return sum + amount;
+            }
+            return sum;
+          }, 0);
+          let imgUrl = getImgUrl(product.name);
+          const isFood = !['Softdrinks', 'Biere', 'Desserts', 'Dips & Soßen'].includes(category);
+          if (!imgUrl && isFood) {
+            imgUrl = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.88 3.75 3.99V22h2.5v-9.01C11.34 12.88 13 11.12 13 9V2h-2v7zm5-7v6.6l-2.4 1.8v1.6h5V2h-2.6zM15 22h2.5v-9.5h-2.5V22z'/%3E%3C/svg%3E";
+          }
+          const isSvg = imgUrl && imgUrl.startsWith('data:image/svg');
 
           productDiv.innerHTML = `
-            <div class="product-info">
+            ${imgUrl ? `<div class="product-img-wrapper" onclick="openImageModal('${imgUrl}', '${product.name.replace(/'/g, "\\'")}')" style="cursor: pointer;"><img src="${imgUrl}" alt="${product.name}" class="product-img" loading="lazy" ${isSvg ? 'style="padding: 1.5rem;"' : ''}></div>` : ''}
+            <div class="product-info" style="${!imgUrl ? 'margin-top: 1rem;' : ''}">
               <div class="product-name">${product.name}</div>
               ${product.desc ? `<div class="product-desc">${product.desc}</div>` : ''}
             </div>
             <div class="product-actions">
               <div class="product-price">€${product.price.toFixed(2).replace('.', ',')}</div>
               <div class="controls">
-                ${qty > 0 ? `<button class="btn" onclick="removeItem('${product.id}')">−</button>` : ''}
+                ${qty > 0 ? `<button class="btn" onclick="removeBaseItem('${product.id}')">−</button>` : ''}
                 ${qty > 0 ? `<span class="qty">${qty}</span>` : ''}
-                <button class="btn" onclick="addItem('${product.id}')">+</button>
+                <button class="btn" onclick="openCustomModalOrAdd('${product.id}')">+</button>
               </div>
             </div>
           `;
@@ -977,13 +1394,104 @@
       updateTotal();
     }
 
-    function addItem(id) {
+    let currentCustomizingId = null;
+
+    function openCustomModalOrAdd(id) {
+      let isCustomizable = false;
+      let productName = '';
+      let productCategory = '';
+      
+      Object.entries(PRODUCTS).forEach(([catName, category]) => {
+        const product = category.find(p => p.id === id);
+        if (product) {
+          productName = product.name;
+          productCategory = catName;
+          const n = product.name.toLowerCase();
+          
+          if (id === 'kingwings') {
+            isCustomizable = false;
+          } else if (n.includes('burger') || n.includes('menü') || n.includes('menu') || n.includes('wrap') || n.includes('dürüm') || id === 'a4' || id === 'bigmama' || id === 's_bigmama' || id === 'b3' || id === 'happybox' || id === 'bucketparty') {
+             isCustomizable = true;
+          }
+        }
+      });
+
+      if (isCustomizable) {
+        currentCustomizingId = id;
+        document.getElementById('customModalTitle').textContent = productName + ' anpassen';
+        
+        const n = productName.toLowerCase();
+        
+        let subtitleText = 'Im Burger:';
+        if (n.includes('wrap')) subtitleText = 'Im Wrap:';
+        else if (n.includes('dürüm')) subtitleText = 'Im Dürüm:';
+        document.getElementById('customModalSubtitle').textContent = subtitleText;
+
+        const isQuickChicken = n.includes('quick chicken') || id === 's_quickchicken' || id === 'happybox' || id === 'bucketparty';
+        const isBeefOrVeggie = n.includes('beef') || n.includes('cheese') || n.includes('veggie') || n.includes('halloumi');
+        const isChickenBurger = (productCategory === 'Chicken Menüs' && !n.includes('wrap')) || 
+                                (productCategory === 'Burger' && !isBeefOrVeggie) ||
+                                id === 'a4' || id === 'bigmama' || id === 's_bigmama' || id === 'b3';
+        
+        document.querySelectorAll('.custom-cb').forEach(cb => cb.checked = false);
+
+        const labelZwiebeln = document.getElementById('label-zwiebeln');
+        const labelSalat = document.getElementById('label-salat');
+        const labelTomaten = document.getElementById('label-tomaten');
+        const labelGurken = document.getElementById('label-gurken');
+
+        labelZwiebeln.style.display = 'flex';
+        labelSalat.style.display = 'flex';
+        labelTomaten.style.display = 'flex';
+        labelGurken.style.display = 'flex';
+
+        if (isQuickChicken) {
+          labelZwiebeln.style.display = 'none';
+          labelSalat.style.display = 'none';
+          labelTomaten.style.display = 'none';
+        } else if (isChickenBurger) {
+          labelTomaten.style.display = 'none';
+        }
+
+        document.getElementById('customModal').classList.add('show');
+      } else {
+        addItemExact(id);
+      }
+    }
+
+    function closeCustomModal() {
+      document.getElementById('customModal').classList.remove('show');
+      currentCustomizingId = null;
+    }
+
+    function confirmCustomModal() {
+      if (!currentCustomizingId) return;
+      const selected = Array.from(document.querySelectorAll('.custom-cb'))
+                            .filter(cb => cb.checked)
+                            .map(cb => cb.value);
+      
+      let finalId = currentCustomizingId;
+      if (selected.length > 0) {
+        finalId += '|' + selected.join(', ');
+      }
+      addItemExact(finalId);
+      closeCustomModal();
+    }
+
+    function addItemExact(id) {
       cart[id] = (cart[id] || 0) + 1;
       saveCart();
       renderMenu();
     }
 
-    function removeItem(id) {
+    function removeBaseItem(baseId) {
+      const cartKey = Object.keys(cart).find(key => key === baseId || key.startsWith(baseId + '|'));
+      if (cartKey) {
+        removeItemExact(cartKey);
+      }
+    }
+
+    function removeItemExact(id) {
       if (cart[id] > 1) {
         cart[id]--;
       } else {
@@ -1001,8 +1509,9 @@
       if (getTotalItems() === 0) return 0;
       let total = 0;
       Object.entries(cart).forEach(([id, qty]) => {
+        const baseId = id.split('|')[0];
         Object.values(PRODUCTS).forEach(category => {
-          const product = category.find(p => p.id === id);
+          const product = category.find(p => p.id === baseId);
           if (product) total += product.price * qty;
         });
       });
@@ -1032,19 +1541,23 @@
 
       let html = '';
       Object.entries(cart).forEach(([id, qty]) => {
+        const baseId = id.split('|')[0];
         Object.values(PRODUCTS).forEach(category => {
-          const product = category.find(p => p.id === id);
+          const product = category.find(p => p.id === baseId);
           if (product) {
+            const customizations = id.includes('|') ? id.split('|')[1] : '';
+            const customText = customizations ? `<div style="font-size: 0.8rem; color: #64748b; margin-top: 0.25rem;">${customizations}</div>` : '';
             html += `
               <div class="cart-item">
                 <div style="flex: 1;">
                   <div>${product.name}</div>
+                  ${customText}
                   <div style="color: var(--accent); font-weight: bold;">€${(product.price * qty).toFixed(2).replace('.', ',')}</div>
                 </div>
                 <div class="controls" style="margin-left: 1rem;">
-                  <button class="btn" onclick="removeItem('${product.id}')">−</button>
+                  <button class="btn" onclick="removeItemExact('${id}')">−</button>
                   <span class="qty">${qty}</span>
-                  <button class="btn" onclick="addItem('${product.id}')">+</button>
+                  <button class="btn" onclick="addItemExact('${id}')">+</button>
                 </div>
               </div>
             `;
@@ -1186,14 +1699,18 @@
         }
 
         const fee = calculateDeliveryFee();
-        deliveryInfo = `\n\nName an der Tür: ${doorName}\nLieferadresse: ${doorAddress}\nLiefergebühr: €${fee.toFixed(2).replace('.', ',')}`;
+        deliveryInfo = `\n\nName an der Tür: ${doorName}\nLieferadresse: ${doorAddress}`;
       }
 
       const items = [];
       Object.entries(cart).forEach(([id, qty]) => {
+        const baseId = id.split('|')[0];
         Object.values(PRODUCTS).forEach(category => {
-          const product = category.find(p => p.id === id);
-          if (product) items.push(`${qty}x ${product.name}`);
+          const product = category.find(p => p.id === baseId);
+          if (product) {
+            const customizations = id.includes('|') ? ` (${id.split('|')[1]})` : '';
+            items.push(`${qty}x ${product.name}${customizations}`);
+          }
         });
       });
 
@@ -1234,6 +1751,29 @@
     renderMenu();
     handleLocationChange();
   </script>
+
+  <div id="google_translate_element" style="display:none;"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'de',
+        includedLanguages: 'de,zh-CN,tr,en,ar,fr',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+    function changeLanguage(langCode) {
+      if (langCode === 'de') {
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + location.hostname + "; path=/;";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=." + location.hostname + "; path=/;";
+      } else {
+        document.cookie = `googtrans=/de/${langCode}; path=/`;
+        document.cookie = `googtrans=/de/${langCode}; domain=.${location.hostname}; path=/`;
+      }
+      location.reload();
+    }
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <footer
     style="margin-top: 5rem; padding: 3rem 1.5rem 2rem; text-align: center; font-family: 'Outfit', sans-serif; border-top: 1px solid var(--card-border);">
