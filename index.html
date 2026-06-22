@@ -8,996 +8,178 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#000000">
   <meta name="author" content="Fırat Tekmanlı">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-color: #f4f6f8;
-      --text-color: #1e293b;
-      --card-bg: rgba(255, 255, 255, 0.85);
-      --card-border: rgba(0, 0, 0, 0.08);
-      --accent: #f97316;
-      --accent-hover: #ea580c;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Outfit', sans-serif;
-      background: var(--bg-color);
-      color: var(--text-color);
-      padding-bottom: 260px;
-    }
-
-    header {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--card-border);
-      padding: 0.75rem 1.5rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      flex-direction: row;
-      gap: 1.5rem;
-      align-items: center;
-      justify-content: flex-start;
-    }
-
-    .header-brand {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .language-flags {
-      display: flex;
-      gap: 0.4rem;
-      font-size: 1.1rem;
-    }
-
-    .flag-icon {
-      cursor: pointer;
-      transition: transform 0.2s;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .flag-icon:hover {
-      transform: scale(1.2);
-    }
-
-    .header-title {
-      text-align: left;
-      font-size: 1.4rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: transparent;
-      background-image: linear-gradient(90deg, #f97316, #fbbf24);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      white-space: nowrap;
-    }
-
-    #searchInput {
-      flex: 1;
-      max-width: 300px;
-      padding: 0.6rem 1rem;
-      border-radius: 20px;
-      border: 1px solid var(--card-border);
-      background: var(--card-bg);
-      color: var(--text-color);
-      font-family: inherit;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    #searchInput:focus {
-      border-color: var(--accent);
-    }
-
-    .main-layout {
-      display: flex;
-      align-items: flex-start;
-      max-width: 100%;
-      margin: 0 auto;
-    }
-
-    .category-nav {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.5rem;
-      padding: 1.5rem 1rem 180px 1rem;
-      position: sticky;
-      top: 60px;
-      height: calc(100vh - 60px);
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      -webkit-overflow-scrolling: touch;
-      touch-action: pan-y;
-      min-width: 220px;
-      max-width: 280px;
-      border-right: 1px solid var(--card-border);
-      scroll-behavior: smooth;
-      transition: transform 0.3s ease;
-    }
-
-    .category-nav::-webkit-scrollbar {
-      display: none;
-    }
-
-    .menu-toggle {
-      display: none;
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 1200;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      width: 44px;
-      height: 44px;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    .category-pill {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      padding: 0.75rem 1rem;
-      border-radius: 12px;
-      text-align: left;
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-color);
-      transition: all 0.2s;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-      flex-shrink: 0;
-      user-select: none;
-    }
-
-    .category-pill:hover,
-    .category-pill.active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    .container {
-      flex: 1;
-      padding: 1.5rem;
-      min-width: 0;
-    }
-
-    @media (max-width: 768px) {
-      body {
-        padding-bottom: 300px;
-      }
-
-      .menu-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .main-layout {
-        flex-direction: column;
-      }
-
-      .category-nav {
-        position: fixed;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 280px;
-        height: 100vh;
-        max-width: 85vw;
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        z-index: 1100;
-        transform: translateX(-100%);
-        border-right: 1px solid var(--card-border);
-        padding-top: 60px;
-        padding-bottom: 80px;
-        /* override desktop grid: single column list */
-        display: flex;
-        flex-direction: column;
-        grid-template-columns: unset;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      .category-nav.open {
-        transform: translateX(0);
-      }
-
-      .nav-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.4);
-        z-index: 1050;
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-      }
-
-      .nav-overlay.show {
-        display: block;
-      }
-
-      .category-pill {
-        white-space: normal;
-        padding: 0.75rem 1rem;
-        border-radius: 12px;
-        text-align: center;
-      }
-
-      header {
-        padding-left: 70px;
-      }
-
-      /* Cart footer: stack vertically on very small screens */
-      .cart-summary {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-
-      .checkout-btn {
-        width: 100%;
-        text-align: center;
-      }
-
-    }
-
-    @media (max-width: 480px) {
-      header {
-        gap: 0.75rem;
-      }
-
-      #searchInput {
-        font-size: 0.85rem;
-        padding: 0.5rem 0.75rem;
-      }
-
-      .cart-summary>div:first-child {
-        flex: 1 1 100%;
-      }
-
-      .cart-summary>div:last-child {
-        flex: 1 1 100%;
-        justify-content: space-between;
-      }
-    }
-
-    .category-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin: 1.5rem 0 0.75rem 0;
-      color: var(--text-color);
-      border-left: 4px solid var(--accent);
-      padding-left: 0.5rem;
-    }
-
-    .products-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 1rem;
-      row-gap: 4rem;
-      margin-bottom: 1.5rem;
-      padding-top: 3.5rem;
-    }
-
-    .product {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 1rem;
-      padding-top: 0;
-      transition: all 0.2s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      margin-top: 3rem;
-      text-align: center;
-    }
-
-    .product-img-wrapper {
-      width: 100px;
-      height: 100px;
-      position: absolute;
-      top: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.15));
-      border-radius: 50%;
-    }
-
-    .product-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-      background-color: #f3f4f6;
-    }
-
-    .product:hover {
-      border-color: var(--accent);
-      box-shadow: 0 6px 17px rgba(0, 0, 0, 0.13);
-    }
-
-    .product-info {
-      width: 100%;
-      margin-top: 65px;
-      margin-bottom: 0.5rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-name {
-      font-weight: 700;
-      font-size: 1rem;
-      line-height: 1.2;
-      color: var(--text-color);
-      margin-bottom: 0.25rem;
-    }
-
-    .product-desc {
-      font-size: 0.75rem;
-      color: #64748b;
-      line-height: 1.3;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      margin-top: 0.25rem;
-    }
-
-    .product-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      margin-top: auto;
-      padding-top: 0.5rem;
-    }
-
-    .product-price {
-      font-weight: 700;
-      color: var(--accent);
-      font-size: 1rem;
-    }
-
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .btn {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      width: 32px;
-      height: 32px;
-      min-width: 32px;
-      border-radius: 6px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-
-    .btn:hover {
-      background: var(--accent-hover);
-    }
-
-    .btn:active {
-      transform: scale(0.92);
-    }
-
-    .qty {
-      font-weight: 600;
-      min-width: 18px;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    .cart-footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-top: 1px solid var(--card-border);
-      z-index: 1000;
-      padding: 0.75rem 1rem;
-      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .cart-summary {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      padding: 0.5rem 0;
-    }
-
-    .cart-details {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease;
-    }
-
-    .cart-details.open {
-      max-height: 40vh;
-      overflow-y: auto;
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--card-border);
-    }
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--card-border);
-      color: var(--text-color);
-    }
-
-    .cart-item:last-child {
-      border-bottom: none;
-    }
-
-    .checkout-btn {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 12px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      white-space: nowrap;
-    }
-
-    .checkout-btn:hover {
-      background: var(--accent-hover);
-    }
-
-    .checkout-btn:active {
-      background: var(--accent-hover);
-      transform: scale(0.97);
-    }
-
-    .delivery-info {
-      background: rgba(255, 255, 255, 0.95);
-      border-bottom: 1px solid var(--card-border);
-    }
-
-    .delivery-info-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.6rem 1rem;
-      cursor: pointer;
-      user-select: none;
-      gap: 0.5rem;
-    }
-
-    .delivery-info-header:hover {
-      background: rgba(0, 0, 0, 0.02);
-    }
-
-    .delivery-info-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-color);
-    }
-
-    .delivery-info-summary {
-      font-size: 0.8rem;
-      color: #64748b;
-      flex: 1;
-      text-align: right;
-      margin-right: 0.5rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .delivery-info-chevron {
-      font-size: 0.75rem;
-      color: #94a3b8;
-      transition: transform 0.25s ease;
-      flex-shrink: 0;
-    }
-
-    .delivery-info-chevron.open {
-      transform: rotate(180deg);
-    }
-
-    .delivery-info-body {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s ease;
-      padding: 0 1rem;
-    }
-
-    .delivery-info-body.open {
-      max-height: 400px;
-      overflow-y: auto;
-      padding: 0 1rem 0.75rem 1rem;
-    }
-
-    .delivery-info-body input[type="text"],
-    .delivery-info-body input[type="number"] {
-      width: 100%;
-      padding: 0.6rem;
-      margin-bottom: 0.5rem;
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.9rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .delivery-info-body input[type="text"]:focus,
-    .delivery-info-body input[type="number"]:focus {
-      border-color: var(--accent);
-    }
-
-    .delivery-info-body label {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      cursor: pointer;
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .install-banner {
-      display: none;
-      background: linear-gradient(90deg, #f97316, #fbbf24);
-      color: #fff;
-      padding: 0.75rem 1.5rem;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      font-size: 0.9rem;
-      font-weight: 600;
-      border-bottom: 1px solid var(--card-border);
-    }
-
-    .install-banner.show {
-      display: flex;
-    }
-
-    .install-banner-btn {
-      background: #fff;
-      color: var(--accent);
-      border: none;
-      padding: 0.4rem 1rem;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: opacity 0.2s;
-      white-space: nowrap;
-    }
-
-    .install-banner-btn:hover {
-      opacity: 0.9;
-    }
-
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bg-color);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(0, 0, 0, 0.3);
-    }
-
-    @media (min-width: 1200px) {
-      .products-list {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (min-width: 1800px) {
-      .products-list {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .category-nav {
-        min-width: 260px;
-        max-width: 260px;
-      }
-    }
-
-    /* Safe area support for notched phones */
-    @supports (padding-bottom: env(safe-area-inset-bottom)) {
-      .cart-footer {
-        padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
-      }
-    }
-
-    /* Modal Styles */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      visibility: hidden;
-      opacity: 0;
-      transition: all 0.3s;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-    }
-    .modal-overlay.show {
-      visibility: visible;
-      opacity: 1;
-    }
-    .modal-content {
-      background: var(--card-bg);
-      padding: 1.5rem;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      transform: translateY(20px);
-      transition: all 0.3s;
-    }
-    .modal-overlay.show .modal-content {
-      transform: translateY(0);
-    }
-    .modal-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-      color: var(--text-color);
-    }
-    .modal-subtitle {
-      font-size: 0.95rem;
-      color: #64748b;
-      margin-bottom: 1.25rem;
-      font-weight: 500;
-    }
-    .modal-options {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-    }
-    .modal-option {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 1rem;
-      cursor: pointer;
-      color: var(--text-color);
-    }
-    .modal-option input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--accent);
-      cursor: pointer;
-    }
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
-    }
-    .btn-secondary {
-      background: #e2e8f0;
-      color: #475569;
-      padding: 0.6rem 1.2rem;
-      border-radius: 10px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .btn-secondary:hover {
-      background: #cbd5e1;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      padding: 0.6rem 1.2rem;
-      border-radius: 10px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .btn-primary:hover {
-      background: var(--accent-hover);
-    }
-    
-    /* Image Modal Styles */
-    #imageModal {
-      z-index: 3000;
-      background: rgba(0,0,0,0.85);
-    }
-    .image-modal-content {
-      position: relative;
-      max-width: 90vw;
-      max-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transform: scale(0.9);
-      transition: transform 0.3s;
-    }
-    #imageModal.show .image-modal-content {
-      transform: scale(1);
-    }
-    .image-modal-content img {
-      max-width: 100%;
-      max-height: 75vh;
-      object-fit: contain;
-      border-radius: 16px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    }
-    .image-modal-title {
-      color: #fff;
-      margin-top: 1rem;
-      font-size: 1.25rem;
-      font-weight: 600;
-      text-align: center;
-    }
-    .image-modal-close {
-      position: absolute;
-      top: -40px;
-      right: 0;
-      color: #fff;
-      font-size: 2.5rem;
-      cursor: pointer;
-      line-height: 1;
-    }
-    
-    /* Google Translate Overrides */
-    body { top: 0 !important; }
-    .skiptranslate iframe, .goog-te-banner-frame { display: none !important; }
-    #goog-gt-tt { display: none !important; }
-    .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
-    .VIpgJd-Zvi9od-ORHb-OEVmcd { display: none !important; }
-
-    /* Hero Feature Section */
-    .hero-feature {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: linear-gradient(135deg, #f97316 0%, #fbbf24 100%);
-      border-radius: 20px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      color: #fff;
-      box-shadow: 0 10px 25px rgba(249, 115, 22, 0.3);
-      overflow: hidden;
-      position: relative;
-    }
-    .hero-content {
-      flex: 1;
-      z-index: 1;
-    }
-    .hero-content h2 {
-      font-size: 1rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      opacity: 0.9;
-      margin-bottom: 0.5rem;
-    }
-    .hero-content h3 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      line-height: 1.2;
-    }
-    .hero-content p {
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-      opacity: 0.9;
-      max-width: 400px;
-    }
-    .hero-content .btn-primary {
-      background: #fff;
-      color: var(--accent);
-      padding: 0.75rem 1.5rem;
-      border-radius: 12px;
-      border: none;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .hero-content .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-    .hero-image {
-      flex: 0 0 200px;
-      height: 200px;
-      position: relative;
-      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
-    }
-    .hero-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      padding: 10px;
-    }
-    @media (max-width: 768px) {
-      .hero-feature {
-        flex-direction: column-reverse;
-        text-align: center;
-        padding: 1.5rem;
-      }
-      .hero-content p {
-        max-width: 100%;
-      }
-      .hero-image {
-        flex: 0 0 150px;
-        height: 150px;
-        margin-bottom: 1rem;
-      }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-  <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
   <div class="nav-overlay" id="navOverlay" onclick="toggleMenu()"></div>
   <header>
-    <div class="header-brand">
-      <div class="header-title">MonAmie Order</div>
-      <div class="language-flags">
-        <span class="flag-icon" title="German" onclick="changeLanguage('de')">🇩🇪</span>
-        <span class="flag-icon" title="Chinese" onclick="changeLanguage('zh-CN')">🇨🇳</span>
-        <span class="flag-icon" title="Turkish" onclick="changeLanguage('tr')">🇹🇷</span>
-        <span class="flag-icon" title="English" onclick="changeLanguage('en')">🇬🇧</span>
-        <span class="flag-icon" title="Arabic" onclick="changeLanguage('ar')">🇸🇦</span>
-        <span class="flag-icon" title="French" onclick="changeLanguage('fr')">🇫🇷</span>
+    <div class="header-inner">
+      <!-- Left: hamburger + logo -->
+      <div class="header-left">
+        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Menü öffnen">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="header-logo">
+          <span class="logo-text">Mon Amie Burger</span>
+        </div>
+      </div>
+
+      <!-- Center: search -->
+      <div class="header-search">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 21l-4.3-4.3" />
+            <circle cx="11" cy="11" r="7" />
+          </svg>
+          <input type="text" id="searchInput" placeholder="Menü suchen..." oninput="filterMenu()" autocomplete="off">
+        </div>
+      </div>
+
+      <!-- Right: nav + cart -->
+      <div class="header-right">
+        <!-- Language flag switcher (desktop) -->
+        <div class="lang-switcher lang-switcher--header" aria-label="Dil seçimi">
+          <button class="lang-btn" onclick="changeLanguage('de')" title="Deutsch" aria-label="Deutsch">🇩🇪</button>
+          <button class="lang-btn" onclick="changeLanguage('en')" title="English" aria-label="English">🇬🇧</button>
+          <button class="lang-btn" onclick="changeLanguage('tr')" title="Türkçe" aria-label="Türkçe">🇹🇷</button>
+          <button class="lang-btn" onclick="changeLanguage('fr')" title="Français" aria-label="Français">🇫🇷</button>
+          <button class="lang-btn" onclick="changeLanguage('ar')" title="العربية" aria-label="العربية">🇸🇦</button>
+          <button class="lang-btn" onclick="changeLanguage('zh-CN')" title="中文" aria-label="中文">🇨🇳</button>
+        </div>
+        <!-- Mobile search icon -->
+        <button class="header-search-btn" id="mobileSearchBtn" aria-label="Ara"
+          onclick="toggleMobileSearch()">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 21l-4.3-4.3" />
+            <circle cx="11" cy="11" r="7" />
+          </svg>
+        </button>
+        <!-- Cart -->
+        <button class="cart-open-btn" onclick="toggleCart()" aria-label="Warenkorb öffnen">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+          <span class="cart-label">Warenkorb</span>
+          <span class="cart-count" id="headerCartCount" data-count="0"></span>
+        </button>
       </div>
     </div>
-    <input type="text" id="searchInput" placeholder="Search menu..." oninput="filterMenu()">
   </header>
   <div class="install-banner" id="installBanner">
-    <span>Install MonAmie App for a faster ordering experience!</span>
-    <button class="install-banner-btn" id="installBtn">Install</button>
+    <span>Installiere die MonAmie App für ein schnelleres Bestell-Erlebnis!</span>
+    <button class="install-banner-btn" id="installBtn">Installieren</button>
   </div>
 
   <div class="main-layout">
-    <div class="category-nav" id="categoryNav"></div>
-    <div class="container" id="menu">
-      <!-- Hero Feature Section -->
-      <div class="hero-feature">
-        <div class="hero-content">
-          <h2>Günün Menüsü</h2>
-          <h3>Clausthal Burger Menü</h3>
-          <p>Käse überbacken, mit Clausthal Salat. Öne çıkan lezzetimiz!</p>
-          <button class="btn-primary" onclick="scrollToCategory('Chicken Menüs')">Hemen Sipariş Ver</button>
-        </div>
-        <div class="hero-image">
-          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400" alt="Clausthal Burger">
+    <div class="category-nav" id="categoryNav">
+      <div class="nav-drawer-header">
+        <img src="banner.png" alt="MonAmie" class="nav-drawer-logo">
+        <button class="nav-drawer-close" onclick="toggleMenu()" aria-label="Schließen">&times;</button>
+      </div>
+      <!-- Language flags in drawer (mobile) -->
+      <div class="nav-drawer-langs">
+        <div class="lang-switcher lang-switcher--drawer">
+          <button class="lang-btn" onclick="changeLanguage('de')" title="Deutsch" aria-label="Deutsch">🇩🇪</button>
+          <button class="lang-btn" onclick="changeLanguage('en')" title="English" aria-label="English">🇬🇧</button>
+          <button class="lang-btn" onclick="changeLanguage('tr')" title="Türkçe" aria-label="Türkçe">🇹🇷</button>
+          <button class="lang-btn" onclick="changeLanguage('fr')" title="Français" aria-label="Français">🇫🇷</button>
+          <button class="lang-btn" onclick="changeLanguage('ar')" title="العربية" aria-label="العربية">🇸🇦</button>
+          <button class="lang-btn" onclick="changeLanguage('zh-CN')" title="中文" aria-label="中文">🇨🇳</button>
         </div>
       </div>
+    </div>
+    <div class="container" id="menu">
     </div>
   </div>
 
-  <div class="cart-footer" id="cartFooter">
-    <div class="delivery-info">
-      <div class="delivery-info-header" id="deliveryInfoHeader" onclick="toggleDeliveryInfo()">
-        <span class="delivery-info-label">🚚 Bestelldetails</span>
-        <span class="delivery-info-summary" id="deliveryInfoSummary">Lieferung · Clausthal-Zellerfeld</span>
-        <span class="delivery-info-chevron" id="deliveryInfoChevron">▼</span>
+  <div class="modal-overlay" id="cartModal" onclick="if(event.target === this) toggleCart()">
+    <div class="modal-content" style="max-height: 90vh; display: flex; flex-direction: column;">
+      <div class="modal-title" style="display: flex; justify-content: space-between; align-items: center;">
+        <span>Mein Warenkorb</span>
+        <button onclick="toggleCart()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color);">&times;</button>
       </div>
-      <div class="delivery-info-body" id="deliveryInfoBody">
-        <div style="display: flex; gap: 1rem; margin-bottom: 0.75rem;">
-          <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
-            <input type="radio" name="deliveryType" value="lieferung" checked onchange="toggleDeliveryType()"> Lieferung
-          </label>
-          <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
-            <input type="radio" name="deliveryType" value="abholung" onchange="toggleDeliveryType()"> Abholung
-          </label>
+      <div style="overflow-y: auto; flex: 1; margin: 1rem 0;">
+        <div class="delivery-info" style="border-bottom: none; border-radius: 12px; border: 1px solid var(--card-border); margin-bottom: 1rem;">
+          <div class="delivery-info-header" id="deliveryInfoHeader" onclick="toggleDeliveryInfo()">
+            <span class="delivery-info-label">🚚 Bestelldetails</span>
+            <span class="delivery-info-summary" id="deliveryInfoSummary">Lieferung · Clausthal-Zellerfeld</span>
+            <span class="delivery-info-chevron" id="deliveryInfoChevron">▼</span>
+          </div>
+          <div class="delivery-info-body" id="deliveryInfoBody">
+            <div style="display: flex; gap: 1rem; margin-bottom: 0.75rem;">
+              <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
+                <input type="radio" name="deliveryType" value="lieferung" checked onchange="toggleDeliveryType()"> Lieferung
+              </label>
+              <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
+                <input type="radio" name="deliveryType" value="abholung" onchange="toggleDeliveryType()"> Abholung
+              </label>
+            </div>
+            <div id="lieferungFields">
+              <input type="text" id="doorName" placeholder="Name an der Tür"
+                onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
+              <div style="margin-bottom: 0.5rem;">
+                <label>
+                  <input type="radio" name="location" value="clausthal" checked onchange="handleLocationChange()">
+                  Clausthal-Zellerfeld (38678)
+                </label>
+                <label>
+                  <input type="radio" name="location" value="other" onchange="handleLocationChange()"> Andere Adresse
+                </label>
+              </div>
+              <div id="otherAddressField">
+                <input type="text" id="doorAddress" placeholder="Lieferadresse (6,00€ Liefergebühr)"
+                  onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
+              </div>
+              <div id="clausthalNote" style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;">
+                Liefergebühr: 1,50€ (Clausthal-Zellerfeld)
+              </div>
+              <div id="otherNote" style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem; display: none;">
+                Liefergebühr: 6,00€ (Andere Adresse)
+              </div>
+            </div>
+            <div id="abholungFields" style="display: none;">
+              <input type="number" id="abholTime" placeholder="Geschätzte Abholzeit (in Minuten)"
+                onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'"
+                min="1">
+            </div>
+          </div>
         </div>
-        <div id="lieferungFields">
-          <input type="text" id="doorName" placeholder="Name an der Tür"
-            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
-          <div style="margin-bottom: 0.5rem;">
-            <label>
-              <input type="radio" name="location" value="clausthal" checked onchange="handleLocationChange()">
-              Clausthal-Zellerfeld (38678)
-            </label>
-            <label>
-              <input type="radio" name="location" value="other" onchange="handleLocationChange()"> Andere Adresse
-            </label>
-          </div>
-          <div id="otherAddressField">
-            <input type="text" id="doorAddress" placeholder="Lieferadresse (6,00€ Liefergebühr)"
-              onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
-          </div>
-          <div id="clausthalNote" style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;">
-            Liefergebühr: 1,50€ (Clausthal-Zellerfeld)
-          </div>
-          <div id="otherNote" style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem; display: none;">
-            Liefergebühr: 6,00€ (Andere Adresse)
-          </div>
-        </div>
-        <div id="abholungFields" style="display: none;">
-          <input type="number" id="abholTime" placeholder="Geschätzte Abholzeit (in Minuten)"
-            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'"
-            min="1">
+        <div class="cart-details open" id="cartDetails" style="max-height: none; margin-top: 0; padding-top: 0; border-top: none;">
+          <div class="cart-details-inner" id="cartItems"></div>
         </div>
       </div>
-    </div>
-    <div class="cart-summary" onclick="toggleCart()">
-      <div style="min-width: 0;">
-        <span id="itemCount">0</span> Items | <span id="totalPrice">€0,00</span>
-        <br><small style="color: #64748b;">Tap to expand</small>
+      <div class="cart-summary" style="padding-top: 1rem; border-top: 1px solid var(--card-border); cursor: default; justify-content: space-between;">
+        <div style="min-width: 0;">
+          <span id="itemCount">0</span> Artikel | <span id="totalPrice" style="font-weight: bold; color: var(--accent);">€0,00</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;">
+          <button class="checkout-btn" onclick="checkout()">Über WhatsApp bestellen</button>
+        </div>
       </div>
-      <div style="display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;">
-        <button class="checkout-btn" onclick="event.stopPropagation(); checkout()">Order via WhatsApp</button>
-        <span class="cart-expand-icon" id="cartExpandIcon">▼</span>
-      </div>
-    </div>
-    <div class="cart-details" id="cartDetails">
-      <div class="cart-details-inner" id="cartItems"></div>
     </div>
   </div>
 
   <div class="modal-overlay" id="customModal" onclick="if(event.target === this) closeCustomModal()">
     <div class="modal-content">
+      <img id="customModalImg" src="" alt="" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem; display: none;">
       <div class="modal-title" id="customModalTitle">Produkt anpassen</div>
+      <div id="customModalDesc" style="font-size: 0.85rem; color: var(--text-muted, #94a3b8); margin: 0.5rem 0 1rem 0; line-height: 1.5; padding: 0.75rem 1rem; background: var(--card-bg, rgba(255,255,255,0.04)); border-radius: 8px; border: 1px solid var(--card-border, rgba(255,255,255,0.08)); display: none;"></div>
       <div class="modal-subtitle" id="customModalSubtitle">Im Burger:</div>
       <div class="modal-options">
-        <label class="modal-option" id="label-zwiebeln"><input type="checkbox" value="Ohne Zwiebeln" class="custom-cb" id="cb-zwiebeln"> Ohne Zwiebeln</label>
-        <label class="modal-option" id="label-salat"><input type="checkbox" value="Ohne Salat" class="custom-cb" id="cb-salat"> Ohne Salat</label>
-        <label class="modal-option" id="label-tomaten"><input type="checkbox" value="Ohne Tomaten" class="custom-cb" id="cb-tomaten"> Ohne Tomaten</label>
-        <label class="modal-option" id="label-gurken"><input type="checkbox" value="Ohne Gurken" class="custom-cb" id="cb-gurken"> Ohne Gurken</label>
+        <label class="modal-option" id="label-zwiebeln"><input type="checkbox" value="Ohne Zwiebeln" class="custom-cb"
+            id="cb-zwiebeln"> Ohne Zwiebeln</label>
+        <label class="modal-option" id="label-salat"><input type="checkbox" value="Ohne Salat" class="custom-cb"
+            id="cb-salat"> Ohne Salat</label>
+        <label class="modal-option" id="label-tomaten"><input type="checkbox" value="Ohne Tomaten" class="custom-cb"
+            id="cb-tomaten"> Ohne Tomaten</label>
+        <label class="modal-option" id="label-gurken"><input type="checkbox" value="Ohne Gurken" class="custom-cb"
+            id="cb-gurken"> Ohne Gurken</label>
       </div>
       <div class="modal-actions">
         <button class="btn-secondary" onclick="closeCustomModal()">Abbrechen</button>
@@ -1014,743 +196,7 @@
     </div>
   </div>
 
-  <script>
-    const PRODUCTS = {
-      'Chicken Menüs': [
-        { id: 'clausthalburgermenu', name: 'Clausthal Burger Menü', price: 15.50, desc: 'Käse überbacken, mit Clausthal Salat' },
-        { id: 'yoyo', name: 'YoYo Menü', price: 14.00, desc: '1x YoYo Burger mit Jalapeño und Cheese "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo, ca. 130 g HotWings (2-3 Stk.)' },
-        { id: 'bbq', name: 'BBQ Menü', price: 10.00, desc: '1x BBQ Burger mit Cheese "L", 1x Clausthalsalat' },
-        { id: 'kingwings', name: 'King Wings Menü', price: 13.50, desc: 'Deep-Fried Chicken Wings (Scharf) ca. 400g (7-10), 1x Klein Pommes oder Wedges' },
-        { id: 'a1', name: 'A1', price: 13.50, desc: 'HotWings ca. 400g (7-10 Stk.), 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'a2', name: 'A2 (Crispyfilets)', price: 11.50, desc: '5x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'a3', name: 'A3 (2x Monamie Burger)', price: 14.50, desc: '2x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'a4', name: 'A4', price: 11.50, desc: '1x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Clausthal Salat, 1x Ketchup/Mayo' },
-        { id: 'bigmama', name: 'Big Mama', price: 14.00, desc: '1x Big Mama Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'happybox', name: 'Happy Box', price: 7.90, desc: '1x Quick Chicken Burger oder 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Überraschung, 1x Caprisonne, 1x Ketchup/Mayo' },
-        { id: 'nuggetsbox', name: 'Nuggets Box', price: 7.50, desc: 'Chicken Nuggets Box' },
-        { id: 'crispybox', name: 'Crispy Box', price: 7.50, desc: 'Crispy Chicken Box' },
-        { id: 'falafelbox', name: 'Falafel Box', price: 7.50, desc: 'Falafel Box' },
-        { id: 'hotwingsbox', name: 'HotWings Box', price: 7.50, desc: 'Hot Wings Box' },
-        { id: 'crushburger', name: 'Crush Menü', price: 14.00, desc: '1x Crush Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'doublcrush', name: 'Double Crush Menü', price: 16.00, desc: '1x Double Crush Burger mit Cheese "XXL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'b3', name: 'B3', price: 13.00, desc: '1x Monamie Burger "L", 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'chickenwrapmenu', name: 'Chicken-Wrap Menü', price: 11.00, desc: '1x Chickenwrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'nuggetwrapmenu', name: 'Nugget-Wrap Menü', price: 11.00, desc: '1x Nugget-Wrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'filetburgermenu', name: 'Filet Burger Menü', price: 12.00, desc: '1x Filet Burger, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'nuggetburgermenu', name: 'Nugget Burger Menü', price: 11.50, desc: '1x Nugget Burger, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'redreaper', name: 'Red Reaper Menü', price: 11.00, desc: '1x Red Reaper Burger "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-        { id: 'bbqwrapmenu', name: 'BBQ-Wrap Menü', price: 11.00, desc: '1x BBQ-Wrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-      ],
-      'Beef Burger Menüs': [
-        { id: 'beefburger', name: 'Beef Burger', price: 9.00, desc: '1x Beef Burger "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'doublebeef', name: 'Double Beef Burger', price: 13.00, desc: '1x Beef Burger "XL" (2x 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'cheeseburger', name: 'Cheeseburger', price: 10.00, desc: '1x Beef Burger mit Cheese "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'doublecheese', name: 'Double Cheeseburger', price: 13.50, desc: '1x Beef Burger mit Cheese "XL" (2x 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'royalbeef', name: 'Royal Beef Burger', price: 13.00, desc: '1x Beef Burger "XL" (180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'royalcheese', name: 'Royal Cheeseburger', price: 13.50, desc: '1x Beef Burger mit Cheese (180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'doubleroy', name: 'Double Royal Beef Burger', price: 15.50, desc: '1x Beef Burger "XXL" (2x 180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'doubleroyalcheese', name: 'Double Royal Cheeseburger', price: 16.00, desc: '1x Beef Burger mit Cheese "XXL" (2x 180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'brobeef', name: 'Bro Beef Burger Menü', price: 15.00, desc: '2x Beef Burger "L" (je 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'chilibeef', name: 'Chili Beef Menü', price: 13.00, desc: '1x Beef Burger mit Jalapeño und Cheese "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 3x Chili Cheese, 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-        { id: 'beefwrap', name: 'Beef Wrap', price: 13.00, desc: '1x Beef Wrap (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-      ],
-      'Burger': [
-        { id: 's_quickchicken', name: 'Quick Chicken Burger "S"', price: 2.50, desc: 'Single Burger' },
-        { id: 's_quickbeef', name: 'Quick Beef Burger "S"', price: 3.00, desc: 'Single Burger' },
-        { id: 's_monamie', name: 'Monamie Burger "L"', price: 5.90, desc: 'Single Burger' },
-        { id: 's_yoyo', name: 'Yoyo Burger "L"', price: 6.90, desc: 'Single Burger' },
-        { id: 's_veggie', name: 'Veggie Burger "L"', price: 7.50, desc: 'Single Burger' },
-        { id: 's_bbq', name: 'BBQ Burger "L"', price: 7.50, desc: 'Single Burger' },
-        { id: 's_filet', name: 'Filet Burger', price: 8.20, desc: 'Single Burger' },
-        { id: 's_bigmama', name: 'Big Mama "XL"', price: 8.90, desc: 'Single Burger' },
-        { id: 's_halloumi', name: 'Halloumi Burger "L"', price: 7.50, desc: 'Single Burger' },
-        { id: 's_crush', name: 'Crush Burger "XL"', price: 8.90, desc: 'Single Burger' },
-        { id: 's_doublecrush', name: 'Double Crush Burger "XXL"', price: 12.90, desc: 'Single Burger' },
-        { id: 's_nugget', name: 'Nugget Burger', price: 5.90, desc: 'Single Burger' },
-        { id: 's_beefburger', name: 'Beef Burger', price: 6.50, desc: 'Single Burger' },
-        { id: 's_cheeseburger', name: 'Cheeseburger', price: 7.00, desc: 'Single Burger' },
-        { id: 's_royalbeef', name: 'Royal Beef Burger', price: 8.50, desc: 'Single Burger' },
-        { id: 's_royalcheese', name: 'Royal Cheeseburger', price: 9.50, desc: 'Single Burger' },
-        { id: 's_chilibeef', name: 'Chili Beef Burger', price: 7.50, desc: 'Single Burger' },
-        { id: 's_redreaper', name: 'Red Reaper Burger "L"', price: 6.90, desc: 'Single Burger' },
-        { id: 's_doublebeef', name: 'Double Beef Burger', price: 8.50, desc: 'Single Burger' },
-        { id: 's_doublecheese', name: 'Double Cheeseburger', price: 9.50, desc: 'Single Burger' },
-        { id: 's_doubleroyal', name: 'Double Royal Beef Burger', price: 12.90, desc: 'Single Burger' },
-        { id: 's_doubleroyalcheese', name: 'Double Royal Cheeseburger', price: 13.50, desc: 'Single Burger' },
-        { id: 'clausthalburger', name: 'Clausthal Burger', price: 12.00, desc: 'Käse überbacken, mit Clausthal Salat' },
-      ],
-      'Wraps & Dürüm': [
-        { id: 's_chickenwrap', name: 'Chicken-Wrap', price: 8.50, desc: 'Single Wrap' },
-        { id: 's_veggietwister_single', name: 'Veggie Twister', price: 8.50, desc: 'Single Wrap' },
-        { id: 's_beefwrap', name: 'Beef-Wrap', price: 9.50, desc: 'Single Wrap' },
-        { id: 's_nuggetwrap', name: 'Nugget-Wrap', price: 8.50, desc: 'Single Wrap' },
-        { id: 's_bbqwrap', name: 'BBQ-Wrap', price: 8.50, desc: 'Single Wrap' },
-        { id: 'duerum1', name: 'Dürüm mit Hähnchenspieß (Tavuk Dürüm)', price: 13.00, desc: 'Hähnchen am Spieß gerollt mit Salat und Soße' },
-        { id: 'duerum2', name: 'Dürüm mit Siskebab (Kusbasi Dürüm)', price: 15.00, desc: 'Rinderspieß gerollt mit Salat und Soße' },
-        { id: 'duerum3', name: 'Adana Dürüm', price: 13.00, desc: 'Gegrillter Hackfleischspieß gerollt mit Salat und Soße' },
-        { id: 'falafelduerum', name: 'Falafel Dürüm', price: 11.00, desc: 'Falafel Dürüm' },
-        { id: 'pomwrap', name: 'Pomwrap', price: 5.00, desc: '1x Knusprige Pommes in einem frischen Wrap' },
-      ],
-      'Grill-Spezialitäten': [
-        { id: 'adanakebab', name: 'Adana Kebab (Scharf)', price: 17.50, desc: 'Scharfes gehacktes vom Rind am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'urfakebab', name: 'Urfa Kebab', price: 17.50, desc: 'Gehacktes vom Rind am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'siskebab', name: 'Sis Kebab (Schisch Kebab)', price: 19.00, desc: 'Rinderspieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'kanat', name: 'Hähnchenflügel (Kanat)', price: 17.50, desc: 'Schön gegrillte Hähnchenflügel, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'tavukgoesue', name: 'Hähnchenbrustfilet (Tavuk Göğsü)', price: 17.50, desc: 'Schön gegrillte Hähnchenbrust, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'tavuksis', name: 'Hähnchenspieß (Tavuk Sis)', price: 17.50, desc: 'Hähnchenstücke am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'koefte', name: 'Köfteteller', price: 17.50, desc: 'Gegrillte Frikadellen aus Rindfleisch, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-      ],
-      'Combi-Grill': [
-        { id: 'comb1', name: 'Hähnchenspieß und Rinderspieß (Tavuk sis ve Kusbasi)', price: 19.00, desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'comb2', name: 'Hähnchenspieß und Adana (Tavuk Sis ve Adana)', price: 18.50, desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'comb3', name: 'Rinderspieß und Adana (Kusbasi ve Adana)', price: 19.00, desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'comb4', name: 'Hähnchenspieß und Köfte (Tavuk Sis ve Köfte)', price: 18.50, desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-        { id: 'comb5', name: 'Adana und Köfte', price: 18.50, desc: 'Mit Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-      ],
-      'Vegetarisch': [
-        { id: 'hallohalloumi', name: 'Hallo Halloumi', price: 11.00, desc: '1x Halloumi Burger "L", 1x Pommes Klein, 1x Ketchup/Mayo' },
-        { id: 'halloumiteller', name: 'Halloumi Teller', price: 13.00, desc: '6 Halloumi Stücke, Salat, Pommes, Soße' },
-        { id: 'veggietwister', name: 'Veggie Twister', price: 8.50, desc: '1x Veggie Twister, 1x Pommes Klein, 1x Ketchup/Mayo' },
-        { id: 'veggiemenu', name: 'Veggie Menü', price: 11.00, desc: '1x Veggie Burger "L", 1x Pommes Klein, 1x Ketchup/Mayo' },
-        { id: 'falafelteller', name: 'Falafel Teller', price: 13.00, desc: 'Falafel Teller' },
-      ],
-      'Vorspeisen': [
-        { id: 'joghurt', name: 'Joghurt', price: 6.00, desc: 'Joghurt' },
-        { id: 'reis', name: 'Reis', price: 6.00, desc: 'Reis' },
-        { id: 'bulgur', name: 'Bulgur', price: 6.00, desc: 'Bulgur' },
-        { id: 'aciezme', name: 'Aci Ezme (Scharfe Soße)', price: 6.00, desc: 'Scharfe Soße' },
-      ],
-      'Chicken Snacks': [
-        { id: 'hotwings230', name: 'HotWings (230g/4-6 Stk.)', price: 7.00, desc: 'HotWings ca. 230g (4-6 Stück)' },
-        { id: 'hotwings350', name: 'HotWings (350g/7-9 Stk.)', price: 10.50, desc: 'HotWings ca. 350g (7-9 Stück)' },
-        { id: 'hotwings540', name: 'HotWings (540g/10-14 Stk.)', price: 16.20, desc: 'HotWings ca. 540g (10-14 Stück)' },
-        { id: 'crispy4', name: 'Crispy Filet (4x)', price: 7.00, desc: '4x Crispyfilets' },
-        { id: 'crispy6', name: 'Crispy Filet (6x)', price: 9.90, desc: '6x Crispyfilets' },
-        { id: 'crispy9', name: 'Crispy Filet (9x)', price: 15.20, desc: '9x Crispyfilets' },
-        { id: 'chickenbites6', name: 'Chicken Bites (6x)', price: 5.50, desc: '6x Chicken Bites' },
-        { id: 'chickenbites9', name: 'Chicken Bites (9x)', price: 8.00, desc: '9x Chicken Bites' },
-        { id: 'chickenbites15', name: 'Chicken Bites (15x)', price: 13.00, desc: '15x Chicken Bites' },
-        { id: 'geflugel', name: 'Geflügel-Bratwurst Menü', price: 9.00, desc: '1x Geflügel-Bratwurst, 1x Klein Pommes oder Wedges' },
-      ],
-      'Finger Food': [
-        { id: 'nuggets6', name: 'Chicken Nuggets (6x)', price: 4.50, desc: '6x Chicken Nuggets' },
-        { id: 'nuggets10', name: 'Chicken Nuggets (10x)', price: 7.50, desc: '10x Chicken Nuggets' },
-        { id: 'chili6', name: 'Chili Cheese (6x)', price: 4.50, desc: '6x Chili Cheese Nuggets' },
-        { id: 'chili10', name: 'Chili Cheese (10x)', price: 7.50, desc: '10x Chili Cheese Nuggets' },
-        { id: 'onion6', name: 'Onion Rings (6x)', price: 4.50, desc: '6x Onion Rings' },
-        { id: 'onion10', name: 'Onion Rings (10x)', price: 7.50, desc: '10x Onion Rings' },
-        { id: 'mozz6', name: 'Mozzarella Sticks (6x)', price: 4.50, desc: '6x Mozzarella Sticks' },
-        { id: 'mozz10', name: 'Mozzarella Sticks (10x)', price: 7.50, desc: '10x Mozzarella Sticks' },
-        { id: 'kroketten6', name: 'Kroketten (6x)', price: 4.50, desc: '6x Kroketten' },
-        { id: 'kroketten10', name: 'Kroketten (10x)', price: 7.50, desc: '10x Kroketten' },
-      ],
-      'Buckets': [
-        { id: 'bucket2', name: 'Small Mix Bucket (2p)', price: 29.90, desc: 'Gönnt Euch zu zweit den Bucket mit ca. 540g HotWings (10-14 Stück) und 10 mild gewürzten Crispy Filets. Dazu gibt es 2 Beilagen nach Wahl und 3 Dips.' },
-        { id: 'bucket3', name: 'Medium Mix Bucket (3p)', price: 34.90, desc: 'Unser beliebter Bucket für 3 Personen mit ca. 400g HotWings (7-10 Stück), 8 knusprigen Crispy Filets und 8 mild gewürzten Filet Bites. Dazu gibt es 3 Beilagen nach Wahl und 4 Dips.' },
-        { id: 'bucketparty', name: 'Party Bucket (4p)', price: 44.90, desc: 'Unser Bucket für großen Hunger mit 4 Quick Chicken Burger "S", ca. 640g HotWings (12-16 Stück) und 8 knusprig leckeren Crispy Filets. Dazu gibt es 4 Beilagen Deiner Wahl und 2 Dips.' },
-        { id: 'bucketfilet', name: 'Filet Bucket', price: 24.90, desc: '14 Filet Bites, 4 Crispy Filets, 2 Beilagen nach Wahl, 2 Dips nach Wahl.' },
-        { id: 'bucketsnack', name: 'Snack Bucket', price: 22.00, desc: '6 Mozzarella, 6 Zwiebelringe, 6 Kroketten, 6 Nuggets, 6 Chilli Cheese, nach Wahl 4 Dip.' },
-      ],
-      'Beilagen': [
-        { id: 'pomssmall', name: 'Pommes Klein', price: 2.90, desc: 'Klassische Pommes' },
-        { id: 'pomslarge', name: 'Pommes Groß', price: 3.90, desc: 'Klassische Pommes' },
-        { id: 'wedgessmall', name: 'Wedges Klein', price: 2.90, desc: 'Wedges' },
-        { id: 'wedgeslarge', name: 'Wedges Groß', price: 3.90, desc: 'Wedges' },
-        { id: 'salat', name: 'Clausthalsalat', price: 3.50, desc: 'Frischer Salat' },
-        { id: 'gemischtersalat', name: 'Gemischter Salat (Klein)', price: 3.50, desc: 'Gemischter Salat' },
-        { id: 'yoyochili', name: 'Yoyo\'s Chili Pommes', price: 4.50, desc: 'Yoyo\'s Chili Pommes' },
-      ],
-      'Dips & Soßen': [
-        { id: 'bbqsauce', name: 'BBQ Soße', price: 0.70, desc: 'BBQ Soße' },
-        { id: 'knoblauch', name: 'Knoblauchsauce', price: 0.70, desc: 'Knoblauchsauce' },
-        { id: 'ketchup', name: 'Ketchup', price: 0.50, desc: 'Ketchup' },
-        { id: 'mayo', name: 'Mayonnaise', price: 0.50, desc: 'Mayonnaise' },
-      ],
-      'Softdrinks': [
-        { id: 'cola', name: 'Cola/Fanta/Sprite (0,33l)', price: 2.50, desc: '0,33l' },
-        { id: 'cola125', name: 'Cola/Fanta/Sprite (1,25l)', price: 7.00, desc: '1,25l' },
-        { id: 'apfelschorle', name: 'Apfelschorle (0,33l)', price: 2.50, desc: '0,33l' },
-        { id: 'water', name: 'Wasser (0,33l)', price: 2.20, desc: '0,33l' },
-        { id: 'gingerale', name: 'Ginger Ale (0,33l)', price: 2.90, desc: '0,33l' },
-        { id: 'bitterlemon', name: 'Bitter Lemon (0,33l)', price: 2.90, desc: '0,33l' },
-        { id: 'tonic', name: 'Tonic Wasser (0,33l)', price: 2.90, desc: '0,33l' },
-        { id: 'schokolade', name: 'Kalte Schokolade (0,5l)', price: 3.00, desc: '0,5l' },
-        { id: 'erdbeermilch', name: 'Kalte Erdbeermilch (0,5l)', price: 3.00, desc: '0,5l' },
-        { id: 'icetea', name: 'Ice Tea (0,33l)', price: 2.50, desc: '0,33l' },
-        { id: 'ayran', name: 'Ayran (0,25l)', price: 2.50, desc: '0,25l' },
-        { id: 'uludag', name: 'Uludag (0,33l)', price: 2.50, desc: '0,33l' },
-        { id: 'apfelsaft', name: 'Apfelsaft (0,2l)', price: 2.90, desc: '0,2l' },
-        { id: 'kirschsaft', name: 'Kirschsaft (0,2l)', price: 2.90, desc: '0,2l' },
-        { id: 'orangensaft', name: 'Orangensaft (0,2l)', price: 2.90, desc: '0,2l' },
-      ],
-      'Biere': [
-        { id: 'krombacher', name: 'Krombacher Pils (0,33l)', price: 3.90, desc: '0,33l' },
-        { id: 'korbi_alkfrei', name: 'Krombacher Alkoholfrei (0,33l)', price: 3.90, desc: '0,33l Alkoholfrei' },
-        { id: 'koestritzer', name: 'Köstritzer Schwarzbier (0,33l)', price: 3.90, desc: '0,33l' },
-        { id: 'radler', name: 'Radler (0,33l)', price: 3.90, desc: '0,33l' },
-        { id: 'radler_alkfrei', name: 'Radler Alkoholfrei (0,33l)', price: 3.90, desc: '0,33l Alkoholfrei' },
-        { id: 'erdinger', name: 'Erdinger Weißbier (0,5l)', price: 4.90, desc: '0,5l' },
-        { id: 'erdinger_alkfrei', name: 'Erdinger Alkoholfrei (0,5l)', price: 4.90, desc: '0,5l Alkoholfrei' },
-      ],
-      'Desserts': [
-        { id: 'baklava', name: 'Baklava (4 Stück)', price: 4.00, desc: '4 Stück Baklava' },
-        { id: 'kuchen', name: 'Kuchen (pro Stück)', price: 2.50, desc: 'Pro Stück' },
-      ],
-    };
-
-    const imageMap = {
-      'A1': 'A1.jpeg',
-      'A2 (Crispyfilets)': 'A2.jpeg',
-      'A3 (2x Monamie Burger)': 'A3.jpeg',
-      'A4': 'A4.jpeg',
-      'B3': 'B3.jpeg',
-      'BBQ-Wrap Menü': 'bbq wrap menü.jpeg',
-      'Beef Burger': 'beef burger menü.jpeg',
-      'Beef Wrap': 'beef wrap menü.jpeg',
-      'Big Mama': 'big mama menü.jpeg',
-      'Bro Beef Burger Menü': 'bro beef burger menü.jpeg',
-      'Cheeseburger': 'cheeseburger menü.jpeg',
-      'Chicken-Wrap Menü': 'chicken wrap menü.jpeg',
-      'Chili Beef Menü': 'chilli beefburger menü.jpeg',
-      'Clausthal Burger Menü': 'clausthal burger menü.jpeg',
-      'Crispy Box': 'crispy box.jpeg',
-      'Crush Menü': 'crush burger menü.jpeg',
-      'Double Beef Burger': 'double beef menü.jpeg',
-      'Double Cheeseburger': 'double cheeseburger menü.jpeg',
-      'Double Crush Menü': 'double crush burger menü.jpeg',
-      'Double Royal Beef Burger': 'double royal beefburger menü.jpeg',
-      'Double Royal Cheeseburger': 'double royal cheeseburger menü.jpeg',
-      'Falafel Box': 'falafelbox.jpeg',
-      'Filet Bucket': 'fillet bucket.jpeg',
-      'HotWings Box': 'hot wings box.jpeg',
-      'King Wings Menü': 'king wings.jpeg',
-      'Medium Mix Bucket (3p)': 'medium mix bucket.jpeg',
-      'Nugget-Wrap Menü': 'nuget wrap menü.jpeg',
-      'Nuggets Box': 'nugget box.jpeg',
-      'Nugget Burger Menü': 'nugget burger menü.jpeg',
-      'Party Bucket (4p)': 'party bucket.jpeg',
-      'Pomwrap': 'pomwrap.jpeg',
-      'Royal Beef Burger': 'royal beef burger menü.jpeg',
-      'Royal Cheeseburger': 'royal cheese burger menü.jpeg',
-      'Small Mix Bucket (2p)': 'small mix bucket.jpeg',
-      'Snack Bucket': 'snack bucket.jpeg',
-      'YoYo Menü': 'yoyo menü.jpeg',
-    };
-
-    function getImgUrl(name) {
-      if (imageMap[name]) return 'menus/popular menus/' + imageMap[name];
-      if (name.toLowerCase().includes('burger')) return 'menus/popular menus/clausthal burger menü.jpeg';
-      if (name.toLowerCase().includes('wrap')) return 'menus/popular menus/chicken wrap menü.jpeg';
-      if (name.toLowerCase().includes('bucket')) return 'menus/popular menus/medium mix bucket.jpeg';
-      return null;
-    }
-
-    function openImageModal(imgUrl, title) {
-      document.getElementById('imageModalImg').src = imgUrl;
-      document.getElementById('imageModalTitle').textContent = title;
-      document.getElementById('imageModal').classList.add('show');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeImageModal() {
-      document.getElementById('imageModal').classList.remove('show');
-      document.body.style.overflow = '';
-    }
-
-    let cart = JSON.parse(localStorage.getItem('cart')) || {};
-
-    // Clean up cart from local storage if any items are no longer in PRODUCTS
-    let cartCleaned = false;
-    Object.keys(cart).forEach(id => {
-      const baseId = id.split('|')[0];
-      let found = false;
-      Object.values(PRODUCTS).forEach(category => {
-        if (category.some(p => p.id === baseId)) found = true;
-      });
-      if (!found) {
-        delete cart[id];
-        cartCleaned = true;
-      }
-    });
-    if (cartCleaned) {
-      localStorage.setItem('cart', JSON.stringify(cart));
-    }
-
-    let cartVisible = false;
-    let menuOpen = false;
-
-    function toggleMenu() {
-      const nav = document.getElementById('categoryNav');
-      const overlay = document.getElementById('navOverlay');
-      menuOpen = !menuOpen;
-      if (menuOpen) {
-        nav.classList.add('open');
-        overlay.classList.add('show');
-      } else {
-        nav.classList.remove('open');
-        overlay.classList.remove('show');
-      }
-    }
-
-    function filterMenu() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      renderMenu(query);
-    }
-
-    function scrollToCategory(categoryName) {
-      const target = document.getElementById('cat-' + categoryName.replace(/\s+/g, '-'));
-      if (target) {
-        const y = target.getBoundingClientRect().top + window.scrollY - 180;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-        if (window.innerWidth <= 768) toggleMenu();
-      }
-    }
-
-    function renderMenu(searchQuery = '') {
-      const menu = document.getElementById('menu');
-      const categoryNav = document.getElementById('categoryNav');
-      // Hero section'ı koru
-      const heroSection = menu.querySelector('.hero-feature');
-      menu.innerHTML = '';
-      if (heroSection) {
-        menu.appendChild(heroSection);
-      }
-      if (categoryNav && searchQuery === '') categoryNav.innerHTML = '';
-
-      Object.entries(PRODUCTS).forEach(([category, products]) => {
-        const filteredProducts = products.filter(p =>
-          p.name.toLowerCase().includes(searchQuery) ||
-          (p.desc && p.desc.toLowerCase().includes(searchQuery))
-        );
-
-        if (filteredProducts.length === 0) return;
-
-        if (categoryNav && searchQuery === '') {
-          const pill = document.createElement('div');
-          pill.className = 'category-pill';
-          pill.textContent = category;
-          pill.onclick = () => {
-            const target = document.getElementById('cat-' + category.replace(/\s+/g, '-'));
-            if (target) {
-              const y = target.getBoundingClientRect().top + window.scrollY - 180;
-              window.scrollTo({ top: y, behavior: 'smooth' });
-              if (window.innerWidth <= 768) toggleMenu();
-            }
-          };
-          categoryNav.appendChild(pill);
-        }
-
-        const categoryDiv = document.createElement('div');
-        categoryDiv.className = 'category';
-        categoryDiv.id = 'cat-' + category.replace(/\s+/g, '-');
-
-        const title = document.createElement('div');
-        title.className = 'category-title';
-        title.textContent = category;
-        categoryDiv.appendChild(title);
-
-        const list = document.createElement('div');
-        list.className = 'products-list';
-
-        filteredProducts.forEach(product => {
-          const productDiv = document.createElement('div');
-          productDiv.className = 'product';
-
-          const qty = Object.entries(cart).reduce((sum, [cartKey, amount]) => {
-            if (cartKey === product.id || cartKey.startsWith(product.id + '|')) {
-               return sum + amount;
-            }
-            return sum;
-          }, 0);
-          let imgUrl = getImgUrl(product.name);
-          const isFood = !['Softdrinks', 'Biere', 'Desserts', 'Dips & Soßen'].includes(category);
-          if (!imgUrl && isFood) {
-            imgUrl = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.88 3.75 3.99V22h2.5v-9.01C11.34 12.88 13 11.12 13 9V2h-2v7zm5-7v6.6l-2.4 1.8v1.6h5V2h-2.6zM15 22h2.5v-9.5h-2.5V22z'/%3E%3C/svg%3E";
-          }
-          const isSvg = imgUrl && imgUrl.startsWith('data:image/svg');
-
-          productDiv.innerHTML = `
-            ${imgUrl ? `<div class="product-img-wrapper" onclick="openImageModal('${imgUrl}', '${product.name.replace(/'/g, "\\'")}')" style="cursor: pointer;"><img src="${imgUrl}" alt="${product.name}" class="product-img" loading="lazy" ${isSvg ? 'style="padding: 1.5rem;"' : ''}></div>` : ''}
-            <div class="product-info" style="${!imgUrl ? 'margin-top: 1rem;' : ''}">
-              <div class="product-name">${product.name}</div>
-              ${product.desc ? `<div class="product-desc">${product.desc}</div>` : ''}
-            </div>
-            <div class="product-actions">
-              <div class="product-price">€${product.price.toFixed(2).replace('.', ',')}</div>
-              <div class="controls">
-                ${qty > 0 ? `<button class="btn" onclick="removeBaseItem('${product.id}')">−</button>` : ''}
-                ${qty > 0 ? `<span class="qty">${qty}</span>` : ''}
-                <button class="btn" onclick="openCustomModalOrAdd('${product.id}')">+</button>
-              </div>
-            </div>
-          `;
-          list.appendChild(productDiv);
-        });
-
-        categoryDiv.appendChild(list);
-        menu.appendChild(categoryDiv);
-      });
-
-      updateTotal();
-    }
-
-    let currentCustomizingId = null;
-
-    function openCustomModalOrAdd(id) {
-      let isCustomizable = false;
-      let productName = '';
-      let productCategory = '';
-      
-      Object.entries(PRODUCTS).forEach(([catName, category]) => {
-        const product = category.find(p => p.id === id);
-        if (product) {
-          productName = product.name;
-          productCategory = catName;
-          const n = product.name.toLowerCase();
-          
-          if (id === 'kingwings') {
-            isCustomizable = false;
-          } else if (n.includes('burger') || n.includes('menü') || n.includes('menu') || n.includes('wrap') || n.includes('dürüm') || id === 'a4' || id === 'bigmama' || id === 's_bigmama' || id === 'b3' || id === 'happybox' || id === 'bucketparty') {
-             isCustomizable = true;
-          }
-        }
-      });
-
-      if (isCustomizable) {
-        currentCustomizingId = id;
-        document.getElementById('customModalTitle').textContent = productName + ' anpassen';
-        
-        const n = productName.toLowerCase();
-        
-        let subtitleText = 'Im Burger:';
-        if (n.includes('wrap')) subtitleText = 'Im Wrap:';
-        else if (n.includes('dürüm')) subtitleText = 'Im Dürüm:';
-        document.getElementById('customModalSubtitle').textContent = subtitleText;
-
-        const isQuickChicken = n.includes('quick chicken') || id === 's_quickchicken' || id === 'happybox' || id === 'bucketparty';
-        const isBeefOrVeggie = n.includes('beef') || n.includes('cheese') || n.includes('veggie') || n.includes('halloumi');
-        const isChickenBurger = (productCategory === 'Chicken Menüs' && !n.includes('wrap')) || 
-                                (productCategory === 'Burger' && !isBeefOrVeggie) ||
-                                id === 'a4' || id === 'bigmama' || id === 's_bigmama' || id === 'b3';
-        
-        document.querySelectorAll('.custom-cb').forEach(cb => cb.checked = false);
-
-        const labelZwiebeln = document.getElementById('label-zwiebeln');
-        const labelSalat = document.getElementById('label-salat');
-        const labelTomaten = document.getElementById('label-tomaten');
-        const labelGurken = document.getElementById('label-gurken');
-
-        labelZwiebeln.style.display = 'flex';
-        labelSalat.style.display = 'flex';
-        labelTomaten.style.display = 'flex';
-        labelGurken.style.display = 'flex';
-
-        if (isQuickChicken) {
-          labelZwiebeln.style.display = 'none';
-          labelSalat.style.display = 'none';
-          labelTomaten.style.display = 'none';
-        } else if (isChickenBurger) {
-          labelTomaten.style.display = 'none';
-        }
-
-        document.getElementById('customModal').classList.add('show');
-      } else {
-        addItemExact(id);
-      }
-    }
-
-    function closeCustomModal() {
-      document.getElementById('customModal').classList.remove('show');
-      currentCustomizingId = null;
-    }
-
-    function confirmCustomModal() {
-      if (!currentCustomizingId) return;
-      const selected = Array.from(document.querySelectorAll('.custom-cb'))
-                            .filter(cb => cb.checked)
-                            .map(cb => cb.value);
-      
-      let finalId = currentCustomizingId;
-      if (selected.length > 0) {
-        finalId += '|' + selected.join(', ');
-      }
-      addItemExact(finalId);
-      closeCustomModal();
-    }
-
-    function addItemExact(id) {
-      cart[id] = (cart[id] || 0) + 1;
-      saveCart();
-      renderMenu();
-    }
-
-    function removeBaseItem(baseId) {
-      const cartKey = Object.keys(cart).find(key => key === baseId || key.startsWith(baseId + '|'));
-      if (cartKey) {
-        removeItemExact(cartKey);
-      }
-    }
-
-    function removeItemExact(id) {
-      if (cart[id] > 1) {
-        cart[id]--;
-      } else {
-        delete cart[id];
-      }
-      saveCart();
-      renderMenu();
-    }
-
-    function saveCart() {
-      localStorage.setItem('cart', JSON.stringify(cart));
-    }
-
-    function calculateTotal() {
-      if (getTotalItems() === 0) return 0;
-      let total = 0;
-      Object.entries(cart).forEach(([id, qty]) => {
-        const baseId = id.split('|')[0];
-        Object.values(PRODUCTS).forEach(category => {
-          const product = category.find(p => p.id === baseId);
-          if (product) total += product.price * qty;
-        });
-      });
-      total += calculateDeliveryFee();
-      return total;
-    }
-
-    function getTotalItems() {
-      return Object.values(cart).reduce((sum, qty) => sum + qty, 0);
-    }
-
-    function updateTotal() {
-      document.getElementById('itemCount').textContent = getTotalItems();
-      const total = calculateTotal();
-      document.getElementById('totalPrice').textContent = '€' + total.toFixed(2).replace('.', ',');
-      updateCartDetails();
-    }
-
-    function updateCartDetails() {
-      const cartDiv = document.getElementById('cartItems');
-      const detailsDiv = document.getElementById('cartDetails');
-      if (getTotalItems() === 0) {
-        detailsDiv.classList.remove('open');
-        document.getElementById('cartExpandIcon').classList.remove('open');
-        return;
-      }
-
-      let html = '';
-      Object.entries(cart).forEach(([id, qty]) => {
-        const baseId = id.split('|')[0];
-        Object.values(PRODUCTS).forEach(category => {
-          const product = category.find(p => p.id === baseId);
-          if (product) {
-            const customizations = id.includes('|') ? id.split('|')[1] : '';
-            const customText = customizations ? `<div style="font-size: 0.8rem; color: #64748b; margin-top: 0.25rem;">${customizations}</div>` : '';
-            html += `
-              <div class="cart-item">
-                <div style="flex: 1;">
-                  <div>${product.name}</div>
-                  ${customText}
-                  <div style="color: var(--accent); font-weight: bold;">€${(product.price * qty).toFixed(2).replace('.', ',')}</div>
-                </div>
-                <div class="controls" style="margin-left: 1rem;">
-                  <button class="btn" onclick="removeItemExact('${id}')">−</button>
-                  <span class="qty">${qty}</span>
-                  <button class="btn" onclick="addItemExact('${id}')">+</button>
-                </div>
-              </div>
-            `;
-          }
-        });
-      });
-      html += `<div style="margin-top: 1rem; font-weight: 700; text-align: right; padding-bottom: 0.5rem;">Total: €${calculateTotal().toFixed(2).replace('.', ',')}</div>`;
-      cartDiv.innerHTML = html;
-    }
-
-    function toggleCart() {
-      const detailsDiv = document.getElementById('cartDetails');
-      const icon = document.getElementById('cartExpandIcon');
-      cartVisible = !cartVisible;
-      if (cartVisible && getTotalItems() > 0) {
-        detailsDiv.classList.add('open');
-        icon.classList.add('open');
-      } else {
-        detailsDiv.classList.remove('open');
-        icon.classList.remove('open');
-        cartVisible = false;
-      }
-    }
-
-    function toggleDeliveryType() {
-      const isAbholung = document.querySelector('input[name="deliveryType"]:checked').value === 'abholung';
-      const lieferungFields = document.getElementById('lieferungFields');
-      const abholungFields = document.getElementById('abholungFields');
-
-      if (isAbholung) {
-        lieferungFields.style.display = 'none';
-        abholungFields.style.display = 'block';
-      } else {
-        lieferungFields.style.display = 'block';
-        abholungFields.style.display = 'none';
-      }
-
-      updateDeliveryInfoSummary();
-      updateTotal();
-    }
-
-    function updateDeliveryInfoSummary() {
-      const summaryEl = document.getElementById('deliveryInfoSummary');
-      if (!summaryEl) return;
-      const deliveryTypeEl = document.querySelector('input[name="deliveryType"]:checked');
-      const isAbholung = deliveryTypeEl ? deliveryTypeEl.value === 'abholung' : false;
-      if (isAbholung) {
-        summaryEl.textContent = 'Abholung';
-      } else {
-        const locationEl = document.querySelector('input[name="location"]:checked');
-        const location = locationEl ? locationEl.value : 'clausthal';
-        summaryEl.textContent = location === 'clausthal' ? 'Lieferung · Clausthal-Zellerfeld' : 'Lieferung · Andere Adresse';
-      }
-    }
-
-    let deliveryInfoOpen = false;
-    function toggleDeliveryInfo() {
-      deliveryInfoOpen = !deliveryInfoOpen;
-      const body = document.getElementById('deliveryInfoBody');
-      const chevron = document.getElementById('deliveryInfoChevron');
-      body.classList.toggle('open', deliveryInfoOpen);
-      chevron.classList.toggle('open', deliveryInfoOpen);
-    }
-
-    function handleLocationChange() {
-      const locationEl = document.querySelector('input[name="location"]:checked');
-      const location = locationEl ? locationEl.value : 'clausthal';
-      const otherField = document.getElementById('otherAddressField');
-      const clausthalNote = document.getElementById('clausthalNote');
-      const otherNote = document.getElementById('otherNote');
-      const doorAddress = document.getElementById('doorAddress');
-
-      if (location === 'other') {
-        otherField.style.display = 'block';
-        clausthalNote.style.display = 'none';
-        otherNote.style.display = 'block';
-        doorAddress.placeholder = 'Lieferadresse (6,00€ Liefergebühr)';
-      } else {
-        otherField.style.display = 'block';
-        clausthalNote.style.display = 'block';
-        otherNote.style.display = 'none';
-        doorAddress.placeholder = 'Lieferadresse (Clausthal-Zellerfeld)';
-      }
-
-      updateDeliveryInfoSummary();
-      updateTotal();
-    }
-
-    function calculateDeliveryFee() {
-      const deliveryTypeEl = document.querySelector('input[name="deliveryType"]:checked');
-      const isAbholung = deliveryTypeEl ? deliveryTypeEl.value === 'abholung' : false;
-      if (isAbholung) return 0;
-
-      const locationEl = document.querySelector('input[name="location"]:checked');
-      const location = locationEl ? locationEl.value : 'clausthal';
-      if (location === 'clausthal') {
-        return 1.50;
-      }
-      return 6.00;
-    }
-
-    function checkout() {
-      const total = getTotalItems();
-      if (total === 0) {
-        alert('Bitte fügen Sie Artikel hinzu, bevor Sie bestellen');
-        return;
-      }
-
-      const deliveryTypeEl = document.querySelector('input[name="deliveryType"]:checked');
-      const isAbholung = deliveryTypeEl ? deliveryTypeEl.value === 'abholung' : false;
-      const locationEl = document.querySelector('input[name="location"]:checked');
-      const location = isAbholung ? '' : (locationEl ? locationEl.value : 'clausthal');
-      let doorName = '';
-      let doorAddress = '';
-      let deliveryInfo = '';
-
-      if (isAbholung) {
-        const abholTime = document.getElementById('abholTime').value.trim();
-        if (!abholTime) {
-          alert('Bitte geben Sie die geschätzte Abholzeit an.');
-          document.getElementById('abholTime').focus();
-          return;
-        }
-        deliveryInfo = `\n\nAbholung (Keine Liefergebühr)\nAbholzeit: ca. ${abholTime} Minuten`;
-      } else {
-        doorName = document.getElementById('doorName').value.trim();
-
-        if (!doorName) {
-          alert('Bitte geben Sie den Namen an der Tür ein');
-          document.getElementById('doorName').focus();
-          return;
-        }
-
-        doorAddress = document.getElementById('doorAddress').value.trim();
-        if (!doorAddress) {
-          alert('Bitte geben Sie die Lieferadresse ein');
-          document.getElementById('doorAddress').focus();
-          return;
-        }
-
-        const fee = calculateDeliveryFee();
-        deliveryInfo = `\n\nName an der Tür: ${doorName}\nLieferadresse: ${doorAddress}`;
-      }
-
-      const items = [];
-      Object.entries(cart).forEach(([id, qty]) => {
-        const baseId = id.split('|')[0];
-        Object.values(PRODUCTS).forEach(category => {
-          const product = category.find(p => p.id === baseId);
-          if (product) {
-            const customizations = id.includes('|') ? ` (${id.split('|')[1]})` : '';
-            items.push(`${qty}x ${product.name}${customizations}`);
-          }
-        });
-      });
-
-      const message = `Bestellung:\n${items.join('\n')}\n\nGesamt: €${calculateTotal().toFixed(2).replace('.', ',')}${deliveryInfo}${cart['kuchen'] ? '\n\n⚠️ Bitte Kuchenart angeben!' : ''}`;
-      const encoded = encodeURIComponent(message);
-      window.open(`https://wa.me/4915253415522?text=${encoded}`, '_blank');
-    }
-
-    // PWA Install
-    let installPrompt = null;
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      installPrompt = e;
-      document.getElementById('installBanner').classList.add('show');
-    });
-
-    document.getElementById('installBtn').addEventListener('click', async () => {
-      if (installPrompt) {
-        installPrompt.prompt();
-        const { outcome } = await installPrompt.userChoice;
-        console.log(`User response: ${outcome}`);
-        installPrompt = null;
-        document.getElementById('installBanner').classList.remove('show');
-      }
-    });
-
-    window.addEventListener('appinstalled', () => {
-      document.getElementById('installBanner').classList.remove('show');
-      installPrompt = null;
-    });
-
-    // Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(err => console.log('SW failed:', err));
-    }
-
-    renderMenu();
-    handleLocationChange();
-  </script>
+  <script type="module" src="./main.js"></script>
 
   <div id="google_translate_element" style="display:none;"></div>
   <script type="text/javascript">
@@ -1773,18 +219,23 @@
       location.reload();
     }
   </script>
-  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="text/javascript"
+    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <footer
     style="margin-top: 5rem; padding: 3rem 1.5rem 2rem; text-align: center; font-family: 'Outfit', sans-serif; border-top: 1px solid var(--card-border);">
     <div
       style="font-size: 1rem; font-weight: 700; color: var(--text-color); letter-spacing: 0.04em; margin-bottom: 0.4rem;">
       MonAmie Order</div>
-    <div style="font-size: 0.78rem; color: #94a3b8; letter-spacing: 0.02em;">
-      Designed &amp; built by
+    <div style="font-size: 0.78rem; color: #94a3b8; letter-spacing: 0.02em; margin-bottom: 1rem;">
+      Entworfen &amp; entwickelt von
       <a href="https://toklutimur.uk" target="_blank" rel="noopener"
         style="color: var(--accent); text-decoration: none; font-weight: 600; transition: opacity 0.2s;"
         onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Fırat Tekmanlı</a>
+    </div>
+    <div style="font-size: 0.85rem; display: flex; justify-content: center; gap: 1.5rem;">
+      <a href="./impressum.html" style="color: var(--text-color); text-decoration: none; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Impressum</a>
+      <a href="./datenschutz.html" style="color: var(--text-color); text-decoration: none; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Datenschutz</a>
     </div>
   </footer>
 </body>
