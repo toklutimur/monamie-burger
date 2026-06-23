@@ -235,9 +235,9 @@ const imageMap = {
   'Fanta (0,33l)': 'menus/drinks/fanta033.png',
   'Sprite (0,33l)': 'menus/drinks/sprite033.png',
   'Krombacher Pils (0,33l)': 'menus/drinks/Krombacher-pils033.png',
-  'Krombacher Alkoholfrei (0,33l)': 'menus/drinks/Krombacheralcoholfrei033.jpg',
+  'Krombacher Alkoholfrei (0,33l)': 'menus/drinks/Krombacheralcoholfrei033.png',
   'Krombacher Radler (0,33l)': 'menus/drinks/krombacherradler033.png',
-  'Radler Alkoholfrei (0,33l)': 'menus/drinks/krombacher_radler_alcoholfrei.jpg',
+  'Radler Alkoholfrei (0,33l)': 'menus/drinks/krombacher_radler_alcoholfrei.png',
   'Köstritzer Schwarzbier (0,33l)': 'menus/drinks/köstritzerschwarz.png',
   'Uludag (0,33l)': 'menus/drinks/uludaggazoz033.png',
   'Mezzo Mix (0,33l)': 'menus/drinks/mezzomix033.png',
@@ -339,10 +339,28 @@ function scrollToCategory(categoryName) {
 function renderMenu(searchQuery = '') {
   const menu = document.getElementById('menu');
   const categoryNav = document.getElementById('categoryNav');
-  // Hero section'ı koru
-  const heroSection = menu.querySelector('.hero-feature');
+  // Preserve hero section across re-renders
+  let heroSection = menu.querySelector('.hero-feature');
   menu.innerHTML = '';
-  if (heroSection) {
+
+  // Create hero on first render
+  if (!heroSection && searchQuery === '') {
+    heroSection = document.createElement('div');
+    heroSection.className = 'hero-feature';
+    heroSection.innerHTML = `
+      <div class="hero-content">
+        <h2>Willkommen bei</h2>
+        <h3>Mon Amie Burger</h3>
+        <p>Frische Burger, knusprige Wings & Grill-Spezialitäten — direkt zu dir nach Hause geliefert.</p>
+        <button class="btn-primary" onclick="scrollToCategory('Chicken Menüs')">Menü entdecken</button>
+      </div>
+      <div class="hero-image">
+        <img src="placeholder.png" alt="Mon Amie Burger" loading="lazy">
+      </div>
+    `;
+  }
+
+  if (heroSection && searchQuery === '') {
     menu.appendChild(heroSection);
   }
   if (categoryNav && searchQuery === '') {
@@ -384,9 +402,10 @@ function renderMenu(searchQuery = '') {
     const list = document.createElement('div');
     list.className = 'products-list';
 
-    filteredProducts.forEach(product => {
+    filteredProducts.forEach((product, index) => {
       const productDiv = document.createElement('div');
       productDiv.className = 'product';
+      productDiv.style.animationDelay = `${index * 0.05}s`;
 
       const qty = Object.entries(cart).reduce((sum, [cartKey, amount]) => {
         if (cartKey === product.id || cartKey.startsWith(product.id + '|')) {
@@ -397,19 +416,19 @@ function renderMenu(searchQuery = '') {
       let imgUrl = getImgUrl(product.name, category);
       const isFood = !['Softdrinks', 'Biere', 'Desserts', 'Dips & Soßen'].includes(category);
       if (!imgUrl && isFood) {
-        imgUrl = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.88 3.75 3.99V22h2.5v-9.01C11.34 12.88 13 11.12 13 9V2h-2v7zm5-7v6.6l-2.4 1.8v1.6h5V2h-2.6zM15 22h2.5v-9.5h-2.5V22z'/%3E%3C/svg%3E";
+        imgUrl = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23555'%3E%3Cpath d='M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.88 3.75 3.99V22h2.5v-9.01C11.34 12.88 13 11.12 13 9V2h-2v7zm5-7v6.6l-2.4 1.8v1.6h5V2h-2.6zM15 22h2.5v-9.5h-2.5V22z'/%3E%3C/svg%3E";
       }
       const isSvg = imgUrl && imgUrl.startsWith('data:image/svg');
 
       productDiv.innerHTML = `
-            ${imgUrl ? `<div class="product-img-wrapper" onclick="openImageModal('${imgUrl}', '${product.name.replace(/'/g, "\\'")}')" style="cursor: pointer;"><img src="${imgUrl}" alt="${product.name}" class="product-img" loading="lazy" ${isSvg ? 'style="padding: 1.5rem;"' : ''}></div>` : ''}
+            ${imgUrl ? `<div class="product-img-wrapper" onclick="openImageModal('${imgUrl}', '${product.name.replace(/'/g, "\\'")}')" style="cursor: pointer;"><img src="${imgUrl}" alt="${product.name}" class="product-img" loading="lazy" ${isSvg ? 'style="padding: 1.5rem; background: #1a1a22;"' : ''}></div>` : ''}
             <div class="product-info" style="${!imgUrl ? 'margin-top: 1rem;' : ''}">
               <div class="product-name">${product.name}</div>
               ${product.desc ? `<div class="product-desc">${product.desc}</div>` : ''}
             </div>
             <div class="product-actions">
               <div class="product-price">€${product.price.toFixed(2).replace('.', ',')}</div>
-              <div class="controls">
+              <div class="controls" id="controls-${product.id}">
                 ${qty > 0 ? `<button class="btn" onclick="removeBaseItem('${product.id}')">−</button>` : ''}
                 ${qty > 0 ? `<span class="qty">${qty}</span>` : ''}
                 <button class="btn" onclick="openCustomModalOrAdd('${product.id}')">+</button>
@@ -551,10 +570,32 @@ function confirmCustomModal() {
   closeCustomModal();
 }
 
+function updateMenuQuantities() {
+  Object.values(PRODUCTS).forEach(category => {
+    category.forEach(product => {
+      const controlsEl = document.getElementById('controls-' + product.id);
+      if (controlsEl) {
+        const qty = Object.entries(cart).reduce((sum, [cartKey, amount]) => {
+          if (cartKey === product.id || cartKey.startsWith(product.id + '|')) {
+            return sum + amount;
+          }
+          return sum;
+        }, 0);
+        controlsEl.innerHTML = `
+          ${qty > 0 ? `<button class="btn" onclick="removeBaseItem('${product.id}')">−</button>` : ''}
+          ${qty > 0 ? `<span class="qty">${qty}</span>` : ''}
+          <button class="btn" onclick="openCustomModalOrAdd('${product.id}')">+</button>
+        `;
+      }
+    });
+  });
+}
+
 function addItemExact(id) {
   cart[id] = (cart[id] || 0) + 1;
   saveCart();
-  renderMenu();
+  updateMenuQuantities();
+  updateTotal();
 }
 
 function removeBaseItem(baseId) {
@@ -571,11 +612,22 @@ function removeItemExact(id) {
     delete cart[id];
   }
   saveCart();
-  renderMenu();
+  updateMenuQuantities();
+  updateTotal();
 }
 
 function saveCart() {
   localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function emptyCart() {
+  cart = {};
+  saveCart();
+  updateMenuQuantities();
+  const cartDiv = document.getElementById('cartItems');
+  if (cartDiv) cartDiv.innerHTML = '';
+  updateTotal();
+  document.getElementById('cartModal').classList.remove('show');
 }
 
 function calculateTotal() {
@@ -616,11 +668,14 @@ function updateCartDetails() {
   }
 
   let html = '';
+  let itemsTotal = 0;
   Object.entries(cart).forEach(([id, qty]) => {
     const baseId = id.split('|')[0];
     Object.values(PRODUCTS).forEach(category => {
       const product = category.find(p => p.id === baseId);
       if (product) {
+        const itemTotal = product.price * qty;
+        itemsTotal += itemTotal;
         const customizations = id.includes('|') ? id.split('|')[1] : '';
         const customText = customizations ? `<div style="font-size: 0.8rem; color: #64748b; margin-top: 0.25rem;">${customizations}</div>` : '';
         html += `
@@ -628,7 +683,7 @@ function updateCartDetails() {
                 <div style="flex: 1;">
                   <div>${product.name}</div>
                   ${customText}
-                  <div style="color: var(--accent); font-weight: bold;">€${(product.price * qty).toFixed(2).replace('.', ',')}</div>
+                  <div style="color: var(--accent); font-weight: bold;">€${itemTotal.toFixed(2).replace('.', ',')}</div>
                 </div>
                 <div class="controls" style="margin-left: 1rem;">
                   <button class="btn" onclick="removeItemExact('${id}')">−</button>
@@ -640,7 +695,25 @@ function updateCartDetails() {
       }
     });
   });
-  html += `<div style="margin-top: 1rem; font-weight: 700; text-align: right; padding-bottom: 0.5rem;">Total: €${calculateTotal().toFixed(2).replace('.', ',')}</div>`;
+
+  const deliveryFee = calculateDeliveryFee();
+  
+  html += `
+    <div style="border-top: 1px dashed rgba(255,255,255,0.1); margin-top: 1rem; padding-top: 1rem;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.95rem;">
+        <span>Zwischensumme:</span>
+        <span>€${itemsTotal.toFixed(2).replace('.', ',')}</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.95rem;">
+        <span>Lieferung:</span>
+        <span>${deliveryFee > 0 ? '€' + deliveryFee.toFixed(2).replace('.', ',') : 'Kostenlos'}</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-weight: 700; font-size: 1.1rem; color: var(--accent);">
+        <span>Gesamt:</span>
+        <span>€${calculateTotal().toFixed(2).replace('.', ',')}</span>
+      </div>
+    </div>
+  `;
   cartDiv.innerHTML = html;
 }
 
@@ -847,6 +920,8 @@ window.closeCustomModal = closeCustomModal;
 window.confirmCustomModal = confirmCustomModal;
 window.closeImageModal = closeImageModal;
 window.checkout = checkout;
+window.scrollToCategory = scrollToCategory;
+window.emptyCart = emptyCart;
 // Dynamically generated onclick handlers inside renderMenu / renderCart
 window.openImageModal = openImageModal;
 window.removeBaseItem = removeBaseItem;

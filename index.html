@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon Amie Burger</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#0f0f12">
   <meta name="author" content="Fırat Tekmanlı">
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;600;700&display=swap"
     rel="stylesheet">
@@ -104,12 +104,23 @@
     <div class="modal-content" style="max-height: 90vh; display: flex; flex-direction: column;">
       <div class="modal-title" style="display: flex; justify-content: space-between; align-items: center;">
         <span>Mein Warenkorb</span>
-        <button onclick="toggleCart()"
-          style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color);">&times;</button>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button type="button" onclick="emptyCart()"
+            style="background: none; border: none; font-size: 0.9rem; color: #ef4444; cursor: pointer; display: flex; align-items: center; gap: 0.25rem;" aria-label="Warenkorb leeren">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              <line x1="10" y1="11" x2="10" y2="17"></line>
+              <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+            Leeren
+          </button>
+          <button onclick="toggleCart()"
+            style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #94a3b8;">&times;</button>
+        </div>
       </div>
       <div style="overflow-y: auto; flex: 1; margin: 1rem 0;">
-        <div class="delivery-info"
-          style="border-bottom: none; border-radius: 12px; border: 1px solid var(--card-border); margin-bottom: 1rem;">
+        <div class="delivery-info">
           <div class="delivery-info-header" id="deliveryInfoHeader" onclick="toggleDeliveryInfo()">
             <span class="delivery-info-label">🚚 Bestelldetails</span>
             <span class="delivery-info-summary" id="deliveryInfoSummary">Lieferung · Clausthal-Zellerfeld</span>
@@ -161,7 +172,7 @@
         </div>
       </div>
       <div class="cart-summary"
-        style="padding-top: 1rem; border-top: 1px solid var(--card-border); cursor: default; justify-content: space-between;">
+        style="padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); cursor: default; justify-content: space-between;">
         <div style="min-width: 0;">
           <span id="itemCount">0</span> Artikel | <span id="totalPrice"
             style="font-weight: bold; color: var(--accent);">€0,00</span>
