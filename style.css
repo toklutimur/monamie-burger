@@ -327,11 +327,52 @@ header {
   transform: scale(0.95);
 }
 
+/* Phone pill button */
+.phone-open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 40px;
+  padding: 0 1rem;
+  border-radius: 14px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.2s;
+  position: relative;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.phone-open-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+.phone-open-btn:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+}
+
+.phone-open-btn:active {
+  transform: scale(0.95);
+}
+
 .cart-icon {
   display: none;
 }
 
-.cart-label {
+.cart-label,
+.phone-label {
   display: inline;
 }
 
@@ -408,7 +449,8 @@ header {
     font-size: 1.6rem;
   }
 
-  .cart-label {
+  .cart-label,
+  .phone-label {
     display: none;
   }
 
