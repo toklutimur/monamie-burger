@@ -220,6 +220,7 @@ const imageMap = {
   'Nugget Burger Menü': 'nugget burger menü.jpeg',
   'Party Bucket (4p)': 'party bucket.jpeg',
   'Pomwrap': 'pomwrap.jpeg',
+  'Red Reaper Menü': 'redreapermenü.jpeg',
   'Royal Beef Burger': 'royal beef burger menü.jpeg',
   'Royal Cheeseburger': 'royal cheese burger menü.jpeg',
   'Small Mix Bucket (2p)': 'small mix bucket.jpeg',
