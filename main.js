@@ -245,10 +245,15 @@ const imageMap = {
   'Uludag Orange (0,33l)': 'menus/drinks/uludaggazozorange033.png',
   'Erdinger Weißbier (0,5l)': 'menus/drinks/erdingerweiss05.png',
   'Erdinger Alkoholfrei (0,5l)': 'menus/drinks/erdingeralkoholfrei.png',
+  'Baklava (4 Stück)': 'menus/deserts/baklava.png',
+  'Kuchen (pro Stück)': 'menus/deserts/kuchen.png',
 };
 
 function getImgUrl(name, category) {
   if (category === 'Single Burgers') {
+    return 'placeholder.png';
+  }
+  if (category === 'Wraps & Dürüm' && name !== 'Pomwrap') {
     return 'placeholder.png';
   }
   if (imageMap[name]) {
@@ -733,6 +738,10 @@ function calculateDeliveryFee() {
   return 6.00;
 }
 
+function sanitizeInput(str) {
+  return str.replace(/[<>]/g, '');
+}
+
 function checkout() {
   const total = getTotalItems();
   if (total === 0) {
@@ -749,7 +758,7 @@ function checkout() {
   let deliveryInfo = '';
 
   if (isAbholung) {
-    const abholTime = document.getElementById('abholTime').value.trim();
+    const abholTime = sanitizeInput(document.getElementById('abholTime').value.trim());
     if (!abholTime) {
       alert('Bitte geben Sie die geschätzte Abholzeit an.');
       document.getElementById('abholTime').focus();
@@ -757,7 +766,7 @@ function checkout() {
     }
     deliveryInfo = `\n\nAbholung (Keine Liefergebühr)\nAbholzeit: ca. ${abholTime} Minuten`;
   } else {
-    doorName = document.getElementById('doorName').value.trim();
+    doorName = sanitizeInput(document.getElementById('doorName').value.trim());
 
     if (!doorName) {
       alert('Bitte geben Sie den Namen an der Tür ein');
@@ -765,7 +774,7 @@ function checkout() {
       return;
     }
 
-    doorAddress = document.getElementById('doorAddress').value.trim();
+    doorAddress = sanitizeInput(document.getElementById('doorAddress').value.trim());
     if (!doorAddress) {
       alert('Bitte geben Sie die Lieferadresse ein');
       document.getElementById('doorAddress').focus();
