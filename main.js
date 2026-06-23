@@ -424,10 +424,6 @@ function renderMenu(searchQuery = '') {
   });
 
   updateTotal();
-  if (document.getElementById('scrollIndicator')) {
-    lastActiveCatId = null;
-    if (typeof handleScrollSpy === 'function') handleScrollSpy();
-  }
 }
 
 let currentCustomizingId = null;
@@ -837,126 +833,8 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(err => console.log('SW failed:', err));
 }
 
-// Scroll handling: fade out when idle + accurate scroll spy
-let scrollIdleTimeout = null;
-let lastActiveCatId = null;
-
 renderMenu();
 handleLocationChange();
-buildScrollIndicator();
-
-function handleScrollSpy() {
-  const categories = Object.keys(PRODUCTS);
-  if (!categories.length) return;
-
-  let activeCatId = null;
-
-  // 1. Check if scrolled to absolute bottom
-  if (Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 10) {
-    activeCatId = 'cat-' + categories[categories.length - 1].replace(/\s+/g, '-');
-  } else {
-    // 2. Find the active category based on offset
-    // Trigger point is ~150px down from the viewport top
-    const triggerPoint = 150;
-    for (let cat of categories) {
-      const id = 'cat-' + cat.replace(/\s+/g, '-');
-      const el = document.getElementById(id);
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        // Category title is above or right at our trigger line
-        if (rect.top <= triggerPoint) {
-          activeCatId = id;
-        } else {
-          break;
-        }
-      }
-    }
-
-    // Fallback to first category
-    if (!activeCatId) {
-      activeCatId = 'cat-' + categories[0].replace(/\s+/g, '-');
-    }
-  }
-
-  if (activeCatId && activeCatId !== lastActiveCatId) {
-    lastActiveCatId = activeCatId;
-    updateScrollIndicatorUI(activeCatId);
-  }
-}
-
-function updateScrollIndicatorUI(activeId) {
-  const allItems = document.querySelectorAll('.scroll-indicator-item');
-  if (!allItems.length) return;
-
-  let activeItem = document.querySelector(`.scroll-indicator-item[data-cat="${activeId}"]`);
-  if (!activeItem) return;
-
-  allItems.forEach(i => i.classList.remove('active'));
-  activeItem.classList.add('active');
-
-  const allItemsArray = Array.from(allItems);
-  const activeIndex = allItemsArray.indexOf(activeItem);
-  allItemsArray.forEach((item, idx) => {
-    item.dataset.dist = Math.abs(idx - activeIndex);
-  });
-
-  const slider = document.getElementById('scrollSlider');
-  if (slider) {
-    const sliderHeight = slider.offsetHeight || 10;
-    const y = activeItem.offsetTop + (activeItem.offsetHeight / 2) - (sliderHeight / 2);
-    slider.style.transform = `translateY(${y}px)`;
-  }
-}
-
-window.addEventListener('scroll', () => {
-  const indicator = document.getElementById('scrollIndicator');
-  if (indicator) {
-    indicator.classList.remove('idle');
-    clearTimeout(scrollIdleTimeout);
-    scrollIdleTimeout = setTimeout(() => {
-      indicator.classList.add('idle');
-    }, 400); // 0.4s timeout
-  }
-  handleScrollSpy();
-});
-
-function buildScrollIndicator() {
-  const indicator = document.getElementById('scrollIndicator');
-  if (!indicator) return;
-  indicator.innerHTML = '';
-
-  const categories = Object.keys(PRODUCTS);
-  categories.forEach(cat => {
-    const id = 'cat-' + cat.replace(/\s+/g, '-');
-    const item = document.createElement('div');
-    item.className = 'scroll-indicator-item';
-    item.dataset.cat = id;
-    item.innerHTML = `
-          <span class="scroll-indicator-label">${cat}</span>
-        `;
-    item.addEventListener('click', () => {
-      const target = document.getElementById(id);
-      if (target) {
-        const y = target.getBoundingClientRect().top + window.scrollY - 120;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    });
-    indicator.appendChild(item);
-  });
-
-  const slider = document.createElement('div');
-  slider.className = 'scroll-indicator-slider';
-  slider.id = 'scrollSlider';
-  indicator.appendChild(slider);
-
-  lastActiveCatId = null; // force update
-  handleScrollSpy();
-
-  // Start idle on mobile so it doesn't overlap on page load
-  if (window.innerWidth <= 768) {
-    indicator.classList.add('idle');
-  }
-}
 
 // Expose functions to global scope for inline HTML event handlers (required for ES modules)
 window.toggleMenu = toggleMenu;
