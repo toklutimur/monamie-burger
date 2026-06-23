@@ -1,7 +1,7 @@
 {
-  "name": "MonAmie Order",
-  "short_name": "MonAmie",
-  "description": "Order from MonAmie Chicken - Calculate total instantly",
+  "name": "Mon Amie Burger",
+  "short_name": "Mon Amie Burger",
+  "description": "Order from Mon Amie Burger - Calculate total instantly",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

@@ -154,6 +154,10 @@ const PRODUCTS = {
     { id: 'colazero', name: 'Coca-Cola Zero (0,33l)', price: 2.50, desc: '0,33l' },
     { id: 'fanta', name: 'Fanta (0,33l)', price: 2.50, desc: '0,33l' },
     { id: 'sprite', name: 'Sprite (0,33l)', price: 2.50, desc: '0,33l' },
+    { id: 'redbull', name: 'Red Bull (0,25l)', price: 3.00, desc: '0,25l' },
+    { id: 'uludag', name: 'Uludag (0,33l)', price: 2.50, desc: '0,33l' },
+    { id: 'uludag_orange', name: 'Uludag Orange (0,33l)', price: 2.50, desc: '0,33l' },
+    { id: 'mezzomix', name: 'Mezzo Mix (0,33l)', price: 2.50, desc: '0,33l' },
     { id: 'cola125', name: 'Coca-Cola (1,25l)', price: 7.00, desc: '1,25l' },
     { id: 'colazero125', name: 'Coca-Cola Zero (1,25l)', price: 7.00, desc: '1,25l' },
     { id: 'fanta125', name: 'Fanta (1,25l)', price: 7.00, desc: '1,25l' },
@@ -167,7 +171,6 @@ const PRODUCTS = {
     { id: 'erdbeermilch', name: 'Kalte Erdbeermilch (0,5l)', price: 3.00, desc: '0,5l' },
     { id: 'icetea', name: 'Ice Tea (0,33l)', price: 2.50, desc: '0,33l' },
     { id: 'ayran', name: 'Ayran (0,25l)', price: 2.50, desc: '0,25l' },
-    { id: 'uludag', name: 'Uludag (0,33l)', price: 2.50, desc: '0,33l' },
     { id: 'apfelsaft', name: 'Apfelsaft (0,2l)', price: 2.90, desc: '0,2l' },
     { id: 'kirschsaft', name: 'Kirschsaft (0,2l)', price: 2.90, desc: '0,2l' },
     { id: 'orangensaft', name: 'Orangensaft (0,2l)', price: 2.90, desc: '0,2l' },
@@ -176,7 +179,7 @@ const PRODUCTS = {
     { id: 'krombacher', name: 'Krombacher Pils (0,33l)', price: 3.90, desc: '0,33l' },
     { id: 'korbi_alkfrei', name: 'Krombacher Alkoholfrei (0,33l)', price: 3.90, desc: '0,33l Alkoholfrei' },
     { id: 'koestritzer', name: 'Köstritzer Schwarzbier (0,33l)', price: 3.90, desc: '0,33l' },
-    { id: 'radler', name: 'Radler (0,33l)', price: 3.90, desc: '0,33l' },
+    { id: 'radler', name: 'Krombacher Radler (0,33l)', price: 3.90, desc: '0,33l' },
     { id: 'radler_alkfrei', name: 'Radler Alkoholfrei (0,33l)', price: 3.90, desc: '0,33l Alkoholfrei' },
     { id: 'erdinger', name: 'Erdinger Weißbier (0,5l)', price: 4.90, desc: '0,5l' },
     { id: 'erdinger_alkfrei', name: 'Erdinger Alkoholfrei (0,5l)', price: 4.90, desc: '0,5l Alkoholfrei' },
@@ -227,18 +230,21 @@ const imageMap = {
   'Snack Bucket': 'snack bucket.jpeg',
   'YoYo Menü': 'yoyo menü.jpeg',
   'Happy Box': 'happyboxmenü.png',
-  'Coca-Cola (0,33l)': 'menus/drinks/colafantasprite033.png',
-  'Coca-Cola Zero (0,33l)': 'menus/drinks/colafantasprite033.png',
-  'Fanta (0,33l)': 'menus/drinks/colafantasprite033.png',
-  'Sprite (0,33l)': 'menus/drinks/colafantasprite033.png',
-  'Coca-Cola (1,25l)': 'menus/drinks/cola-fanta-sprite-125.jpg',
-  'Coca-Cola Zero (1,25l)': 'menus/drinks/cola-fanta-sprite-125.jpg',
-  'Fanta (1,25l)': 'menus/drinks/cola-fanta-sprite-125.jpg',
-  'Sprite (1,25l)': 'menus/drinks/cola-fanta-sprite-125.jpg',
-  'Krombacher Pils (0,33l)': 'menus/drinks/Krombacher-pils033.jpg',
+  'Coca-Cola (0,33l)': 'menus/drinks/cola033.png',
+  'Coca-Cola Zero (0,33l)': 'menus/drinks/colazero033.png',
+  'Fanta (0,33l)': 'menus/drinks/fanta033.png',
+  'Sprite (0,33l)': 'menus/drinks/sprite033.png',
+  'Krombacher Pils (0,33l)': 'menus/drinks/Krombacher-pils033.png',
   'Krombacher Alkoholfrei (0,33l)': 'menus/drinks/Krombacheralcoholfrei033.jpg',
-  'Radler (0,33l)': 'menus/drinks/krombacher radler 033.webp',
-  'Radler Alkoholfrei (0,33l)': 'menus/drinks/krombacher radler 033.webp',
+  'Krombacher Radler (0,33l)': 'menus/drinks/krombacherradler033.png',
+  'Radler Alkoholfrei (0,33l)': 'menus/drinks/krombacher_radler_alcoholfrei.jpg',
+  'Köstritzer Schwarzbier (0,33l)': 'menus/drinks/köstritzerschwarz.png',
+  'Uludag (0,33l)': 'menus/drinks/uludaggazoz033.png',
+  'Mezzo Mix (0,33l)': 'menus/drinks/mezzomix033.png',
+  'Red Bull (0,25l)': 'menus/drinks/redbull025.png',
+  'Uludag Orange (0,33l)': 'menus/drinks/uludaggazozorange033.png',
+  'Erdinger Weißbier (0,5l)': 'menus/drinks/erdingerweiss05.png',
+  'Erdinger Alkoholfrei (0,5l)': 'menus/drinks/erdingeralkoholfrei.png',
 };
 
 function getImgUrl(name, category) {
@@ -782,6 +788,11 @@ function checkout() {
       }
     });
   });
+
+  if (!isAbholung) {
+    const fee = calculateDeliveryFee();
+    items.push(`Lieferung – €${fee.toFixed(2).replace('.', ',')}`);
+  }
 
   const message = `Bestellung:\n${items.join('\n')}\n\nGesamt: €${calculateTotal().toFixed(2).replace('.', ',')}${deliveryInfo}${cart['kuchen'] ? '\n\n⚠️ Bitte Kuchenart angeben!' : ''}`;
   const encoded = encodeURIComponent(message);
