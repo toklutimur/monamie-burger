@@ -187,6 +187,7 @@ const PRODUCTS = {
       'A3 (2x Monamie Burger)': 'A3.jpeg',
       'A4': 'A4.jpeg',
       'B3': 'B3.jpeg',
+      'BBQ Menü': 'bbqmenü.jpeg',
       'BBQ-Wrap Menü': 'bbq wrap menü.jpeg',
       'Beef Burger': 'beef burger menü.jpeg',
       'Beef Wrap': 'beef wrap menü.jpeg',
@@ -866,7 +867,7 @@ const PRODUCTS = {
         clearTimeout(scrollIdleTimeout);
         scrollIdleTimeout = setTimeout(() => {
           indicator.classList.add('idle');
-        }, 1500); // 1.5s timeout
+        }, 400); // 0.4s timeout
       }
       handleScrollSpy();
     });
@@ -902,6 +903,11 @@ const PRODUCTS = {
 
       lastActiveCatId = null; // force update
       handleScrollSpy();
+
+      // Start idle on mobile so it doesn't overlap on page load
+      if (window.innerWidth <= 768) {
+        indicator.classList.add('idle');
+      }
     }
 
 // Expose functions to global scope for inline HTML event handlers (required for ES modules)
