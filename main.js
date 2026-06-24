@@ -901,10 +901,12 @@ window.addEventListener('appinstalled', () => {
   installPrompt = null;
 });
 
-// Service Worker
+// Service Worker (Disabled to prevent aggressive caching issues)
+/*
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(err => console.log('SW failed:', err));
 }
+*/
 
 renderMenu();
 handleLocationChange();
