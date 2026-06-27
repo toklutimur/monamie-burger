@@ -12,7 +12,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.google.com https://*.googleapis.com https://*.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.googleapis.com https://*.gstatic.com https://*.google.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.googleapis.com https://*.gstatic.com https://*.google.com; connect-src 'self' https://*.googleapis.com https://*.google.com https://*.gstatic.com; frame-src 'self' https://*.google.com https://*.googleapis.com data:;">
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.google.com https://*.googleapis.com https://*.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.googleapis.com https://*.gstatic.com https://*.google.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://flagcdn.com https://*.googleapis.com https://*.gstatic.com https://*.google.com; connect-src 'self' https://*.googleapis.com https://*.google.com https://*.gstatic.com; frame-src 'self' https://*.google.com https://*.googleapis.com data:;">
 </head>
 
 <body>
@@ -46,12 +46,12 @@
       <div class="header-right">
         <!-- Language flag switcher (desktop) -->
         <div class="lang-switcher lang-switcher--header" aria-label="Dil seçimi">
-          <button class="lang-btn" onclick="changeLanguage('de')" title="Deutsch" aria-label="Deutsch">🇩🇪</button>
-          <button class="lang-btn" onclick="changeLanguage('en')" title="English" aria-label="English">🇬🇧</button>
-          <button class="lang-btn" onclick="changeLanguage('tr')" title="Türkçe" aria-label="Türkçe">🇹🇷</button>
-          <button class="lang-btn" onclick="changeLanguage('fr')" title="Français" aria-label="Français">🇫🇷</button>
-          <button class="lang-btn" onclick="changeLanguage('ar')" title="العربية" aria-label="العربية">🇸🇦</button>
-          <button class="lang-btn" onclick="changeLanguage('zh-CN')" title="中文" aria-label="中文">🇨🇳</button>
+          <button class="lang-btn" onclick="changeLanguage('de')" title="Deutsch" aria-label="Deutsch"><img src="https://flagcdn.com/w20/de.png" alt="DE" style="width: 20px; border-radius: 2px; display: block;"></button>
+          <button class="lang-btn" onclick="changeLanguage('en')" title="English" aria-label="English"><img src="https://flagcdn.com/w20/gb.png" alt="EN" style="width: 20px; border-radius: 2px; display: block;"></button>
+          <button class="lang-btn" onclick="changeLanguage('tr')" title="Türkçe" aria-label="Türkçe"><img src="https://flagcdn.com/w20/tr.png" alt="TR" style="width: 20px; border-radius: 2px; display: block;"></button>
+          <button class="lang-btn" onclick="changeLanguage('fr')" title="Français" aria-label="Français"><img src="https://flagcdn.com/w20/fr.png" alt="FR" style="width: 20px; border-radius: 2px; display: block;"></button>
+          <button class="lang-btn" onclick="changeLanguage('ar')" title="العربية" aria-label="العربية"><img src="https://flagcdn.com/w20/sa.png" alt="AR" style="width: 20px; border-radius: 2px; display: block;"></button>
+          <button class="lang-btn" onclick="changeLanguage('zh-CN')" title="中文" aria-label="中文"><img src="https://flagcdn.com/w20/cn.png" alt="ZH" style="width: 20px; border-radius: 2px; display: block;"></button>
         </div>
         <!-- Mobile search icon -->
         <button class="header-search-btn" id="mobileSearchBtn" aria-label="Ara" onclick="toggleMobileSearch()">
@@ -96,12 +96,12 @@
       <!-- Language flags in drawer (mobile) -->
       <div class="nav-drawer-langs">
         <div class="lang-switcher lang-switcher--drawer">
-          <button class="lang-btn" onclick="changeLanguage('de')" title="Deutsch" aria-label="Deutsch">🇩🇪</button>
-          <button class="lang-btn" onclick="changeLanguage('en')" title="English" aria-label="English">🇬🇧</button>
-          <button class="lang-btn" onclick="changeLanguage('tr')" title="Türkçe" aria-label="Türkçe">🇹🇷</button>
-          <button class="lang-btn" onclick="changeLanguage('fr')" title="Français" aria-label="Français">🇫🇷</button>
-          <button class="lang-btn" onclick="changeLanguage('ar')" title="العربية" aria-label="العربية">🇸🇦</button>
-          <button class="lang-btn" onclick="changeLanguage('zh-CN')" title="中文" aria-label="中文">🇨🇳</button>
+          <button class="lang-btn" onclick="changeLanguage('de')" title="Deutsch" aria-label="Deutsch"><img src="https://flagcdn.com/w20/de.png" alt="DE" style="width: 20px; border-radius: 2px; display: block;"></button>
+          <button class="lang-btn" onclick="changeLanguage('en')" title="English" aria-label="English"><img src="https://flagcdn.com/w20/gb.png" alt="EN" style="width: 20px; border-radius: 2px; display: block;"></button>
+          <button class="lang-btn" onclick="changeLanguage('tr')" title="Türkçe" aria-label="Türkçe"><img src="https://flagcdn.com/w20/tr.png" alt="TR" style="width: 20px; border-radius: 2px; display: block;"></button>
+          <button class="lang-btn" onclick="changeLanguage('fr')" title="Français" aria-label="Français"><img src="https://flagcdn.com/w20/fr.png" alt="FR" style="width: 20px; border-radius: 2px; display: block;"></button>
+          <button class="lang-btn" onclick="changeLanguage('ar')" title="العربية" aria-label="العربية"><img src="https://flagcdn.com/w20/sa.png" alt="AR" style="width: 20px; border-radius: 2px; display: block;"></button>
+          <button class="lang-btn" onclick="changeLanguage('zh-CN')" title="中文" aria-label="中文"><img src="https://flagcdn.com/w20/cn.png" alt="ZH" style="width: 20px; border-radius: 2px; display: block;"></button>
         </div>
       </div>
     </div>
