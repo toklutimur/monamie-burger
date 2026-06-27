@@ -724,6 +724,14 @@ function toggleCart() {
   } else {
     if (getTotalItems() > 0) {
       modal.classList.add('show');
+      // Auto-expand delivery details when cart opens
+      if (!deliveryInfoOpen) {
+        deliveryInfoOpen = true;
+        const body = document.getElementById('deliveryInfoBody');
+        const chevron = document.getElementById('deliveryInfoChevron');
+        if (body) body.classList.add('open');
+        if (chevron) chevron.classList.add('open');
+      }
     } else {
       alert('Ihr Warenkorb ist leer.');
     }

@@ -449,7 +449,6 @@ header {
     font-size: 1.6rem;
   }
 
-  .cart-label,
   .phone-label {
     display: none;
   }
@@ -458,12 +457,17 @@ header {
     display: none;
   }
 
-  .cart-open-btn,
   .phone-open-btn {
     width: 40px;
     height: 40px;
     padding: 0;
     justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .cart-open-btn {
+    height: 40px;
+    padding: 0 0.75rem;
     flex-shrink: 0;
   }
 
