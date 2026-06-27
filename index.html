@@ -3,7 +3,9 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Mon Amie Burger</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0f0f12">
@@ -111,7 +113,7 @@
 
 
   <div class="modal-overlay" id="cartModal" onclick="if(event.target === this) toggleCart()">
-    <div class="modal-content" style="max-height: 90vh; display: flex; flex-direction: column;">
+    <div class="modal-content" style="display: flex; flex-direction: column;">
       <div class="modal-title" style="display: flex; justify-content: space-between; align-items: center;">
         <span>Mein Warenkorb</span>
         <div style="display: flex; align-items: center; gap: 1rem;">

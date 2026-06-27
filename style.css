@@ -20,6 +20,10 @@
   box-sizing: border-box;
 }
 
+html {
+  height: -webkit-fill-available;
+}
+
 html,
 body {
   overflow-x: hidden;
@@ -33,8 +37,12 @@ body {
     linear-gradient(160deg, #0f0f12 0%, #1a0a0c 40%, #0f0f12 100%);
   background-color: #0f0f12;
   color: var(--text-color);
-  padding-top: 83px;
-  padding-bottom: 40px;
+  padding-top: calc(83px + env(safe-area-inset-top));
+  padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 /* Staggered card entrance animation */
@@ -71,6 +79,10 @@ header {
   left: 0;
   right: 0;
   z-index: 100;
+  /* Safe area for Dynamic Island / notch */
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 .header-inner {
@@ -406,11 +418,13 @@ header {
 
 @media (max-width: 768px) {
   body {
-    padding-top: 71px;
+    padding-top: calc(71px + env(safe-area-inset-top, 0px));
   }
 
   .header-inner {
     padding: 0 1rem;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
     height: 68px;
   }
 
@@ -421,10 +435,12 @@ header {
   .header-search {
     display: none;
     position: absolute;
-    top: 68px;
+    top: calc(68px + env(safe-area-inset-top, 0px));
     left: 0;
     right: 0;
     padding: 0.5rem 1rem;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
     background: rgba(15, 15, 18, 0.97);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -463,12 +479,14 @@ header {
     padding: 0;
     justify-content: center;
     flex-shrink: 0;
+    touch-action: manipulation;
   }
 
   .cart-open-btn {
     height: 40px;
     padding: 0 0.75rem;
     flex-shrink: 0;
+    touch-action: manipulation;
   }
 
   .cart-open-btn svg,
@@ -493,6 +511,8 @@ header {
   /* Tighten header padding and logo size */
   .header-inner {
     padding: 0 0.75rem;
+    padding-left: max(0.75rem, env(safe-area-inset-left));
+    padding-right: max(0.75rem, env(safe-area-inset-right));
     gap: 0.4rem;
   }
 
@@ -516,6 +536,7 @@ header {
   position: sticky;
   top: 83px;
   height: calc(100vh - 83px);
+  height: calc(100dvh - 83px);
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
@@ -621,6 +642,7 @@ header {
     bottom: 0;
     width: 290px;
     height: 100vh;
+    height: 100dvh;
     max-width: 85vw;
     background: linear-gradient(160deg, #1a0a0a 0%, #1e1010 40%, #0f172a 100%);
     backdrop-filter: blur(10px);
@@ -628,14 +650,16 @@ header {
     z-index: 1100;
     transform: translateX(-100%);
     border-right: 3px solid var(--red);
-    padding-top: 0;
-    padding-bottom: 80px;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+    padding-left: env(safe-area-inset-left, 0px);
     /* override desktop grid: single column list */
     display: flex;
     flex-direction: column;
     grid-template-columns: unset;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     box-shadow: 6px 0 30px rgba(0, 0, 0, 0.2);
   }
 
@@ -771,7 +795,7 @@ header {
   }
 
   header {
-    padding-left: 70px;
+    /* No extra padding-left needed; hamburger is in the header-left flex group */
   }
 
   /* Cart footer: stack vertically on very small screens */
@@ -1089,6 +1113,7 @@ header {
 
 .cart-details.open {
   max-height: 40vh;
+  max-height: 40dvh;
   overflow-y: auto;
   margin-top: 1rem;
   padding-top: 1rem;
@@ -1299,10 +1324,32 @@ header {
   }
 }
 
-/* Safe area support for notched phones */
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
+/* Safe area support for notched phones (iPhone X/11/12/13/14/15 series) */
+@supports (padding: env(safe-area-inset-bottom)) {
   .cart-footer {
     padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    padding-left: calc(1rem + env(safe-area-inset-left));
+    padding-right: calc(1rem + env(safe-area-inset-right));
+  }
+
+  .app-footer {
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+  }
+
+  .modal-overlay {
+    /* ensure modal covers full screen incl. safe areas */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .modal-content {
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+
+  .category-nav {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
   }
 }
 
@@ -1323,6 +1370,8 @@ header {
   transition: all 0.3s;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  /* Cover full screen including safe areas */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 .modal-overlay.show {
@@ -1337,10 +1386,12 @@ header {
   border-radius: 20px;
   width: 90%;
   max-width: 400px;
+  max-height: calc(90dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
   transform: translateY(20px);
   transition: all 0.3s;
   color: #f1f1f4;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-overlay.show .modal-content {
@@ -1430,7 +1481,7 @@ header {
 .image-modal-content {
   position: relative;
   max-width: 90vw;
-  max-height: 90vh;
+  max-height: 90dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1445,7 +1496,7 @@ header {
 
 .image-modal-content img {
   max-width: 100%;
-  max-height: 75vh;
+  max-height: 75dvh;
   object-fit: contain;
   border-radius: 16px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
