@@ -553,21 +553,7 @@ header {
   display: none;
 }
 
-.menu-toggle {
-  display: none;
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  z-index: 1200;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
+
 
 .category-pill {
   background: rgba(223, 34, 35, 0.12);
