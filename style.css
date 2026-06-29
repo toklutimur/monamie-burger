@@ -715,7 +715,7 @@ header {
   }
 
   .category-nav::-webkit-scrollbar {
-    width: 4px;
+    width: 12px;
   }
 
   .category-nav::-webkit-scrollbar-track {
@@ -723,8 +723,9 @@ header {
   }
 
   .category-nav::-webkit-scrollbar-thumb {
-    background: rgba(223, 34, 35, 0.5);
-    border-radius: 4px;
+    background: rgba(223, 34, 35, 0.72);
+    border: 3px solid rgba(15, 15, 18, 0.95);
+    border-radius: 999px;
   }
 
   /* Language flags row inside drawer */
@@ -1323,6 +1324,37 @@ header {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(223, 34, 35, 0.5);
+}
+
+@media (max-width: 768px) {
+  html {
+    scrollbar-width: auto;
+    scrollbar-color: rgba(223, 34, 35, 0.72) rgba(15, 15, 18, 0.35);
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 14px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(15, 15, 18, 0.35);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(223, 34, 35, 0.72);
+    border: 3px solid rgba(15, 15, 18, 0.95);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(223, 34, 35, 0.9);
+  }
 }
 
 @media (min-width: 1800px) {
