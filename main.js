@@ -7,7 +7,7 @@ const PRODUCTS = {
     { id: 'a1', name: 'A1 Menü', price: 13.50, desc: 'HotWings ca. 400g (7-10 Stk.), 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
     { id: 'a2', name: 'A2 (Crispyfilets) Menü', price: 11.50, desc: '5x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
     { id: 'a3', name: 'A3 (2x Monamie Burger) Menü', price: 14.50, desc: '2x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-    { id: 'a4', name: 'A4 Menü', price: 11.50, desc: '1x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Clausthal Salat, 1x Ketchup/Mayo' },
+    { id: 'a4', name: 'A4 Menü', price: 12.00, desc: '1x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Clausthal Salat, 1x Ketchup/Mayo' },
     { id: 'bigmama', name: 'Big Mama Menü', price: 14.00, desc: '1x Big Mama Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
     { id: 'happybox', name: 'Happy Box Menü', price: 7.90, desc: '1x Quick Chicken Burger oder 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Überraschung, 1x Caprisonne, 1x Ketchup/Mayo' },
     { id: 'nuggetsbox', name: 'Nuggets Box Menü', price: 7.50, desc: 'Chicken Nuggets Box' },
