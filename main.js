@@ -355,7 +355,7 @@ function renderMenu(searchQuery = '') {
         <button class="btn-primary" onclick="scrollToCategory('Chicken Menüs')">Menü entdecken</button>
       </div>
       <div class="hero-image">
-        <img src="placeholder.png" alt="Mon Amie Burger" loading="lazy">
+        <img src="placeholder.png" alt="Mon Amie Burger" class="placeholder-img" loading="eager" decoding="async">
       </div>
     `;
   }
@@ -419,9 +419,10 @@ function renderMenu(searchQuery = '') {
         imgUrl = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23555'%3E%3Cpath d='M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.88 3.75 3.99V22h2.5v-9.01C11.34 12.88 13 11.12 13 9V2h-2v7zm5-7v6.6l-2.4 1.8v1.6h5V2h-2.6zM15 22h2.5v-9.5h-2.5V22z'/%3E%3C/svg%3E";
       }
       const isSvg = imgUrl && imgUrl.startsWith('data:image/svg');
+      const isPlaceholder = imgUrl === 'placeholder.png';
 
       productDiv.innerHTML = `
-            ${imgUrl ? `<div class="product-img-wrapper" onclick="openImageModal('${imgUrl}', '${product.name.replace(/'/g, "\\'")}')" style="cursor: pointer;"><img src="${imgUrl}" alt="${product.name}" class="product-img" loading="lazy" ${isSvg ? 'style="padding: 1.5rem; background: #1a1a22;"' : ''}></div>` : ''}
+            ${imgUrl ? `<div class="product-img-wrapper" onclick="openImageModal('${imgUrl}', '${product.name.replace(/'/g, "\\'")}')" style="cursor: pointer;"><img src="${imgUrl}" alt="${product.name}" class="product-img${isPlaceholder ? ' placeholder-img' : ''}" loading="lazy" decoding="async" ${isSvg ? 'style="padding: 1.5rem; background: #1a1a22;"' : ''}></div>` : ''}
             <div class="product-info" style="${!imgUrl ? 'margin-top: 1rem;' : ''}">
               <div class="product-name">${product.name}</div>
               ${product.desc ? `<div class="product-desc">${product.desc}</div>` : ''}
