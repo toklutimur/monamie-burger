@@ -447,6 +447,17 @@ function renderMenu(searchQuery = '') {
 
 let currentCustomizingId = null;
 
+function hasCustomizableBase(product) {
+  const name = product.name.toLowerCase();
+  const desc = (product.desc || '').toLowerCase();
+  const text = `${name} ${desc}`;
+
+  return text.includes('burger') ||
+    text.includes('wrap') ||
+    text.includes('d\u00fcr\u00fcm') ||
+    text.includes('duerum');
+}
+
 function openCustomModalOrAdd(id) {
   let isCustomizable = false;
   let productName = '';
@@ -459,11 +470,10 @@ function openCustomModalOrAdd(id) {
       productName = product.name;
       productCategory = catName;
       productDesc = product.desc || '';
-      const n = product.name.toLowerCase();
 
       if (id === 'kingwings') {
         isCustomizable = false;
-      } else if (n.includes('burger') || n.includes('menü') || n.includes('menu') || n.includes('wrap') || n.includes('dürüm') || id === 'a4' || id === 'bigmama' || id === 's_bigmama' || id === 'b3' || id === 'happybox' || id === 'bucketparty') {
+      } else if (hasCustomizableBase(product)) {
         isCustomizable = true;
       }
     }
