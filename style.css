@@ -396,14 +396,15 @@ header {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(241, 241, 244, 0.62);
   border-radius: 9999px;
   min-width: 20px;
   height: 20px;
-  font-size: 0.7rem;
-  font-weight: 700;
+  font-size: 0.66rem;
+  font-weight: 600;
   padding: 0 4px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .cart-count[data-count="0"] {
@@ -501,15 +502,19 @@ header {
 
   .cart-count {
     position: absolute;
-    top: -6px;
-    right: -6px;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 5px;
+    top: -4px;
+    right: -4px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    background: var(--accent);
+    color: #fff;
     border: 2px solid rgba(15, 15, 18, 0.95);
-    font-size: 0.65rem;
+    font-size: 0.58rem;
+    font-weight: 700;
     line-height: 1;
     pointer-events: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
   }
 
   .cart-open-btn svg,
@@ -894,7 +899,7 @@ header {
   }
 
   .qty {
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     min-width: 14px;
   }
 
@@ -1087,10 +1092,16 @@ header {
 }
 
 .qty {
-  font-weight: 600;
+  color: rgba(241, 241, 244, 0.58);
+  font-weight: 500;
   min-width: 18px;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   text-align: center;
+}
+
+#itemCount {
+  color: rgba(241, 241, 244, 0.62);
+  font-weight: 500;
 }
 
 .cart-footer {
