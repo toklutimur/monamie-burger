@@ -1707,6 +1707,7 @@ body {
 
 .hero-image img.placeholder-img {
   padding: 1.25rem;
+  background: transparent;
   border-color: rgba(249, 115, 22, 0.28);
 }
 
