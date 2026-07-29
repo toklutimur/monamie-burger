@@ -129,6 +129,29 @@ def data_shape(value, depth=0):
     return type(value).__name__
 
 
+def element_paths(value, path="$"):
+    found = []
+    if isinstance(value, dict):
+        for key, item in value.items():
+            child_path = f"{path}.{key}"
+            if key == "elements":
+                found.append(
+                    {
+                        "path": child_path,
+                        "type": type(item).__name__,
+                        "length": len(item) if isinstance(item, list) else None,
+                        "sample_keys": list(item[0].keys())
+                        if isinstance(item, list) and item and isinstance(item[0], dict)
+                        else [],
+                    }
+                )
+            found.extend(element_paths(item, child_path))
+    elif isinstance(value, list):
+        for index, item in enumerate(value[:6]):
+            found.extend(element_paths(item, f"{path}[{index}]"))
+    return found
+
+
 def page_content():
     source = Path(__file__).with_name("monamie-wp-home-preview.html").read_text()
     style = re.search(r"(<style>.*?</style>)", source, flags=re.S).group(1)
@@ -200,7 +223,16 @@ def inspect(session):
     for page_id in (531, 533, 537):
         try:
             _, document = elementor_document(session, page_id)
-            elementor[str(page_id)] = data_shape(document)
+            response = document.get("data", {}).get("responses", {}).get("document", {})
+            response_data = response.get("data", {})
+            elementor[str(page_id)] = {
+                "success": response.get("success"),
+                "code": response.get("code"),
+                "response_data_keys": list(response_data.keys())
+                if isinstance(response_data, dict)
+                else [],
+                "element_paths": element_paths(response_data),
+            }
         except Exception as error:
             elementor[str(page_id)] = {"error": str(error)}
     print(
