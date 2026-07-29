@@ -821,6 +821,16 @@ header {
   filter: sepia(1) saturate(1.8) hue-rotate(330deg);
 }
 
+.product-img.placeholder-img {
+  object-fit: contain;
+  padding: 24px;
+  background: #f5f1ea;
+}
+
+.product:hover .product-img.placeholder-img {
+  transform: none;
+}
+
 .product-info {
   flex: 1;
   display: flex;

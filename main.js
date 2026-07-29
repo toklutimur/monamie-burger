@@ -1,22 +1,22 @@
 const PRODUCTS = {
   'Chicken Menüs': [
     { id: 'clausthalburgermenu', name: 'Clausthal Burger Menü', price: 15.50, desc: 'Käse überbacken, mit Clausthal Salat' },
-    { id: 'yoyo', name: 'YoYo Menü', price: 14.00, desc: '1x YoYo Burger mit Jalapeño und Cheese "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo, ca. 130 g HotWings (2-3 Stk.)' },
+    { id: 'yoyo', name: 'YoYo Menü', price: 14.00, desc: '1x YoYo Burger mit Jalapeño und Cheese "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo, HotWings (2-3 Stk.)' },
     { id: 'bbq', name: 'BBQ Menü', price: 10.00, desc: '1x BBQ Burger mit Cheese "L", 1x Clausthalsalat' },
-    { id: 'kingwings', name: 'King Wings Menü', price: 13.50, desc: 'Deep-Fried Chicken Wings (Scharf) ca. 400g (7-10), 1x Klein Pommes oder Wedges' },
-    { id: 'a1', name: 'A1', price: 13.50, desc: 'HotWings ca. 400g (7-10 Stk.), 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-    { id: 'a2', name: 'A2 (Crispyfilets)', price: 11.50, desc: '5x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-    { id: 'a3', name: 'A3 (2x Monamie Burger)', price: 14.50, desc: '2x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
-    { id: 'a4', name: 'A4', price: 11.50, desc: '1x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Clausthal Salat, 1x Ketchup/Mayo' },
-    { id: 'bigmama', name: 'Big Mama', price: 14.00, desc: '1x Big Mama Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
-    { id: 'happybox', name: 'Happy Box', price: 7.90, desc: '1x Quick Chicken Burger oder 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Überraschung, 1x Caprisonne, 1x Ketchup/Mayo' },
-    { id: 'nuggetsbox', name: 'Nuggets Box', price: 7.50, desc: 'Chicken Nuggets Box' },
-    { id: 'crispybox', name: 'Crispy Box', price: 7.50, desc: 'Crispy Chicken Box' },
-    { id: 'falafelbox', name: 'Falafel Box', price: 7.50, desc: 'Falafel Box' },
-    { id: 'hotwingsbox', name: 'HotWings Box', price: 7.50, desc: 'Hot Wings Box' },
+    { id: 'kingwings', name: 'King Wings Menü', price: 13.50, desc: 'Deep-Fried Chicken Wings (Scharf) (7-10), 1x Klein Pommes oder Wedges' },
+    { id: 'a1', name: 'A1 Menü', price: 13.50, desc: 'HotWings (7-10 Stk.), 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+    { id: 'a2', name: 'A2 (Crispyfilets) Menü', price: 11.50, desc: '5x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+    { id: 'a3', name: 'A3 (2x Monamie Burger) Menü', price: 14.50, desc: '2x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+    { id: 'a4', name: 'A4 Menü', price: 12.00, desc: '1x Monamie Burger "L", 1x Klein Pommes oder Wedges, 1x Clausthal Salat, 1x Ketchup/Mayo' },
+    { id: 'bigmama', name: 'Big Mama Menü', price: 14.00, desc: '1x Big Mama Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
+    { id: 'happybox', name: 'Happy Box Menü', price: 7.90, desc: '1x Quick Chicken Burger oder 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Überraschung, 1x Caprisonne, 1x Ketchup/Mayo' },
+    { id: 'nuggetsbox', name: 'Nuggets Box Menü', price: 7.50, desc: 'Chicken Nuggets Box' },
+    { id: 'crispybox', name: 'Crispy Box Menü', price: 7.50, desc: 'Crispy Chicken Box' },
+    { id: 'falafelbox', name: 'Falafel Box Menü', price: 7.50, desc: 'Falafel Box' },
+    { id: 'hotwingsbox', name: 'HotWings Box Menü', price: 7.50, desc: 'Hot Wings Box' },
     { id: 'crushburger', name: 'Crush Menü', price: 14.00, desc: '1x Crush Burger mit Cheese "XL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
     { id: 'doublcrush', name: 'Double Crush Menü', price: 16.00, desc: '1x Double Crush Burger mit Cheese "XXL", 1x Groß Pommes oder Wedges, 1x Ketchup/Mayo' },
-    { id: 'b3', name: 'B3', price: 13.00, desc: '1x Monamie Burger "L", 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
+    { id: 'b3', name: 'B3 Menü', price: 13.00, desc: '1x Monamie Burger "L", 2x Crispyfilets, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
     { id: 'chickenwrapmenu', name: 'Chicken-Wrap Menü', price: 11.00, desc: '1x Chickenwrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
     { id: 'nuggetwrapmenu', name: 'Nugget-Wrap Menü', price: 11.00, desc: '1x Nugget-Wrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
     { id: 'filetburgermenu', name: 'Filet Burger Menü', price: 12.00, desc: '1x Filet Burger, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
@@ -25,17 +25,17 @@ const PRODUCTS = {
     { id: 'bbqwrapmenu', name: 'BBQ-Wrap Menü', price: 11.00, desc: '1x BBQ-Wrap, 1x Klein Pommes oder Wedges, 1x Ketchup/Mayo' },
   ],
   'Beef Burger Menüs': [
-    { id: 'beefburger', name: 'Beef Burger', price: 9.00, desc: '1x Beef Burger "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-    { id: 'doublebeef', name: 'Double Beef Burger', price: 13.00, desc: '1x Beef Burger "XL" (2x 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-    { id: 'cheeseburger', name: 'Cheeseburger', price: 10.00, desc: '1x Beef Burger mit Cheese "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-    { id: 'doublecheese', name: 'Double Cheeseburger', price: 13.50, desc: '1x Beef Burger mit Cheese "XL" (2x 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-    { id: 'royalbeef', name: 'Royal Beef Burger', price: 13.00, desc: '1x Beef Burger "XL" (180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-    { id: 'royalcheese', name: 'Royal Cheeseburger', price: 13.50, desc: '1x Beef Burger mit Cheese (180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-    { id: 'doubleroy', name: 'Double Royal Beef Burger', price: 15.50, desc: '1x Beef Burger "XXL" (2x 180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-    { id: 'doubleroyalcheese', name: 'Double Royal Cheeseburger', price: 16.00, desc: '1x Beef Burger mit Cheese "XXL" (2x 180 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-    { id: 'brobeef', name: 'Bro Beef Burger Menü', price: 15.00, desc: '2x Beef Burger "L" (je 100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-    { id: 'chilibeef', name: 'Chili Beef Menü', price: 13.00, desc: '1x Beef Burger mit Jalapeño und Cheese "L" (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 3x Chili Cheese, 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
-    { id: 'beefwrap', name: 'Beef Wrap', price: 13.00, desc: '1x Beef Wrap (100 Gramm saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+    { id: 'beefburger', name: 'Beef Burger Menü', price: 9.00, desc: '1x Beef Burger "L" (saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+    { id: 'doublebeef', name: 'Double Beef Burger Menü', price: 13.00, desc: '1x Beef Burger "XL" (2x saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+    { id: 'cheeseburger', name: 'Cheeseburger Menü', price: 10.00, desc: '1x Beef Burger mit Cheese "L" (saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+    { id: 'doublecheese', name: 'Double Cheeseburger Menü', price: 13.50, desc: '1x Beef Burger mit Cheese "XL" (2x saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+    { id: 'royalbeef', name: 'Royal Beef Burger Menü', price: 13.00, desc: '1x Beef Burger "XL" (saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+    { id: 'royalcheese', name: 'Royal Cheeseburger Menü', price: 13.50, desc: '1x Beef Burger mit Cheese (saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+    { id: 'doubleroy', name: 'Double Royal Beef Burger Menü', price: 15.50, desc: '1x Beef Burger "XXL" (2x saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+    { id: 'doubleroyalcheese', name: 'Double Royal Cheeseburger Menü', price: 16.00, desc: '1x Beef Burger mit Cheese "XXL" (2x saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+    { id: 'brobeef', name: 'Bro Beef Burger Menü', price: 15.00, desc: '2x Beef Burger "L" (saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+    { id: 'chilibeef', name: 'Chili Beef Menü', price: 13.00, desc: '1x Beef Burger mit Jalapeño und Cheese "L" (saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 3x Chili Cheese, 1x Klein Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
+    { id: 'beefwrap', name: 'Beef Wrap Menü', price: 13.00, desc: '1x Beef Wrap (saftiges Rindfleisch, frische Tomaten, knackiger Eisbergsalat, Zwiebeln, Gurken und hausgemachte Sauce), 1x Groß Pommes oder Wedges, 1x Ketchup und Mayonnaise' },
   ],
   'Single Burgers': [
     { id: 's_quickchicken', name: 'Quick Chicken Burger "S"', price: 2.50, desc: 'Single Burger' },
@@ -78,7 +78,7 @@ const PRODUCTS = {
     { id: 'adanakebab', name: 'Adana Kebab (Scharf)', price: 17.50, desc: 'Scharfes gehacktes vom Rind am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
     { id: 'urfakebab', name: 'Urfa Kebab', price: 17.50, desc: 'Gehacktes vom Rind am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
     { id: 'siskebab', name: 'Sis Kebab (Schisch Kebab)', price: 19.00, desc: 'Rinderspieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
-    { id: 'kanat', name: 'Hähnchenflügel', price: 17.50, desc: 'Schön gegrillte Hähnchenflügel, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
+    { id: 'kanat', name: 'Hähnchenflügel', price: 17.50, desc: 'Schön gegrillte 8 Stück Hähnchenflügel, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
     { id: 'tavukgoesue', name: 'Hähnchenbrustfilet', price: 17.50, desc: 'Schön gegrillte Hähnchenbrust, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
     { id: 'tavuksis', name: 'Hähnchenspieß', price: 17.50, desc: 'Hähnchenstücke am Spieß, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
     { id: 'koefte', name: 'Köfteteller', price: 17.50, desc: 'Gegrillte Frikadellen aus Rindfleisch, Bulgur oder Pommes, als Beilage Joghurt und gemischter Salat, dazu Brot' },
@@ -104,9 +104,9 @@ const PRODUCTS = {
     { id: 'aciezme', name: 'Scharfe Soße', price: 6.00, desc: 'Scharfe Soße' },
   ],
   'Chicken Snacks': [
-    { id: 'hotwings230', name: 'HotWings (230g/4-6 Stk.)', price: 7.00, desc: 'HotWings ca. 230g (4-6 Stück)' },
-    { id: 'hotwings350', name: 'HotWings (350g/7-9 Stk.)', price: 10.50, desc: 'HotWings ca. 350g (7-9 Stück)' },
-    { id: 'hotwings540', name: 'HotWings (540g/10-14 Stk.)', price: 16.20, desc: 'HotWings ca. 540g (10-14 Stück)' },
+    { id: 'hotwings230', name: 'HotWings (4-6 Stk.)', price: 7.00, desc: 'HotWings (4-6 Stück)' },
+    { id: 'hotwings350', name: 'HotWings (7-9 Stk.)', price: 10.50, desc: 'HotWings (7-9 Stück)' },
+    { id: 'hotwings540', name: 'HotWings (10-14 Stk.)', price: 16.20, desc: 'HotWings (10-14 Stück)' },
     { id: 'crispy4', name: 'Crispy Filet (4x)', price: 7.00, desc: '4x Crispyfilets' },
     { id: 'crispy6', name: 'Crispy Filet (6x)', price: 9.90, desc: '6x Crispyfilets' },
     { id: 'crispy9', name: 'Crispy Filet (9x)', price: 15.20, desc: '9x Crispyfilets' },
@@ -128,9 +128,9 @@ const PRODUCTS = {
     { id: 'kroketten10', name: 'Kroketten (10x)', price: 7.50, desc: '10x Kroketten' },
   ],
   'Buckets': [
-    { id: 'bucket2', name: 'Small Mix Bucket (2p)', price: 29.90, desc: 'Gönnt Euch zu zweit den Bucket mit ca. 540g HotWings (10-14 Stück) und 10 mild gewürzten Crispy Filets. Dazu gibt es 2 Beilagen nach Wahl und 3 Dips.' },
-    { id: 'bucket3', name: 'Medium Mix Bucket (3p)', price: 34.90, desc: 'Unser beliebter Bucket für 3 Personen mit ca. 400g HotWings (7-10 Stück), 8 knusprigen Crispy Filets und 8 mild gewürzten Filet Bites. Dazu gibt es 3 Beilagen nach Wahl und 4 Dips.' },
-    { id: 'bucketparty', name: 'Party Bucket (4p)', price: 44.90, desc: 'Unser Bucket für großen Hunger mit 4 Quick Chicken Burger "S", ca. 640g HotWings (12-16 Stück) und 8 knusprig leckeren Crispy Filets. Dazu gibt es 4 Beilagen Deiner Wahl und 2 Dips.' },
+    { id: 'bucket2', name: 'Small Mix Bucket (2p)', price: 29.90, desc: 'Gönnt Euch zu zweit den Bucket mit HotWings (10-14 Stück) und 10 mild gewürzten Crispy Filets. Dazu gibt es 2 Beilagen nach Wahl und 3 Dips.' },
+    { id: 'bucket3', name: 'Medium Mix Bucket (3p)', price: 34.90, desc: 'Unser beliebter Bucket für 3 Personen mit HotWings (7-10 Stück), 8 knusprigen Crispy Filets und 8 mild gewürzten Filet Bites. Dazu gibt es 3 Beilagen nach Wahl und 4 Dips.' },
+    { id: 'bucketparty', name: 'Party Bucket (4p)', price: 44.90, desc: 'Unser Bucket für großen Hunger mit 4 Quick Chicken Burger "S", HotWings (12-16 Stück) und 8 knusprig leckeren Crispy Filets. Dazu gibt es 4 Beilagen Deiner Wahl und 2 Dips.' },
     { id: 'bucketfilet', name: 'Filet Bucket', price: 24.90, desc: '14 Filet Bites, 4 Crispy Filets, 2 Beilagen nach Wahl, 2 Dips nach Wahl.' },
     { id: 'bucketsnack', name: 'Snack Bucket', price: 22.00, desc: '6 Mozzarella, 6 Zwiebelringe, 6 Kroketten, 6 Nuggets, 6 Chilli Cheese, nach Wahl 4 Dip.' },
   ],
@@ -191,45 +191,45 @@ const PRODUCTS = {
 };
 
 const imageMap = {
-  'A1': 'A1.jpeg',
-  'A2 (Crispyfilets)': 'A2.jpeg',
-  'A3 (2x Monamie Burger)': 'A3.jpeg',
-  'A4': 'A4.jpeg',
-  'B3': 'B3.jpeg',
+  'A1 Menü': 'A1.jpeg',
+  'A2 (Crispyfilets) Menü': 'A2.jpeg',
+  'A3 (2x Monamie Burger) Menü': 'A3.jpeg',
+  'A4 Menü': 'A4.jpeg',
+  'B3 Menü': 'B3.jpeg',
   'BBQ Menü': 'bbqmenü.jpeg',
   'BBQ-Wrap Menü': 'bbq wrap menü.jpeg',
-  'Beef Burger': 'beef burger menü.jpeg',
-  'Beef Wrap': 'beef wrap menü.jpeg',
-  'Big Mama': 'big mama menü.jpeg',
+  'Beef Burger Menü': 'beef burger menü.jpeg',
+  'Beef Wrap Menü': 'beef wrap menü.jpeg',
+  'Big Mama Menü': 'big mama menü.jpeg',
   'Bro Beef Burger Menü': 'bro beef burger menü.jpeg',
-  'Cheeseburger': 'cheeseburger menü.jpeg',
+  'Cheeseburger Menü': 'cheeseburger menü.jpeg',
   'Chicken-Wrap Menü': 'chicken wrap menü.jpeg',
   'Chili Beef Menü': 'chilli beefburger menü.jpeg',
   'Clausthal Burger Menü': 'clausthal burger menü.jpeg',
-  'Crispy Box': 'crispy box.jpeg',
+  'Crispy Box Menü': 'crispy box.jpeg',
   'Crush Menü': 'crush burger menü.jpeg',
-  'Double Beef Burger': 'double beef menü.jpeg',
-  'Double Cheeseburger': 'double cheeseburger menü.jpeg',
+  'Double Beef Burger Menü': 'double beef menü.jpeg',
+  'Double Cheeseburger Menü': 'double cheeseburger menü.jpeg',
   'Double Crush Menü': 'double crush burger menü.jpeg',
-  'Double Royal Beef Burger': 'double royal beefburger menü.jpeg',
-  'Double Royal Cheeseburger': 'double royal cheeseburger menü.jpeg',
-  'Falafel Box': 'falafelbox.jpeg',
+  'Double Royal Beef Burger Menü': 'double royal beefburger menü.jpeg',
+  'Double Royal Cheeseburger Menü': 'double royal cheeseburger menü.jpeg',
+  'Falafel Box Menü': 'falafelbox.jpeg',
   'Filet Bucket': 'fillet bucket.jpeg',
-  'HotWings Box': 'hot wings box.jpeg',
+  'HotWings Box Menü': 'hot wings box.jpeg',
   'King Wings Menü': 'king wings.jpeg',
   'Medium Mix Bucket (3p)': 'medium mix bucket.jpeg',
   'Nugget-Wrap Menü': 'nuget wrap menü.jpeg',
-  'Nuggets Box': 'nugget box.jpeg',
+  'Nuggets Box Menü': 'nugget box.jpeg',
   'Nugget Burger Menü': 'nugget burger menü.jpeg',
   'Party Bucket (4p)': 'party bucket.jpeg',
   'Pomwrap': 'pomwrap.jpeg',
   'Red Reaper Menü': 'redreapermenü.jpeg',
-  'Royal Beef Burger': 'royal beef burger menü.jpeg',
-  'Royal Cheeseburger': 'royal cheese burger menü.jpeg',
+  'Royal Beef Burger Menü': 'royal beef burger menü.jpeg',
+  'Royal Cheeseburger Menü': 'royal cheese burger menü.jpeg',
   'Small Mix Bucket (2p)': 'small mix bucket.jpeg',
   'Snack Bucket': 'snack bucket.jpeg',
   'YoYo Menü': 'yoyo menü.jpeg',
-  'Happy Box': 'happyboxmenü.png',
+  'Happy Box Menü': 'happyboxmenü.png',
   'Coca-Cola (0,33l)': 'menus/drinks/cola033.png',
   'Coca-Cola Zero (0,33l)': 'menus/drinks/colazero033.png',
   'Fanta (0,33l)': 'menus/drinks/fanta033.png',
@@ -437,9 +437,10 @@ function renderMenu(searchQuery = '') {
         imgUrl = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23555'%3E%3Cpath d='M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.88 3.75 3.99V22h2.5v-9.01C11.34 12.88 13 11.12 13 9V2h-2v7zm5-7v6.6l-2.4 1.8v1.6h5V2h-2.6zM15 22h2.5v-9.5h-2.5V22z'/%3E%3C/svg%3E";
       }
       const isSvg = imgUrl && imgUrl.startsWith('data:image/svg');
+      const isPlaceholder = imgUrl === 'placeholder.png';
 
       productDiv.innerHTML = `
-            ${imgUrl ? `<div class="product-img-wrapper" onclick="openImageModal('${imgUrl}', '${product.name.replace(/'/g, "\\'")}')"><img src="${imgUrl}" alt="${product.name}" class="product-img${isSvg ? ' product-img--placeholder' : ''}" loading="lazy"></div>` : ''}
+            ${imgUrl ? `<div class="product-img-wrapper" onclick="openImageModal('${imgUrl}', '${product.name.replace(/'/g, "\\'")}')"><img src="${imgUrl}" alt="${product.name}" class="product-img${isSvg ? ' product-img--placeholder' : ''}${isPlaceholder ? ' placeholder-img' : ''}" loading="lazy" decoding="async"></div>` : ''}
             <div class="product-info">
               <div class="product-name">${product.name}</div>
               ${product.desc ? `<div class="product-desc">${product.desc}</div>` : ''}
@@ -465,6 +466,17 @@ function renderMenu(searchQuery = '') {
 
 let currentCustomizingId = null;
 
+function hasCustomizableBase(product) {
+  const name = product.name.toLowerCase();
+  const desc = (product.desc || '').toLowerCase();
+  const text = `${name} ${desc}`;
+
+  return text.includes('burger') ||
+    text.includes('wrap') ||
+    text.includes('d\u00fcr\u00fcm') ||
+    text.includes('duerum');
+}
+
 function openCustomModalOrAdd(id) {
   let isCustomizable = false;
   let productName = '';
@@ -477,11 +489,10 @@ function openCustomModalOrAdd(id) {
       productName = product.name;
       productCategory = catName;
       productDesc = product.desc || '';
-      const n = product.name.toLowerCase();
 
       if (id === 'kingwings') {
         isCustomizable = false;
-      } else if (n.includes('burger') || n.includes('menü') || n.includes('menu') || n.includes('wrap') || n.includes('dürüm') || id === 'a4' || id === 'bigmama' || id === 's_bigmama' || id === 'b3' || id === 'happybox' || id === 'bucketparty') {
+      } else if (hasCustomizableBase(product)) {
         isCustomizable = true;
       }
     }
@@ -715,7 +726,7 @@ function updateCartDetails() {
   });
 
   const deliveryFee = calculateDeliveryFee();
-  
+
   html += `
     <div style="border-top: 1px dashed rgba(255,255,255,0.1); margin-top: 1rem; padding-top: 1rem;">
       <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.95rem;">
@@ -742,6 +753,14 @@ function toggleCart() {
   } else {
     if (getTotalItems() > 0) {
       modal.classList.add('show');
+      // Auto-expand delivery details when cart opens
+      if (!deliveryInfoOpen) {
+        deliveryInfoOpen = true;
+        const body = document.getElementById('deliveryInfoBody');
+        const chevron = document.getElementById('deliveryInfoChevron');
+        if (body) body.classList.add('open');
+        if (chevron) chevron.classList.add('open');
+      }
     } else {
       alert('Ihr Warenkorb ist leer.');
     }
