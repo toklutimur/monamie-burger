@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mon Amie Chicken – Preview</title>
+</head>
+<body>
+<header class="mock-header">
+  <a href="#" class="mock-logo"><img src="https://mon-amie-chicken.de/wp-content/uploads/2023/11/logo.png" alt="Mon Amie Chicken"></a>
+  <nav><a href="#">Home</a><a href="https://mon-amie-burger.de/">Speisekarte</a><a href="#">Über Uns</a><a href="#">Kontakt</a></nav>
+  <a class="mock-order" href="https://mon-amie-burger.de/">Bestellen</a>
+</header>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--ma-orange:#f05a24;--ma-orange-dark:#d94a18;--ma-ink:#111827;--ma-muted:#68707d;--ma-cream:#f5efe6;--ma-paper:#f8f8f5;--ma-line:#e8e5df}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ma-paper);color:var(--ma-ink);font-family:Manrope,Arial,sans-serif}
+a{text-decoration:none}
+.mock-header{height:88px;padding:10px max(24px,calc((100vw - 1320px)/2));background:#fff;display:flex;align-items:center;gap:38px;position:sticky;top:0;z-index:20;border-bottom:1px solid var(--ma-line)}
+.mock-logo img{width:182px;max-height:68px;object-fit:contain}
+.mock-header nav{display:flex;gap:30px;margin-left:auto}.mock-header nav a{color:var(--ma-ink);font-size:13px;font-weight:800}.mock-order{background:var(--ma-ink);color:#fff;padding:14px 22px;border-radius:999px;font-size:13px;font-weight:800}
+.ma-home{overflow:hidden}
+.ma-shell{width:min(1320px,calc(100% - 40px));margin:0 auto}
+.ma-hero{min-height:610px;margin-top:24px;border-radius:32px;background:var(--ma-cream);display:grid;grid-template-columns:1.02fr .98fr;overflow:hidden;position:relative}
+.ma-hero-copy{padding:76px 20px 64px 74px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+.ma-kicker{display:flex;align-items:center;gap:11px;color:var(--ma-orange);font-size:12px;font-weight:900;letter-spacing:.17em;text-transform:uppercase}.ma-kicker:before{content:"";width:30px;height:2px;background:currentColor}
+.ma-hero h1{margin:20px 0 18px;font:900 clamp(64px,7.2vw,112px)/.82 "Barlow Condensed",sans-serif;letter-spacing:-.045em;text-transform:uppercase}.ma-hero h1 span{display:block;color:var(--ma-orange)}
+.ma-hero-copy>p{max-width:570px;margin:0;color:var(--ma-muted);font-size:17px;line-height:1.75}
+.ma-actions{display:flex;align-items:center;gap:22px;margin-top:30px}.ma-btn{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:0 27px;border-radius:999px;background:var(--ma-orange);color:#fff;font-weight:900;font-size:14px;box-shadow:0 13px 28px rgba(240,90,36,.23)}.ma-btn:hover{background:var(--ma-orange-dark)}.ma-phone{color:var(--ma-ink);font-weight:900;font-size:14px;border-bottom:2px solid var(--ma-ink);padding-bottom:4px}
+.ma-points{display:flex;gap:24px;margin-top:38px}.ma-points span{font-size:11px;color:var(--ma-muted);font-weight:800;text-transform:uppercase;letter-spacing:.05em}.ma-points b{color:var(--ma-orange);margin-right:6px}
+.ma-hero-visual{position:relative;min-height:610px;background:linear-gradient(135deg,#242936,#0f1117)}
+.ma-hero-visual:before{content:"";position:absolute;width:460px;height:460px;border-radius:50%;background:var(--ma-orange);opacity:.86;right:-110px;top:-110px}
+.ma-hero-visual img{position:absolute;width:112%;max-width:none;right:-8%;bottom:12%;z-index:2;filter:drop-shadow(0 28px 28px rgba(0,0,0,.28))}
+.ma-favorite{position:absolute;z-index:3;right:28px;bottom:25px;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);padding:16px 20px;border-radius:18px;min-width:245px;box-shadow:0 15px 36px rgba(0,0,0,.18)}.ma-favorite small{display:block;color:var(--ma-orange);font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.ma-favorite strong{display:block;margin-top:5px;font:800 20px "Barlow Condensed",sans-serif}.ma-favorite span{color:var(--ma-orange);font-weight:900}
+.ma-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:22px auto 0;border:1px solid var(--ma-line);border-radius:20px;overflow:hidden;background:var(--ma-line)}.ma-trust div{background:#fff;padding:24px 28px}.ma-trust b{display:block;font:900 24px "Barlow Condensed",sans-serif;text-transform:uppercase}.ma-trust span{color:var(--ma-muted);font-size:12px;font-weight:700}
+.ma-section{padding:108px 0}.ma-section-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:35px}.ma-section h2{margin:8px 0 0;font:900 clamp(48px,5vw,72px)/.92 "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:-.035em}.ma-section-head>p{max-width:430px;color:var(--ma-muted);line-height:1.7;font-size:14px}
+.ma-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.ma-card{min-height:430px;position:relative;border-radius:26px;overflow:hidden;background:#ddd;color:#fff}.ma-card:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,13,18,.92),rgba(10,13,18,.03) 67%)}.ma-card img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:transform .5s}.ma-card:hover img{transform:scale(1.04)}.ma-card-copy{position:absolute;z-index:2;left:26px;right:26px;bottom:24px}.ma-card-copy small{font-size:10px;color:#ffb08f;font-weight:900;letter-spacing:.15em;text-transform:uppercase}.ma-card-copy h3{margin:6px 0;font:900 34px "Barlow Condensed",sans-serif;text-transform:uppercase}.ma-card-copy p{margin:0;color:rgba(255,255,255,.75);font-size:12px}.ma-card:nth-child(1){background:#ede4d6}.ma-card:nth-child(1) img{object-fit:contain;padding:30px 5px 75px;background:linear-gradient(145deg,#fff6e8,#e7d3b4)}
+.ma-story{background:var(--ma-ink);color:#fff;border-radius:32px;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}.ma-story-copy{padding:68px}.ma-story .ma-kicker{color:#ff8b62}.ma-story h2{font-size:64px}.ma-story p{color:#aab0bb;line-height:1.85}.ma-story-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}.ma-story-grid div{border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:19px}.ma-story-grid b{display:block;color:#fff;font-size:14px}.ma-story-grid span{color:#8f97a5;font-size:11px}.ma-story-photo{background:url('https://mon-amie-chicken.de/wp-content/uploads/2023/02/Crispy-Buttermilk-Fried-Chicken-FT-RECIPE0822-2000-03016340dad54d9a9ba3418b3bff3b17.jpg') center/cover;min-height:530px}
+.ma-order{padding:40px 0 108px}.ma-order-box{border-radius:30px;background:var(--ma-orange);padding:58px 64px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:30px;position:relative;overflow:hidden}.ma-order-box:after{content:"MA";position:absolute;right:31%;top:-52px;font:900 190px "Barlow Condensed";color:rgba(255,255,255,.08)}.ma-order-box h2{margin:0;font:900 clamp(42px,5vw,70px)/.9 "Barlow Condensed";text-transform:uppercase;letter-spacing:-.03em;position:relative;z-index:2}.ma-order-box p{margin:12px 0 0;color:#ffe8df;position:relative;z-index:2}.ma-order-buttons{display:flex;gap:12px;position:relative;z-index:2}.ma-order .ma-btn{background:#fff;color:var(--ma-ink);box-shadow:none}.ma-btn.ma-dark{background:var(--ma-ink);color:#fff}
+.ma-info{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;margin-bottom:100px}.ma-info>div{background:#fff;border:1px solid var(--ma-line);border-radius:24px;padding:34px}.ma-info small{color:var(--ma-orange);font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.ma-info h3{margin:9px 0 14px;font:900 32px "Barlow Condensed";text-transform:uppercase}.ma-info p{color:var(--ma-muted);line-height:1.7;margin:0}.ma-info a{color:var(--ma-ink);font-weight:900}
+@media(max-width:900px){.mock-header{height:72px;padding:8px 15px}.mock-logo img{width:126px}.mock-header nav{display:none}.mock-order{margin-left:auto;padding:12px 17px}.ma-shell{width:calc(100% - 24px)}.ma-hero{grid-template-columns:1fr;margin-top:12px;border-radius:24px}.ma-hero-copy{padding:48px 25px 38px}.ma-hero h1{font-size:67px}.ma-hero-copy>p{font-size:14px}.ma-actions{align-items:flex-start;flex-direction:column;gap:16px}.ma-points{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ma-hero-visual{min-height:330px}.ma-hero-visual img{width:115%;right:-8%;bottom:12%}.ma-favorite{right:14px;bottom:14px;min-width:210px;padding:13px 15px}.ma-trust{grid-template-columns:1fr}.ma-trust div{padding:18px 21px}.ma-section{padding:75px 0}.ma-section-head{align-items:flex-start;flex-direction:column}.ma-section h2{font-size:52px}.ma-cards{grid-template-columns:1fr}.ma-card{min-height:370px}.ma-story{grid-template-columns:1fr}.ma-story-copy{padding:42px 25px}.ma-story h2{font-size:52px}.ma-story-photo{min-height:330px}.ma-order{padding-bottom:75px}.ma-order-box{padding:42px 25px;align-items:flex-start;flex-direction:column}.ma-order-buttons{width:100%;flex-direction:column}.ma-order-buttons .ma-btn{width:100%}.ma-info{grid-template-columns:1fr;margin-bottom:65px}.ma-info>div{padding:26px}}
+@media(max-width:420px){.ma-hero h1{font-size:58px}.ma-points{grid-template-columns:1fr}.ma-story-grid{grid-template-columns:1fr}.ma-card{min-height:340px}}
+</style>
+
+<main class="ma-home">
+  <div class="ma-shell">
+    <section class="ma-hero">
+      <div class="ma-hero-copy">
+        <div class="ma-kicker">Clausthal-Zellerfeld</div>
+        <h1>Heiß. Kross.<span>Mon Amie.</span></h1>
+        <p>Saftige Burger, knuspriges Chicken und Grill-Spezialitäten – täglich frisch zubereitet, zum Abholen oder direkt zu dir geliefert.</p>
+        <div class="ma-actions">
+          <a class="ma-btn" href="https://mon-amie-burger.de/">Speisekarte entdecken</a>
+          <a class="ma-phone" href="tel:+4915253415522">+49 1525 3415522</a>
+        </div>
+        <div class="ma-points"><span><b>01</b> Frisch zubereitet</span><span><b>02</b> Lieferung & Abholung</span><span><b>03</b> Einfach per WhatsApp</span></div>
+      </div>
+      <div class="ma-hero-visual">
+        <img src="https://mon-amie-chicken.de/wp-content/uploads/2023/10/Air-Fryer-Quarter-pound-Beef-Burgers-Fries-removebg-preview.png" alt="Burger mit Pommes">
+        <div class="ma-favorite"><small>Direkt online wählen</small><strong>Unsere komplette Speisekarte</strong><span>Jetzt entdecken →</span></div>
+      </div>
+    </section>
+    <section class="ma-trust"><div><b>Seit 2020</b><span>Familienrestaurant im Herzen von Clausthal</span></div><div><b>Täglich frisch</b><span>Burger, Chicken und Grillgerichte</span></div><div><b>11:30–22:00</b><span>Montag bis Sonntag geöffnet</span></div></section>
+  </div>
+
+  <section class="ma-section">
+    <div class="ma-shell">
+      <div class="ma-section-head"><div><div class="ma-kicker">Unsere Küche</div><h2>Für jeden Hunger.</h2></div><p>Vom schnellen Burger bis zum großen Grillteller: Entdecke unsere beliebtesten Kategorien und bestelle unkompliziert online.</p></div>
+      <div class="ma-cards">
+        <a class="ma-card" href="https://mon-amie-burger.de/"><img src="https://mon-amie-chicken.de/wp-content/uploads/2023/10/Air-Fryer-Quarter-pound-Beef-Burgers-Fries-removebg-preview.png" alt="Burger"><div class="ma-card-copy"><small>Saftig & frisch</small><h3>Burger Menüs</h3><p>Chicken, Beef und vegetarische Favoriten.</p></div></a>
+        <a class="ma-card" href="https://mon-amie-burger.de/"><img src="https://mon-amie-chicken.de/wp-content/uploads/2023/02/Crispy-Buttermilk-Fried-Chicken-FT-RECIPE0822-2000-03016340dad54d9a9ba3418b3bff3b17.jpg" alt="Knuspriges Chicken"><div class="ma-card-copy"><small>Goldbraun & kross</small><h3>Crispy Chicken</h3><p>Wings, Filets, Buckets und Snacks.</p></div></a>
+        <a class="ma-card" href="https://mon-amie-burger.de/"><img src="https://mon-amie-chicken.de/wp-content/uploads/2023/10/kebab-platter-with-lamb-chicken-lula-tikka-kebabs-grilled-vegetables-with-red-onion-salad-removebg-preview.png" alt="Grillteller"><div class="ma-card-copy"><small>Vom heißen Grill</small><h3>Grill Spezialitäten</h3><p>Spieße, Köfte, Dürüm und Tellergerichte.</p></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ma-shell ma-story">
+    <div class="ma-story-copy"><div class="ma-kicker">Mon Amie seit 2020</div><h2>Gutes Essen.<br>Ehrlich gemacht.</h2><p>Wir sind ein Familienrestaurant im Zentrum von Clausthal-Zellerfeld. Unser Anspruch ist einfach: frische Zutaten, kräftiger Geschmack und ein Service, bei dem du dich willkommen fühlst.</p><div class="ma-story-grid"><div><b>Familiengeführt</b><span>Persönlich und gastfreundlich</span></div><div><b>Große Auswahl</b><span>Für Fleischfans und Vegetarier</span></div><div><b>Schnelle Bestellung</b><span>Online oder per WhatsApp</span></div><div><b>Mitten in Clausthal</b><span>Gut erreichbar im Zentrum</span></div></div></div>
+    <div class="ma-story-photo" role="img" aria-label="Frisch zubereitetes Chicken"></div>
+  </section>
+
+  <section class="ma-order"><div class="ma-shell ma-order-box"><div><h2>Bereit für<br>Mon Amie?</h2><p>Menü auswählen, Warenkorb füllen und direkt per WhatsApp bestellen.</p></div><div class="ma-order-buttons"><a class="ma-btn" href="https://mon-amie-burger.de/">Jetzt bestellen</a><a class="ma-btn ma-dark" href="tel:+4915253415522">Anrufen</a></div></div></section>
+
+  <section class="ma-shell ma-info">
+    <div><small>Besuche uns</small><h3>Mitten in Clausthal-Zellerfeld</h3><p>Adolph-Roemer-Straße 9<br>38678 Clausthal-Zellerfeld</p></div>
+    <div><small>Wir sind für dich da</small><h3>Täglich 11:30–22:00</h3><p><a href="tel:+4915253415522">+49 1525 3415522</a><br>Lieferung und Abholung verfügbar.</p></div>
+  </section>
+</main>
+</body>
+</html>
