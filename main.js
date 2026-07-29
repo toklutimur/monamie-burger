@@ -339,6 +339,7 @@ function scrollToCategory(categoryName) {
 function renderMenu(searchQuery = '') {
   const menu = document.getElementById('menu');
   const categoryNav = document.getElementById('categoryNav');
+  const categoryRail = document.getElementById('categoryRail');
   // Preserve hero section across re-renders
   let heroSection = menu.querySelector('.hero-feature');
   menu.innerHTML = '';
@@ -349,13 +350,26 @@ function renderMenu(searchQuery = '') {
     heroSection.className = 'hero-feature';
     heroSection.innerHTML = `
       <div class="hero-content">
-        <h2>Willkommen bei</h2>
-        <h3>Mon Amie Burger</h3>
-        <p>Frische Burger, knusprige Wings & Grill-Spezialitäten — direkt zu dir nach Hause geliefert.</p>
-        <button class="btn-primary" onclick="scrollToCategory('Chicken Menüs')">Menü entdecken</button>
+        <div class="hero-eyebrow"><span></span> Clausthal-Zellerfeld</div>
+        <h2>Heiß. Kross.<br><em>Mon Amie.</em></h2>
+        <p>Saftige Burger, knuspriges Chicken und Grill-Spezialitäten — frisch zubereitet und direkt zu dir geliefert.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="scrollToCategory('Chicken Menüs')">Jetzt bestellen</button>
+          <a class="hero-phone" href="tel:+4915253415522">+49 1525 3415522</a>
+        </div>
+        <div class="hero-points">
+          <span><b>01</b> Frisch zubereitet</span>
+          <span><b>02</b> Lieferung & Abholung</span>
+          <span><b>03</b> Einfach per WhatsApp</span>
+        </div>
       </div>
       <div class="hero-image">
-        <img src="placeholder.png" alt="Mon Amie Burger" loading="lazy">
+        <img src="menus/popular menus/clausthal burger menü.jpeg" alt="Clausthal Burger Menü" loading="eager">
+        <div class="hero-product-card">
+          <span>Unser Lokal-Favorit</span>
+          <strong>Clausthal Burger Menü</strong>
+          <b>€15,50</b>
+        </div>
       </div>
     `;
   }
@@ -363,11 +377,11 @@ function renderMenu(searchQuery = '') {
   if (heroSection && searchQuery === '') {
     menu.appendChild(heroSection);
   }
-  if (categoryNav && searchQuery === '') {
-    categoryNav.querySelectorAll('.category-pill').forEach(el => el.remove());
+  if (categoryRail && searchQuery === '') {
+    categoryRail.querySelectorAll('.category-pill').forEach(el => el.remove());
   }
 
-  Object.entries(PRODUCTS).forEach(([category, products]) => {
+  Object.entries(PRODUCTS).forEach(([category, products], categoryIndex) => {
     const filteredProducts = products.filter(p =>
       p.name.toLowerCase().includes(searchQuery) ||
       (p.desc && p.desc.toLowerCase().includes(searchQuery))
@@ -375,10 +389,14 @@ function renderMenu(searchQuery = '') {
 
     if (filteredProducts.length === 0) return;
 
-    if (categoryNav && searchQuery === '') {
-      const pill = document.createElement('div');
+    if (categoryRail && searchQuery === '') {
+      const pill = document.createElement('button');
+      pill.type = 'button';
       pill.className = 'category-pill';
-      pill.textContent = category;
+      pill.innerHTML = `
+        <span class="category-index">${String(categoryIndex + 1).padStart(2, '0')}</span>
+        <span class="category-label">${category}</span>
+      `;
       pill.onclick = () => {
         const target = document.getElementById('cat-' + category.replace(/\s+/g, '-'));
         if (target) {
@@ -387,7 +405,7 @@ function renderMenu(searchQuery = '') {
           if (window.innerWidth <= 768) toggleMenu();
         }
       };
-      categoryNav.appendChild(pill);
+      categoryRail.appendChild(pill);
     }
 
     const categoryDiv = document.createElement('div');
@@ -421,17 +439,17 @@ function renderMenu(searchQuery = '') {
       const isSvg = imgUrl && imgUrl.startsWith('data:image/svg');
 
       productDiv.innerHTML = `
-            ${imgUrl ? `<div class="product-img-wrapper" onclick="openImageModal('${imgUrl}', '${product.name.replace(/'/g, "\\'")}')" style="cursor: pointer;"><img src="${imgUrl}" alt="${product.name}" class="product-img" loading="lazy" ${isSvg ? 'style="padding: 1.5rem; background: #1a1a22;"' : ''}></div>` : ''}
-            <div class="product-info" style="${!imgUrl ? 'margin-top: 1rem;' : ''}">
+            ${imgUrl ? `<div class="product-img-wrapper" onclick="openImageModal('${imgUrl}', '${product.name.replace(/'/g, "\\'")}')"><img src="${imgUrl}" alt="${product.name}" class="product-img${isSvg ? ' product-img--placeholder' : ''}" loading="lazy"></div>` : ''}
+            <div class="product-info">
               <div class="product-name">${product.name}</div>
               ${product.desc ? `<div class="product-desc">${product.desc}</div>` : ''}
             </div>
             <div class="product-actions">
               <div class="product-price">€${product.price.toFixed(2).replace('.', ',')}</div>
               <div class="controls" id="controls-${product.id}">
-                ${qty > 0 ? `<button class="btn" onclick="removeBaseItem('${product.id}')">−</button>` : ''}
+                ${qty > 0 ? `<button class="btn" onclick="removeBaseItem('${product.id}')" aria-label="${product.name} entfernen">−</button>` : ''}
                 ${qty > 0 ? `<span class="qty">${qty}</span>` : ''}
-                <button class="btn" onclick="openCustomModalOrAdd('${product.id}')">+</button>
+                <button class="btn${qty === 0 ? ' btn-add' : ''}" onclick="openCustomModalOrAdd('${product.id}')" aria-label="${product.name} hinzufügen"><span>+</span>${qty === 0 ? '<em>Hinzufügen</em>' : ''}</button>
               </div>
             </div>
           `;
@@ -582,9 +600,9 @@ function updateMenuQuantities() {
           return sum;
         }, 0);
         controlsEl.innerHTML = `
-          ${qty > 0 ? `<button class="btn" onclick="removeBaseItem('${product.id}')">−</button>` : ''}
+          ${qty > 0 ? `<button class="btn" onclick="removeBaseItem('${product.id}')" aria-label="${product.name} entfernen">−</button>` : ''}
           ${qty > 0 ? `<span class="qty">${qty}</span>` : ''}
-          <button class="btn" onclick="openCustomModalOrAdd('${product.id}')">+</button>
+          <button class="btn${qty === 0 ? ' btn-add' : ''}" onclick="openCustomModalOrAdd('${product.id}')" aria-label="${product.name} hinzufügen"><span>+</span>${qty === 0 ? '<em>Hinzufügen</em>' : ''}</button>
         `;
       }
     });

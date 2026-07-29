@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon Amie Burger</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0f0f12">
+  <meta name="theme-color" content="#f05a24">
   <meta name="author" content="Fırat Tekmanlı">
-  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@400;600;700&display=swap"
+  <meta name="description"
+    content="Mon Amie Burger in Clausthal-Zellerfeld: Burger, Chicken, Grill-Spezialitäten und Lieferung per WhatsApp bestellen.">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
   <meta http-equiv="Content-Security-Policy"
@@ -26,9 +29,13 @@
             <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" />
           </svg>
         </button>
-        <div class="header-logo">
-          <span class="logo-text">Mon Amie Burger</span>
-        </div>
+        <a class="header-logo" href="#menu" aria-label="Mon Amie Burger Startseite">
+          <span class="brand-mark" aria-hidden="true">MA</span>
+          <span class="brand-copy">
+            <span class="logo-text">Mon Amie</span>
+            <span class="brand-subtitle">Burger · Chicken · Grill</span>
+          </span>
+        </a>
       </div>
 
       <!-- Center: search -->
@@ -85,6 +92,8 @@
   <div class="install-banner" id="installBanner">
     <span>Installiere die MonAmie App für ein schnelleres Bestell-Erlebnis!</span>
     <button class="install-banner-btn" id="installBtn">Installieren</button>
+    <button class="install-banner-close" type="button"
+      onclick="this.parentElement.classList.remove('show')" aria-label="Installationshinweis schließen">&times;</button>
   </div>
 
   <div class="main-layout">
@@ -104,6 +113,14 @@
           <button class="lang-btn" onclick="changeLanguage('zh-CN')" title="中文" aria-label="中文">🇨🇳</button>
         </div>
       </div>
+      <div class="category-heading">
+        <div>
+          <span class="section-kicker">Direkt auswählen</span>
+          <strong>Kategorien</strong>
+        </div>
+        <span class="category-heading-note">Frisch zubereitet · schnell bestellt</span>
+      </div>
+      <div class="category-rail" id="categoryRail"></div>
     </div>
     <div class="container" id="menu">
     </div>
@@ -260,16 +277,28 @@
     src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <footer class="app-footer">
-    <div class="footer-logo">
-      <span class="logo-text" style="font-size: 1.5rem;">Mon Amie Burger</span>
+    <div class="footer-main">
+      <div class="footer-brand">
+        <span class="brand-mark" aria-hidden="true">MA</span>
+        <div>
+          <span class="footer-title">Mon Amie Burger</span>
+          <p>Burger, Chicken &amp; Grill aus Clausthal-Zellerfeld.</p>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <span>Adolph-Roemer-Straße 9 · 38678 Clausthal-Zellerfeld</span>
+        <a href="tel:+4915253415522">+49 1525 3415522</a>
+      </div>
     </div>
-    <div class="footer-credit">
-      Entworfen &amp; entwickelt von
-      <a href="https://toklutimur.uk" target="_blank" rel="noopener">Fırat Tekmanlı</a>
-    </div>
-    <div class="footer-links">
-      <a href="./impressum.html">Impressum</a>
-      <a href="./datenschutz.html">Datenschutz</a>
+    <div class="footer-bottom">
+      <div class="footer-credit">
+        Entworfen &amp; entwickelt von
+        <a href="https://toklutimur.uk" target="_blank" rel="noopener">Fırat Tekmanlı</a>
+      </div>
+      <div class="footer-links">
+        <a href="./impressum.html">Impressum</a>
+        <a href="./datenschutz.html">Datenschutz</a>
+      </div>
     </div>
   </footer>
 </body>
