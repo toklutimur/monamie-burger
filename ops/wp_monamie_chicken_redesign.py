@@ -62,6 +62,66 @@ def api_nonce(session):
     raise RuntimeError("REST API nonce not found")
 
 
+def elementor_nonce(session, post_id):
+    response = session.get(
+        f"{BASE}/wp-admin/post.php",
+        params={"post": post_id, "action": "elementor"},
+        timeout=60,
+    )
+    response.raise_for_status()
+    match = re.search(
+        r'elementorCommonConfig\s*=\s*(\{.*?\});',
+        response.text,
+        flags=re.S,
+    )
+    if match:
+        return json.loads(match.group(1))["ajax"]["nonce"]
+    match = re.search(
+        r'"ajax"\s*:\s*\{[^{}]*"nonce"\s*:\s*"([^"]+)"',
+        response.text,
+    )
+    if match:
+        return match.group(1)
+    raise RuntimeError(f"Elementor nonce not found for page {post_id}")
+
+
+def elementor_document(session, post_id):
+    nonce = elementor_nonce(session, post_id)
+    response = session.post(
+        f"{BASE}/wp-admin/admin-ajax.php",
+        data={
+            "action": "elementor_ajax",
+            "_nonce": nonce,
+            "editor_post_id": str(post_id),
+            "actions": json.dumps(
+                {
+                    "document": {
+                        "action": "get_document_config",
+                        "data": {"id": post_id},
+                    }
+                }
+            ),
+        },
+        timeout=60,
+    )
+    response.raise_for_status()
+    return nonce, response.json()
+
+
+def data_shape(value, depth=0):
+    if depth >= 4:
+        return type(value).__name__
+    if isinstance(value, dict):
+        return {key: data_shape(item, depth + 1) for key, item in value.items()}
+    if isinstance(value, list):
+        return {
+            "type": "list",
+            "length": len(value),
+            "sample": data_shape(value[0], depth + 1) if value else None,
+        }
+    return type(value).__name__
+
+
 def page_content():
     source = Path(__file__).with_name("monamie-wp-home-preview.html").read_text()
     style = re.search(r"(<style>.*?</style>)", source, flags=re.S).group(1)
@@ -129,6 +189,13 @@ def inspect(session):
         headers=headers,
         timeout=30,
     )
+    elementor = {}
+    for page_id in (531, 533, 537):
+        try:
+            _, document = elementor_document(session, page_id)
+            elementor[str(page_id)] = data_shape(document)
+        except Exception as error:
+            elementor[str(page_id)] = {"error": str(error)}
     print(
         json.dumps(
             {
@@ -147,6 +214,7 @@ def inspect(session):
                 ]
                 if pages.status_code == 200
                 else [],
+                "elementor": elementor,
             },
             ensure_ascii=False,
             indent=2,
@@ -190,28 +258,17 @@ def apply(session):
     response.raise_for_status()
     page_id = response.json()["id"]
 
-    settings = session.get(f"{BASE}/wp-admin/options-reading.php", timeout=30)
-    settings.raise_for_status()
-    nonce_match = re.search(r'name="_wpnonce"\s+value="([^"]+)"', settings.text)
-    if not nonce_match:
-        raise RuntimeError("Reading settings nonce not found")
     save = session.post(
-        f"{BASE}/wp-admin/options.php",
-        data={
-            "option_page": "reading",
-            "action": "update",
-            "_wpnonce": nonce_match.group(1),
-            "_wp_http_referer": "/wp-admin/options-reading.php",
-            "show_on_front": "page",
-            "page_on_front": str(page_id),
-            "page_for_posts": "0",
-            "posts_per_page": "10",
-            "posts_per_rss": "10",
-            "rss_use_excerpt": "0",
-            "blog_charset": "UTF-8",
-        },
+        f"{BASE}/wp-json/wp/v2/settings",
+        headers=headers,
+        data=json.dumps(
+            {
+                "show_on_front": "page",
+                "page_on_front": page_id,
+                "page_for_posts": 0,
+            }
+        ),
         timeout=60,
-        allow_redirects=True,
     )
     save.raise_for_status()
     public = session.get(f"{BASE}/?modern-home-check=20260729", timeout=60)
@@ -237,28 +294,18 @@ def apply(session):
 
 
 def rollback(session):
-    settings = session.get(f"{BASE}/wp-admin/options-reading.php", timeout=30)
-    settings.raise_for_status()
-    nonce_match = re.search(r'name="_wpnonce"\s+value="([^"]+)"', settings.text)
-    if not nonce_match:
-        raise RuntimeError("Reading settings nonce not found")
+    nonce = api_nonce(session)
     response = session.post(
-        f"{BASE}/wp-admin/options.php",
-        data={
-            "option_page": "reading",
-            "action": "update",
-            "_wpnonce": nonce_match.group(1),
-            "_wp_http_referer": "/wp-admin/options-reading.php",
-            "show_on_front": "page",
-            "page_on_front": "531",
-            "page_for_posts": "0",
-            "posts_per_page": "10",
-            "posts_per_rss": "10",
-            "rss_use_excerpt": "0",
-            "blog_charset": "UTF-8",
-        },
+        f"{BASE}/wp-json/wp/v2/settings",
+        headers={"X-WP-Nonce": nonce, "Content-Type": "application/json"},
+        data=json.dumps(
+            {
+                "show_on_front": "page",
+                "page_on_front": 531,
+                "page_for_posts": 0,
+            }
+        ),
         timeout=60,
-        allow_redirects=True,
     )
     response.raise_for_status()
     print(json.dumps({"rolled_back": True, "front_page": 531}))

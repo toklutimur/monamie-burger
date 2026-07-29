@@ -2,6 +2,16 @@ name: Temporary WordPress redesign runner
 
 on:
   workflow_dispatch:
+    inputs:
+      operation:
+        description: WordPress operation
+        required: true
+        default: inspect
+        type: choice
+        options:
+          - inspect
+          - apply
+          - rollback
   push:
     branches:
       - ops/wp-redesign-runner
@@ -22,5 +32,5 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install requests
-      - name: Apply and verify WordPress redesign
-        run: python ops/wp_monamie_chicken_redesign.py apply
+      - name: Run WordPress operation
+        run: python ops/wp_monamie_chicken_redesign.py "${{ inputs.operation }}"
