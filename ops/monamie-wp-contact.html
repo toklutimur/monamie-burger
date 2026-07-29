@@ -1,0 +1,80 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--ma-orange:#f05a24;--ma-orange-dark:#d94a18;--ma-ink:#111827;--ma-muted:#68707d;--ma-cream:#f5efe6;--ma-paper:#f8f8f5;--ma-line:#e8e5df}
+body.page-template-default{background:var(--ma-paper)}
+body.page-template-default .site-content>.ast-container{display:block;max-width:none;padding:0;width:100%}
+body.page-template-default .content-area{width:100%;margin:0}
+body.page-template-default article{padding:0!important}
+body.page-template-default .entry-header{display:none}
+body.page-template-default .entry-content{margin:0}
+.ast-primary-header-bar{background:rgba(255,255,255,.96);border-bottom:1px solid var(--ma-line);min-height:86px}
+.site-header{position:sticky;top:0;z-index:999}
+.site-header .custom-logo-link img{width:190px;max-height:70px;object-fit:contain}
+.main-header-menu>.menu-item>.menu-link{color:var(--ma-ink);font-size:13px;font-weight:800;padding:0 18px}
+.main-header-menu>.menu-item>.menu-link:hover,.main-header-menu>.current-menu-item>.menu-link{color:var(--ma-orange)}
+.main-header-menu>.menu-item:nth-child(2)>.menu-link{background:var(--ma-ink);color:#fff;border-radius:999px;height:46px;margin-left:8px;padding:0 24px}
+.site-footer,.site-below-footer-wrap{background:var(--ma-ink)!important;color:#c4cad3}
+.site-footer a{color:#fff}
+.ma-contact,.ma-contact *{box-sizing:border-box}
+.ma-contact{overflow:hidden;color:var(--ma-ink);font-family:Manrope,Arial,sans-serif}
+.ma-contact a{text-decoration:none}
+.ma-shell{width:min(1240px,calc(100% - 40px));margin:0 auto}
+.ma-kicker{display:flex;align-items:center;gap:11px;color:var(--ma-orange);font-size:12px;font-weight:900;letter-spacing:.17em;text-transform:uppercase}
+.ma-kicker:before{content:"";width:30px;height:2px;background:currentColor}
+.ma-contact h1,.ma-contact h2,.ma-contact h3{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:-.035em}
+.ma-contact-hero{margin-top:24px;border-radius:32px;background:var(--ma-cream);padding:86px 72px;position:relative;overflow:hidden}
+.ma-contact-hero:after{content:"HALLO";position:absolute;right:-15px;bottom:-64px;color:rgba(240,90,36,.075);font:900 230px "Barlow Condensed",sans-serif}
+.ma-contact h1{position:relative;z-index:1;font-size:clamp(68px,8vw,114px);line-height:.84;margin:22px 0}
+.ma-contact h1 span{display:block;color:var(--ma-orange)}
+.ma-contact-hero p{position:relative;z-index:1;max-width:620px;color:var(--ma-muted);font-size:17px;line-height:1.8}
+.ma-contact-grid{padding:28px 0 110px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.ma-contact-card{background:#fff;border:1px solid var(--ma-line);border-radius:24px;padding:34px;min-height:260px;display:flex;flex-direction:column}
+.ma-contact-card__tag{color:var(--ma-orange);font-size:10px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
+.ma-contact-card h2{font-size:36px;line-height:1;margin:34px 0 12px}
+.ma-contact-card p{color:var(--ma-muted);font-size:14px;line-height:1.8;margin:0 0 22px}
+.ma-contact-link{margin-top:auto;color:var(--ma-ink)!important;font-weight:900;font-size:14px;border-bottom:2px solid var(--ma-orange);align-self:flex-start;padding-bottom:3px}
+.ma-visit{margin-bottom:110px;background:var(--ma-ink);border-radius:30px;color:#fff;display:grid;grid-template-columns:1.1fr .9fr;overflow:hidden}
+.ma-visit__copy{padding:68px}
+.ma-visit .ma-kicker{color:#ff8b62}
+.ma-visit h2{font-size:clamp(52px,5vw,74px);line-height:.92;margin:18px 0}
+.ma-visit p{color:#aab0bb;line-height:1.8;max-width:520px}
+.ma-actions{display:flex;gap:12px;margin-top:28px}
+.ma-btn{display:inline-flex;min-height:54px;padding:0 27px;align-items:center;justify-content:center;border-radius:999px;background:var(--ma-orange);color:#fff!important;font-weight:900;font-size:14px}
+.ma-btn.ma-light{background:#fff;color:var(--ma-ink)!important}
+.ma-visit__visual{min-height:480px;position:relative;background:linear-gradient(145deg,#272d39,#101218)}
+.ma-visit__visual:before{content:"9";position:absolute;inset:0;display:grid;place-items:center;color:var(--ma-orange);font:900 260px "Barlow Condensed",sans-serif}
+.ma-address-badge{position:absolute;left:30px;right:30px;bottom:30px;background:rgba(255,255,255,.94);color:var(--ma-ink);padding:22px 24px;border-radius:18px;backdrop-filter:blur(12px)}
+.ma-address-badge small{display:block;color:var(--ma-orange);font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+.ma-address-badge strong{display:block;margin-top:6px;font-size:15px}
+@media(max-width:900px){
+ .ast-primary-header-bar{min-height:72px}.site-header .custom-logo-link img{width:132px;max-height:56px}
+ .ast-mobile-header-wrap .ast-primary-header-bar{padding:0 12px}.ast-button-wrap .menu-toggle.main-header-menu-toggle{color:var(--ma-ink);border-radius:12px;background:var(--ma-cream)}
+ .ma-shell{width:calc(100% - 24px)}.ma-contact-hero{margin-top:12px;border-radius:24px;padding:54px 26px}
+ .ma-contact h1{font-size:64px}.ma-contact-hero p{font-size:15px}.ma-contact-grid{grid-template-columns:1fr;padding-bottom:76px}
+ .ma-contact-card{min-height:auto}.ma-visit{grid-template-columns:1fr;margin-bottom:74px}.ma-visit__copy{padding:48px 26px}
+ .ma-visit h2{font-size:52px}.ma-actions{flex-direction:column}.ma-btn{width:100%}.ma-visit__visual{min-height:360px}
+}
+</style>
+<main class="ma-contact">
+  <section class="ma-shell ma-contact-hero">
+    <div class="ma-kicker">Kontakt & Öffnungszeiten</div>
+    <h1>Komm vorbei.<span>Wir freuen uns.</span></h1>
+    <p>Du möchtest bestellen, hast eine Frage oder willst uns einfach besuchen? Ruf uns an oder komm direkt in der Adolph-Roemer-Straße vorbei.</p>
+  </section>
+
+  <section class="ma-shell ma-contact-grid">
+    <article class="ma-contact-card"><div class="ma-contact-card__tag">Anrufen</div><h2>Direkt erreichbar</h2><p>Für Fragen zu deiner Bestellung oder zur Abholung erreichst du uns telefonisch.</p><a class="ma-contact-link" href="tel:+4915253415522">+49 1525 3415522</a></article>
+    <article class="ma-contact-card"><div class="ma-contact-card__tag">Öffnungszeiten</div><h2>Jeden Tag</h2><p>Montag bis Sonntag<br>durchgehend geöffnet</p><a class="ma-contact-link" href="https://mon-amie-burger.de/">11:30–22:00 Uhr</a></article>
+    <article class="ma-contact-card"><div class="ma-contact-card__tag">Bestellen</div><h2>Online auswählen</h2><p>Speisekarte ansehen, Lieblingsgerichte wählen und bequem über WhatsApp bestellen.</p><a class="ma-contact-link" href="https://mon-amie-burger.de/">Zur Speisekarte →</a></article>
+  </section>
+
+  <section class="ma-shell ma-visit">
+    <div class="ma-visit__copy">
+      <div class="ma-kicker">Mitten in Clausthal</div>
+      <h2>Dein Weg zu Mon Amie.</h2>
+      <p>Du findest uns zentral in Clausthal-Zellerfeld. Abholen, vor Ort genießen oder vorab telefonisch bestellen – ganz wie es für dich passt.</p>
+      <div class="ma-actions"><a class="ma-btn" href="https://www.google.com/maps/search/?api=1&query=Adolph-Roemer-Stra%C3%9Fe+9%2C+38678+Clausthal-Zellerfeld">Route öffnen</a><a class="ma-btn ma-light" href="tel:+4915253415522">Jetzt anrufen</a></div>
+    </div>
+    <div class="ma-visit__visual"><div class="ma-address-badge"><small>Unsere Adresse</small><strong>Adolph-Roemer-Straße 9<br>38678 Clausthal-Zellerfeld</strong></div></div>
+  </section>
+</main>

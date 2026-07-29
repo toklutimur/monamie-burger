@@ -209,6 +209,122 @@ body.page-template-default .entry-content { margin: 0; }
     return "<!-- wp:html -->\n" + wordpress_css + style + main + "\n<!-- /wp:html -->"
 
 
+def html_asset(name):
+    return Path(__file__).with_name(name).read_text()
+
+
+def elementor_elements(markup, prefix):
+    return [
+        {
+            "id": f"{prefix}sec",
+            "elType": "section",
+            "settings": {
+                "layout": "full_width",
+                "stretch_section": "section-stretched",
+                "content_width": {"unit": "px", "size": 1600, "sizes": []},
+                "gap": "no",
+            },
+            "elements": [
+                {
+                    "id": f"{prefix}col",
+                    "elType": "column",
+                    "settings": {"_column_size": 100, "_inline_size": None},
+                    "elements": [
+                        {
+                            "id": f"{prefix}html",
+                            "elType": "widget",
+                            "widgetType": "html",
+                            "settings": {"html": markup},
+                            "elements": [],
+                        }
+                    ],
+                    "isInner": False,
+                }
+            ],
+            "isInner": False,
+        }
+    ]
+
+
+def save_elementor(session, post_id, elements):
+    nonce = elementor_nonce(session, post_id)
+    response = session.post(
+        f"{BASE}/wp-admin/admin-ajax.php",
+        data={
+            "action": "elementor_ajax",
+            "_nonce": nonce,
+            "editor_post_id": str(post_id),
+            "actions": json.dumps(
+                {
+                    "save": {
+                        "action": "save_builder",
+                        "data": {
+                            "status": "publish",
+                            "elements": elements,
+                            "settings": {},
+                        },
+                    }
+                }
+            ),
+        },
+        timeout=90,
+    )
+    response.raise_for_status()
+    body = response.json()
+    saved = body.get("data", {}).get("responses", {}).get("save", {})
+    if not saved.get("success"):
+        raise RuntimeError(f"Elementor save failed for page {post_id}: {saved}")
+    return body
+
+
+def current_elementor_elements(session, post_id):
+    _, document = elementor_document(session, post_id)
+    response = document.get("data", {}).get("responses", {}).get("document", {})
+    if not response.get("success"):
+        raise RuntimeError(f"Could not back up Elementor page {post_id}")
+    return response.get("data", {}).get("elements", [])
+
+
+def update_page_metadata(session, headers, post_id, title, excerpt):
+    response = session.post(
+        f"{BASE}/wp-json/wp/v2/pages/{post_id}",
+        headers=headers,
+        data=json.dumps({"title": title, "excerpt": excerpt}),
+        timeout=60,
+    )
+    response.raise_for_status()
+
+
+def update_navigation(session, headers):
+    response = session.get(
+        f"{BASE}/wp-json/wp/v2/menu-items",
+        params={"per_page": 100, "context": "edit"},
+        headers=headers,
+        timeout=30,
+    )
+    if response.status_code != 200:
+        return []
+    updated = []
+    for item in response.json():
+        url = item.get("url", "").rstrip("/")
+        title = html.unescape(item.get("title", {}).get("rendered", ""))
+        desired = None
+        if url.endswith("/contact-us"):
+            desired = "Kontakt"
+        elif url.endswith("/about-us"):
+            desired = "Über Uns"
+        if desired and title != desired:
+            saved = session.post(
+                f"{BASE}/wp-json/wp/v2/menu-items/{item['id']}",
+                headers=headers,
+                data=json.dumps({"title": desired}),
+                timeout=30,
+            )
+            saved.raise_for_status()
+            updated.append({"id": item["id"], "title": desired})
+    return updated
+
+
 def inspect(session):
     nonce = api_nonce(session)
     headers = {"X-WP-Nonce": nonce}
@@ -264,6 +380,12 @@ def inspect(session):
 def apply(session):
     nonce = api_nonce(session)
     headers = {"X-WP-Nonce": nonce, "Content-Type": "application/json"}
+    original_front_page = 531
+    original_elementor = {
+        533: current_elementor_elements(session, 533),
+        537: current_elementor_elements(session, 537),
+    }
+    changed_elementor = []
     pages = session.get(
         f"{BASE}/wp-json/wp/v2/pages",
         params={"slug": "home-modern", "context": "edit"},
@@ -297,36 +419,97 @@ def apply(session):
     response.raise_for_status()
     page_id = response.json()["id"]
 
-    save = session.post(
-        f"{BASE}/wp-json/wp/v2/settings",
-        headers=headers,
-        data=json.dumps(
-            {
-                "show_on_front": "page",
-                "page_on_front": page_id,
-                "page_for_posts": 0,
-            }
-        ),
-        timeout=60,
-    )
-    save.raise_for_status()
-    public = session.get(f"{BASE}/?modern-home-check=20260729", timeout=60)
-    public_ok = (
-        public.status_code == 200
-        and 'class="ma-home"' in public.text
-        and "Heiß. Kross." in public.text
-        and "https://mon-amie-burger.de/" in public.text
-    )
-    if not public_ok:
-        rollback(session)
-        raise RuntimeError("Public verification failed; original homepage restored")
+    try:
+        save_elementor(
+            session,
+            533,
+            elementor_elements(
+                html_asset("monamie-wp-about.html"),
+                "maab",
+            ),
+        )
+        changed_elementor.append(533)
+        save_elementor(
+            session,
+            537,
+            elementor_elements(
+                html_asset("monamie-wp-contact.html"),
+                "maco",
+            ),
+        )
+        changed_elementor.append(537)
+        update_page_metadata(
+            session,
+            headers,
+            533,
+            "Über Uns",
+            "Seit 2020 ist Mon Amie das familiengeführte Restaurant für Burger, Chicken und Grill-Spezialitäten in Clausthal-Zellerfeld.",
+        )
+        update_page_metadata(
+            session,
+            headers,
+            537,
+            "Kontakt",
+            "Adresse, Telefonnummer und Öffnungszeiten von Mon Amie Chicken in Clausthal-Zellerfeld.",
+        )
+        navigation = update_navigation(session, headers)
+        save = session.post(
+            f"{BASE}/wp-json/wp/v2/settings",
+            headers=headers,
+            data=json.dumps(
+                {
+                    "show_on_front": "page",
+                    "page_on_front": page_id,
+                    "page_for_posts": 0,
+                }
+            ),
+            timeout=60,
+        )
+        save.raise_for_status()
+        checks = {
+            "/": ('class="ma-home"', "Heiß. Kross."),
+            "/about-us/": ('class="ma-about"', "Seit 2020."),
+            "/contact-us/": ('class="ma-contact"', "Komm vorbei."),
+        }
+        verified = {}
+        for path, markers in checks.items():
+            public = session.get(
+                f"{BASE}{path}?design-check=20260729",
+                timeout=60,
+            )
+            verified[path] = (
+                public.status_code == 200
+                and all(marker in public.text for marker in markers)
+                and "https://mon-amie-burger.de/" in public.text
+            )
+        if not all(verified.values()):
+            raise RuntimeError(f"Public verification failed: {verified}")
+    except Exception:
+        for post_id in reversed(changed_elementor):
+            save_elementor(session, post_id, original_elementor[post_id])
+        nonce = api_nonce(session)
+        session.post(
+            f"{BASE}/wp-json/wp/v2/settings",
+            headers={"X-WP-Nonce": nonce, "Content-Type": "application/json"},
+            data=json.dumps(
+                {
+                    "show_on_front": "page",
+                    "page_on_front": original_front_page,
+                    "page_for_posts": 0,
+                }
+            ),
+            timeout=60,
+        ).raise_for_status()
+        raise
     print(
         json.dumps(
             {
                 "published": True,
                 "page_id": page_id,
                 "front_page": page_id,
-                "public_verified": True,
+                "elementor_pages": [533, 537],
+                "navigation_updated": navigation,
+                "public_verified": verified,
             }
         )
     )
