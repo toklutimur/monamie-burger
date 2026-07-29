@@ -109,10 +109,17 @@ def elementor_document(session, post_id):
 
 
 def data_shape(value, depth=0):
-    if depth >= 4:
+    if depth >= 8:
         return type(value).__name__
     if isinstance(value, dict):
-        return {key: data_shape(item, depth + 1) for key, item in value.items()}
+        items = list(value.items())
+        shaped = {
+            key: data_shape(item, depth + 1)
+            for key, item in items[:40]
+        }
+        if len(items) > 40:
+            shaped["__remaining_keys__"] = len(items) - 40
+        return shaped
     if isinstance(value, list):
         return {
             "type": "list",
