@@ -206,11 +206,80 @@ body.page-template-default .entry-content { margin: 0; }
 }
 </style>
 """
-    return "<!-- wp:html -->\n" + wordpress_css + style + main + "\n<!-- /wp:html -->"
+    return (
+        "<!-- wp:html -->\n"
+        + wordpress_css
+        + style
+        + main
+        + site_enhancements()
+        + "\n<!-- /wp:html -->"
+    )
 
 
 def html_asset(name):
-    return Path(__file__).with_name(name).read_text()
+    return Path(__file__).with_name(name).read_text() + site_enhancements()
+
+
+def site_enhancements():
+    return """
+<style>
+.site-footer{display:none!important}
+.ma-custom-footer,.ma-custom-footer *{box-sizing:border-box}
+.ma-custom-footer{background:#111827;color:#fff;font-family:Manrope,Arial,sans-serif;padding:64px 20px 26px}
+.ma-custom-footer__inner{width:min(1240px,100%);margin:0 auto}
+.ma-custom-footer__top{display:grid;grid-template-columns:1.1fr .8fr 1fr;gap:55px;padding-bottom:46px}
+.ma-custom-footer__brand img{width:190px;max-height:76px;object-fit:contain;filter:brightness(0) invert(1)}
+.ma-custom-footer__brand p{max-width:360px;margin:18px 0 0;color:#9ca3af;font-size:13px;line-height:1.8}
+.ma-custom-footer__title{display:block;margin-bottom:18px;color:#f05a24;font-size:10px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
+.ma-custom-footer__links{display:grid;gap:12px}
+.ma-custom-footer__links a,.ma-custom-footer__contact a{color:#fff!important;text-decoration:none;font-size:14px;font-weight:700}
+.ma-custom-footer__links a:hover,.ma-custom-footer__contact a:hover{color:#ff8b62!important}
+.ma-custom-footer__contact p{margin:0 0 12px;color:#c4cad3;font-size:13px;line-height:1.7}
+.ma-custom-footer__bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;gap:20px;color:#737c8c;font-size:11px}
+@media(max-width:760px){
+ .ma-custom-footer{padding:48px 24px 22px}.ma-custom-footer__top{grid-template-columns:1fr;gap:34px;padding-bottom:38px}
+ .ma-custom-footer__brand img{width:155px}.ma-custom-footer__bottom{flex-direction:column}
+}
+</style>
+<footer class="ma-custom-footer">
+  <div class="ma-custom-footer__inner">
+    <div class="ma-custom-footer__top">
+      <div class="ma-custom-footer__brand">
+        <img src="https://mon-amie-chicken.de/wp-content/uploads/2023/11/logo.png" alt="Mon Amie Chicken">
+        <p>Burger, knuspriges Chicken und Grill-Spezialitäten – täglich frisch im Herzen von Clausthal-Zellerfeld.</p>
+      </div>
+      <div>
+        <span class="ma-custom-footer__title">Navigation</span>
+        <nav class="ma-custom-footer__links" aria-label="Footer Navigation">
+          <a href="https://mon-amie-chicken.de/">Home</a>
+          <a href="https://mon-amie-burger.de/">Speisekarte</a>
+          <a href="https://mon-amie-chicken.de/about-us/">Über Uns</a>
+          <a href="https://mon-amie-chicken.de/contact-us/">Kontakt</a>
+        </nav>
+      </div>
+      <div class="ma-custom-footer__contact">
+        <span class="ma-custom-footer__title">Besuche uns</span>
+        <p>Adolph-Roemer-Straße 9<br>38678 Clausthal-Zellerfeld</p>
+        <p>Täglich 11:30–22:00 Uhr</p>
+        <a href="tel:+4915253415522">+49 1525 3415522</a>
+      </div>
+    </div>
+    <div class="ma-custom-footer__bottom"><span>© 2026 Mon Amie Chicken</span><span>Frisch zubereitet. Persönlich serviert.</span></div>
+  </div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var chat=document.querySelector('.joinchat');
+  var touched=false;
+  if(!chat)return;
+  var button=chat.querySelector('.joinchat__button');
+  if(button)button.addEventListener('click',function(){touched=true;},{capture:true});
+  window.setTimeout(function(){
+    if(!touched)chat.classList.remove('joinchat--chatbox');
+  },1800);
+});
+</script>
+"""
 
 
 def elementor_elements(markup, prefix):
@@ -498,15 +567,20 @@ def apply(session):
             "/contact-us/": ('class="ma-contact"', "Komm vorbei."),
         }
         verified = {}
+        anonymous = requests.Session()
+        anonymous.headers.update(
+            {"User-Agent": "Mozilla/5.0 (Mon Amie public design verification)"}
+        )
         for path, markers in checks.items():
-            public = session.get(
-                f"{BASE}{path}?design-check=20260729",
+            public = anonymous.get(
+                f"{BASE}{path}?design-check=202607291850",
                 timeout=60,
             )
             verified[path] = (
                 public.status_code == 200
                 and all(marker in public.text for marker in markers)
                 and "https://mon-amie-burger.de/" in public.text
+                and 'class="ma-custom-footer"' in public.text
             )
         if not all(verified.values()):
             raise RuntimeError(f"Public verification failed: {verified}")
