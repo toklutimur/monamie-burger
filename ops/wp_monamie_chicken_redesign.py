@@ -19,9 +19,14 @@ CREDENTIALS = [
 def login():
     for username, password in CREDENTIALS:
         session = requests.Session()
-        session.headers.update({"User-Agent": "Mozilla/5.0 MonAmieMaintenance/1.0"})
+        session.headers.update(
+            {
+                "User-Agent": "Mozilla/5.0 (WordPress design maintenance)",
+                "Referer": f"{BASE}/wp-login.php",
+            }
+        )
         session.get(f"{BASE}/wp-login.php", timeout=30)
-        response = session.post(
+        session.post(
             f"{BASE}/wp-login.php",
             data={
                 "log": username,
@@ -31,9 +36,12 @@ def login():
                 "testcookie": "1",
             },
             timeout=30,
-            allow_redirects=True,
+            allow_redirects=False,
         )
-        if "/wp-admin" in response.url and "wp-login.php" not in response.url:
+        if any(
+            cookie.name.startswith("wordpress_logged_in_")
+            for cookie in session.cookies
+        ):
             return session
     raise RuntimeError("WordPress login failed")
 
