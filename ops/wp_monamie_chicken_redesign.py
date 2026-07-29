@@ -347,10 +347,35 @@ def inspect(session):
                 "response_data_keys": list(response_data.keys())
                 if isinstance(response_data, dict)
                 else [],
-                "element_paths": element_paths(response_data),
+                "root_elements": len(response_data.get("elements", []))
+                if isinstance(response_data, dict)
+                else 0,
             }
         except Exception as error:
             elementor[str(page_id)] = {"error": str(error)}
+    public_pages = {}
+    anonymous = requests.Session()
+    anonymous.headers.update(
+        {"User-Agent": "Mozilla/5.0 (Mon Amie public design verification)"}
+    )
+    for path, marker in {
+        "/": 'class="ma-home"',
+        "/about-us/": 'class="ma-about"',
+        "/contact-us/": 'class="ma-contact"',
+    }.items():
+        response = anonymous.get(
+            f"{BASE}{path}?public-check=202607291845",
+            timeout=60,
+        )
+        public_pages[path] = {
+            "status": response.status_code,
+            "new_design": marker in response.text,
+            "cache": {
+                key: value
+                for key, value in response.headers.items()
+                if "cache" in key.lower() or key.lower() in {"age", "server"}
+            },
+        }
     print(
         json.dumps(
             {
@@ -370,6 +395,7 @@ def inspect(session):
                 if pages.status_code == 200
                 else [],
                 "elementor": elementor,
+                "public_pages": public_pages,
             },
             ensure_ascii=False,
             indent=2,
