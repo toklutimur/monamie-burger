@@ -65,3 +65,17 @@ This is the Mon Amie Burger website, a Vite-powered static restaurant ordering/m
 - For mobile work, check an iPhone-sized viewport around 390px wide.
 - Check for horizontal scrolling, clipped sticky controls, broken cart/order behavior, and unreadable menu cards.
 - Summarize files changed, verification performed, and any remaining risks.
+
+## Definition of Done (extends the global default)
+
+- Gates: `npm run build` after code changes; `node test.js` / `node test-puppeteer.js` where they apply (`npm test` is not wired).
+- Visual/device proof: `npm run dev -- --host 127.0.0.1` at a 390px viewport for cart, menu and layout changes; screenshot path in the report.
+- Merge: PR against `main`, `gh pr merge --squash --delete-branch`.
+- Deploy: GitHub Pages serves the committed `dist/`; rebuild and commit `dist/` in the same PR as the source change.
+- Live check: `curl -sI` on the domain in `CNAME` returns 200 and the changed page shows the change.
+- User-only steps (report, do not attempt): prices, menu items, legal pages, WhatsApp order format, and the Cloudflare Pages migration (roadmap, not part of any task unless asked).
+
+## Agent loop
+
+- Menu data, translations, delivery rules and legal pages are out of scope unless the task names them (Content Protection above); the reviewer blocks on accidental edits there.
+- A source change without a rebuilt `dist/` is incomplete.
