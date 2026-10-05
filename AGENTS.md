@@ -17,8 +17,8 @@ This is the Mon Amie Burger website, a Vite-powered static restaurant ordering/m
 
 - Currently deployed via **GitHub Pages** with a custom domain — the root `CNAME`
   file controls it. Never modify or delete `CNAME` without asking.
-- `dist/` is committed build output for that Pages setup; regenerate with
-  `npm run build`, don't hand-edit it.
+- Pages serves the repo root (`index.html`, `main.js`, ...) directly. `dist/` is
+  gitignored local build output (CI only runs `npm run build`); never commit it.
 - A migration to **Cloudflare Pages** is planned (see the vault runbook). The
   domain carries live IONOS e-mail — MX/SPF/DMARC records must be migrated
   before any nameserver switch. Do not start this migration as a side effect
@@ -50,11 +50,11 @@ This is the Mon Amie Burger website, a Vite-powered static restaurant ordering/m
 - Gates: `npm run build` after code changes; `node test.js` / `node test-puppeteer.js` where they apply (`npm test` is not wired).
 - Visual/device proof: `npm run dev -- --host 127.0.0.1` at a 390px viewport (and desktop) for cart, menu and layout changes; check horizontal scroll, clipped sticky controls, broken cart/order behavior; screenshot path in the report.
 - Merge: squash PR against `main`.
-- Deploy: GitHub Pages serves the committed `dist/`; rebuild and commit `dist/` in the same PR as the source change.
+- Deploy: merge to `main`; GitHub Pages serves the repo root (no `dist/`). Bump the `?v=` query on the `main.js`/`style.css` tags in `index.html` when they change.
 - Live check: `curl -sI` on the domain in `CNAME` returns 200 and the changed page shows the change.
 - User-only steps (report, do not attempt): prices, menu items, legal pages, WhatsApp order format, and the Cloudflare Pages migration (roadmap, not part of any task unless asked).
 
 ## Agent loop
 
 - Menu data, translations, delivery rules and legal pages are out of scope unless the task names them (Content Protection above); the reviewer blocks on accidental edits there.
-- A source change without a rebuilt `dist/` is incomplete.
+- A change to `main.js` or `style.css` without a bumped `?v=` in `index.html` is incomplete.
