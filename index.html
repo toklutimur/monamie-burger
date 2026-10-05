@@ -159,18 +159,24 @@
                   Clausthal-Zellerfeld (38678)
                 </label>
                 <label>
+                  <input type="radio" name="location" value="buntenbock" onchange="handleLocationChange()"> Buntenbock
+                </label>
+                <label>
                   <input type="radio" name="location" value="other" onchange="handleLocationChange()"> Andere Adresse
                 </label>
               </div>
               <div id="otherAddressField">
-                <input type="text" id="doorAddress" placeholder="Lieferadresse (6,00€ Liefergebühr)"
+                <input type="text" id="doorAddress" placeholder="Lieferadresse (Clausthal-Zellerfeld)"
                   onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--card-border)'">
               </div>
               <div id="clausthalNote" style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;">
                 Liefergebühr: 1,50€ (Clausthal-Zellerfeld)
               </div>
+              <div id="buntenbockNote" style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem; display: none;">
+                Liefergebühr: 3,00€ (Buntenbock)
+              </div>
               <div id="otherNote" style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem; display: none;">
-                Liefergebühr: 6,00€ (Andere Adresse)
+                Liefergebühr: 6,00€ (Andere Adresse) · Mindestbestellwert: 40,00€
               </div>
             </div>
             <div id="abholungFields" style="display: none;">
@@ -243,7 +249,7 @@
       caches.keys().then((keys) => keys.forEach((key) => caches.delete(key)));
     }
   </script>
-  <script type="module" src="./main.js?v=20260702-gramaj-clean"></script>
+  <script type="module" src="./main.js?v=20261006-buntenbock"></script>
 
   <div id="google_translate_element" style="display:none;"></div>
   <script type="text/javascript">
