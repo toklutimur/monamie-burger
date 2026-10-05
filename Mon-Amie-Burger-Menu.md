@@ -86,7 +86,6 @@
 | Nugget-Wrap | €8,50 |
 | BBQ-Wrap | €8,50 |
 | Dürüm mit Hähnchenspieß | €13,00 |
-| Dürüm mit Siskebab (Kuşbaşı) | €15,00 |
 | Adana Dürüm | €13,00 |
 | Falafel Dürüm | €11,00 |
 | Pomwrap | €5,00 |
@@ -97,7 +96,6 @@
 |------|:-----:|
 | Adana Kebab (scharf) | €17,50 |
 | Urfa Kebab | €17,50 |
-| Şiş Kebab | €19,00 |
 | Hähnchenflügel (8 Stk.) | €17,50 |
 | Hähnchenbrustfilet | €17,50 |
 | Hähnchenspieß | €17,50 |
@@ -107,9 +105,7 @@
 
 | Ürün | Fiyat |
 |------|:-----:|
-| Hähnchenspieß & Kuşbaşı | €19,00 |
 | Hähnchenspieß & Adana | €18,50 |
-| Kuşbaşı & Adana | €19,00 |
 | Hähnchenspieß & Köfte | €18,50 |
 | Adana & Köfte | €18,50 |
 
@@ -129,7 +125,6 @@
 |------|:-----:|
 | Joghurt | €6,00 |
 | Reis | €6,00 |
-| Bulgur | €6,00 |
 | Scharfe Soße | €6,00 |
 
 ## 🍗 Chicken Snacks
