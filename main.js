@@ -641,8 +641,27 @@ function emptyCart() {
   document.getElementById('cartModal').classList.remove('show');
 }
 
-function calculateTotal() {
-  if (getTotalItems() === 0) return 0;
+// Lieferzonen: Gebühr pro Ort und Mindestbestellwert (Warenwert ohne Liefergebühr).
+const DELIVERY_FEES = { clausthal: 1.50, buntenbock: 3.00, other: 6.00 };
+const MIN_ORDER_OTHER = 40.00;
+const LOCATION_LABELS = { clausthal: 'Clausthal-Zellerfeld', buntenbock: 'Buntenbock', other: 'Andere Adresse' };
+
+function formatEuro(value) {
+  return value.toFixed(2).replace('.', ',') + '€';
+}
+
+function getSelectedLocation() {
+  const locationEl = document.querySelector('input[name="location"]:checked');
+  return locationEl ? locationEl.value : 'clausthal';
+}
+
+function isAbholungSelected() {
+  const deliveryTypeEl = document.querySelector('input[name="deliveryType"]:checked');
+  return deliveryTypeEl ? deliveryTypeEl.value === 'abholung' : false;
+}
+
+// Warenwert ohne Liefergebühr
+function calculateItemsTotal() {
   let total = 0;
   Object.entries(cart).forEach(([id, qty]) => {
     const baseId = id.split('|')[0];
@@ -651,8 +670,20 @@ function calculateTotal() {
       if (product) total += product.price * qty;
     });
   });
-  total += calculateDeliveryFee();
   return total;
+}
+
+// Fehlender Betrag bis zum Mindestbestellwert (0, wenn keiner gilt oder erreicht ist)
+function getMinOrderShortfall() {
+  if (isAbholungSelected() || getSelectedLocation() !== 'other') return 0;
+  const itemsCents = Math.round(calculateItemsTotal() * 100);
+  const minCents = Math.round(MIN_ORDER_OTHER * 100);
+  return itemsCents < minCents ? (minCents - itemsCents) / 100 : 0;
+}
+
+function calculateTotal() {
+  if (getTotalItems() === 0) return 0;
+  return calculateItemsTotal() + calculateDeliveryFee();
 }
 
 function getTotalItems() {
@@ -708,6 +739,10 @@ function updateCartDetails() {
   });
 
   const deliveryFee = calculateDeliveryFee();
+  const shortfall = getMinOrderShortfall();
+  const minOrderHint = shortfall > 0
+    ? `<div id="minOrderHint" style="font-size: 0.8rem; color: #f59e0b; margin-bottom: 0.5rem;">Mindestbestellwert für Andere Adresse: ${formatEuro(MIN_ORDER_OTHER)} – es fehlen noch ${formatEuro(shortfall)}</div>`
+    : '';
 
   html += `
     <div style="border-top: 1px dashed rgba(255,255,255,0.1); margin-top: 1rem; padding-top: 1rem;">
@@ -719,6 +754,7 @@ function updateCartDetails() {
         <span>Lieferung:</span>
         <span>${deliveryFee > 0 ? '€' + deliveryFee.toFixed(2).replace('.', ',') : 'Kostenlos'}</span>
       </div>
+      ${minOrderHint}
       <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-weight: 700; font-size: 1.1rem; color: var(--accent);">
         <span>Gesamt:</span>
         <span>€${calculateTotal().toFixed(2).replace('.', ',')}</span>
@@ -774,9 +810,8 @@ function updateDeliveryInfoSummary() {
   if (isAbholung) {
     summaryEl.textContent = 'Abholung';
   } else {
-    const locationEl = document.querySelector('input[name="location"]:checked');
-    const location = locationEl ? locationEl.value : 'clausthal';
-    summaryEl.textContent = location === 'clausthal' ? 'Lieferung · Clausthal-Zellerfeld' : 'Lieferung · Andere Adresse';
+    const location = getSelectedLocation();
+    summaryEl.textContent = 'Lieferung · ' + (LOCATION_LABELS[location] || LOCATION_LABELS.other);
   }
 }
 
@@ -790,23 +825,22 @@ function toggleDeliveryInfo() {
 }
 
 function handleLocationChange() {
-  const locationEl = document.querySelector('input[name="location"]:checked');
-  const location = locationEl ? locationEl.value : 'clausthal';
+  const location = getSelectedLocation();
   const otherField = document.getElementById('otherAddressField');
   const clausthalNote = document.getElementById('clausthalNote');
+  const buntenbockNote = document.getElementById('buntenbockNote');
   const otherNote = document.getElementById('otherNote');
   const doorAddress = document.getElementById('doorAddress');
 
+  otherField.style.display = 'block';
+  clausthalNote.style.display = location === 'clausthal' ? 'block' : 'none';
+  buntenbockNote.style.display = location === 'buntenbock' ? 'block' : 'none';
+  otherNote.style.display = location === 'other' ? 'block' : 'none';
+
   if (location === 'other') {
-    otherField.style.display = 'block';
-    clausthalNote.style.display = 'none';
-    otherNote.style.display = 'block';
-    doorAddress.placeholder = 'Lieferadresse (6,00€ Liefergebühr)';
+    doorAddress.placeholder = `Lieferadresse (${formatEuro(DELIVERY_FEES.other)} Liefergebühr, Mindestbestellwert ${formatEuro(MIN_ORDER_OTHER)})`;
   } else {
-    otherField.style.display = 'block';
-    clausthalNote.style.display = 'block';
-    otherNote.style.display = 'none';
-    doorAddress.placeholder = 'Lieferadresse (Clausthal-Zellerfeld)';
+    doorAddress.placeholder = `Lieferadresse (${LOCATION_LABELS[location] || LOCATION_LABELS.clausthal})`;
   }
 
   updateDeliveryInfoSummary();
@@ -814,16 +848,9 @@ function handleLocationChange() {
 }
 
 function calculateDeliveryFee() {
-  const deliveryTypeEl = document.querySelector('input[name="deliveryType"]:checked');
-  const isAbholung = deliveryTypeEl ? deliveryTypeEl.value === 'abholung' : false;
-  if (isAbholung) return 0;
-
-  const locationEl = document.querySelector('input[name="location"]:checked');
-  const location = locationEl ? locationEl.value : 'clausthal';
-  if (location === 'clausthal') {
-    return 1.50;
-  }
-  return 6.00;
+  if (isAbholungSelected()) return 0;
+  const location = getSelectedLocation();
+  return location in DELIVERY_FEES ? DELIVERY_FEES[location] : DELIVERY_FEES.other;
 }
 
 function sanitizeInput(str) {
@@ -869,7 +896,11 @@ function checkout() {
       return;
     }
 
-    const fee = calculateDeliveryFee();
+    if (getMinOrderShortfall() > 0) {
+      alert(`Mindestbestellwert für diese Lieferadresse: ${formatEuro(MIN_ORDER_OTHER)} (ohne Liefergebühr). Bitte fügen Sie weitere Artikel hinzu.`);
+      return;
+    }
+
     deliveryInfo = `\n\nName an der Tür: ${doorName}\nLieferadresse: ${doorAddress}`;
   }
 
